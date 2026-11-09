@@ -20,7 +20,7 @@ Las flechas se leen "desde → hasta" con la condición que dispara el cambio. E
 
 1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/10-aldeano`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde el inicio (nacen en la aldea).*
-3. **Crea estos archivos** en `Assets/_Alumnos/Aldeano/`: `AldeanoController.cs`, `AldeanoVagar.cs`, `AldeanoMuerto.cs`.
+3. **Crea estos archivos** en `Assets/_Alumnos/Aldeano/`: `AldeanoController.cs`, `AldeanoVagar.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
 5. **Primer estado:** en `Entrar` pide la animación (`Caminar`) y en `Actualizar` haz lo mínimo (mover con `Cuerpo.Mover`).
 6. **Play:** en cuanto existe `AldeanoController`, el sistema lo usa en lugar del demo. Si ves tu primer estado funcionando, sigue con el siguiente.
@@ -89,7 +89,7 @@ Guía completa con diagramas: [guía de inicio](03_como_empezar.md).
 | Behaviour | Responsable | Se entrega en | Mientras tanto |
 | --- | --- | --- | --- |
 | [`Steering.Wander`](02_steering_behaviors.md#wander-vagar-6-pts) | Cupo 10 (Aldeano) | Clase 3 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
-| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 1 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
+| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 | [`Steering.Hide`](02_steering_behaviors.md#hide-esconderse-8-pts) | Cupo 07 (TorreLanzadora) | Clase 4 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 | [`Steering.Arrive`](02_steering_behaviors.md#arrive-llegar-4-pts) | Cupo 02 (Bruto) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 
@@ -133,12 +133,12 @@ Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguie
 
 | Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** Lun 9 nov | Vagar, Muerto | 2/7 · 29% | Esqueleto y paseo con Wander; muerte. | — |
-| **2** Mié 11 nov | Asustarse, Huir | 4/7 · 57% | Detecta enemigos y huye con Flee. | — |
-| **3** Mié 18 nov | Esconderse | 5/7 · 71% | Se esconde (Hide/Arrive) y espera a que pase el peligro. | Wander |
-| **4** Lun 23 nov | Charlar | 6/7 · 86% | Interaccion entre aldeanos (comunicación por Sensor/Agente.Todos). | — |
-| **5** Mié 25 nov | Festejo | 7/7 · 100% | Celebra o llora segun el resultado. Escucha Alertas del Guardia. | — |
-| **6** Lun 30 nov | (pulido) | 7/7 · 100% | Pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | Vagar | 1/7 · 14% | Onboarding y primer commit: el Controller crea la Maquina e inicia en Vagar (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision. | — |
+| **2** Mié 11 nov | Muerto, Asustarse | 3/7 · 43% | Muerto: Global. Asustarse: Reaccion de susto 0.8 s al ver un enemigo o oir Alertas. | — |
+| **3** Mié 18 nov | Huir | 4/7 · 57% | Huir: Se aleja del enemigo (con sesgo hacia el granero). | Wander |
+| **4** Lun 23 nov | Esconderse, Charlar | 6/7 · 86% | Esconderse: Se pega a un escondite (casa/granero/rocas) fuera de la línea de visión del enemigo. Charlar: Se detiene 3 s con otro aldeano cercano. | — |
+| **5** Mié 25 nov | Festejo | 7/7 · 100% | Festejo: Global: celebra en victoria, llora en derrota. | — |
+| **6** Lun 30 nov | (colch&oacute;n) | 7/7 · 100% | Colchon (opcional): se usa solo para corregir pendientes o para ponerse al corriente. No hay estados nuevos. | — |
 
 Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
 
@@ -146,27 +146,131 @@ Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting 
 
 > Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
 
-### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 1 · Lun 9 nov · Onboarding y primer commit · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-1/10-aldeano`  ·  **Avance esperado:** 2 de 7 estados (29%)
+**Rama:** `clase-1/10-aldeano`  ·  **Avance esperado:** 1 de 7 estados (14%)
 
 ![Diagrama de estados de Aldeano](img/m10_aldeano_4.svg)
+
+#### Onboarding (2 horas): recorre todo y sube tu primer commit
+
+![Linea de tiempo del onboarding de 2 horas](img/m10_aldeano_5.svg)
+
+> Hoy no se califica cuánto programaste, sino que **recorriste el flujo completo una vez**: clonar, correr el juego, leer tu ficha, crear tu rama, hacer que tu máquina arranque y llegar hasta un PR revisado. Todo lo demás se construye sobre esto.
+
+##### 1 · Clonar y abrir (0-15 min)
+
+```bash
+git clone https://github.com/BanyoLoper/tower-defense.git td
+cd td
+git status
+```
+
+Abre la carpeta `td` con Unity `6000.3.10f1` (la primera vez tarda). Debe decir `On branch main` y *working tree clean*. Si falla: [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+##### 2 · Jugar la base (15-30 min)
+
+Abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Pulsa ESPACIO para llamar oleadas; mira cómo aparecen enemigos y torres y recorre la Hierarchy. Así sabes qué hace el juego sin tu código.
+
+##### 3 · Leer tu ficha y el Estado base (30-50 min)
+
+Lee de esta ficha el diagrama de estados, *Qué es tu máquina* y las reglas. Abre `Assets/_Granero/Scripts/Maquina/` y mira `Estado.cs`, `Maquina.cs` y `Contexto.cs`; la explicación está en [Estado general](01_estado_general.md).
+
+##### 4 · Crear tu rama (50-60 min)
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/10-aldeano
+```
+
+Es la rama de hoy; el nombre debe ser exacto.
+
+##### 5 · Controller + estado inicial (60-95 min)
+
+Crea los dos archivos de abajo en `Assets/_Alumnos/Aldeano/` (Unity genera los `.meta`). Es la versión mínima del esqueleto completo que aparece más abajo en esta ficha: solo registra `AldeanoVagar`. Pulsa Play y, si hace falta, llama oleadas con ESPACIO hasta que aparezca tu agente (desde el inicio (nacen en la aldea)): la consola debe mostrar *Aldeano: entre a Vagar*.
+
+##### 6 · Primer commit y push (95-110 min)
+
+```bash
+git status
+git add Assets/_Alumnos/Aldeano
+git commit -m "clase 1: Aldeano - controller y Vagar"
+git push -u origin clase-1/10-aldeano
+```
+
+`git status` debe mostrar solo tu carpeta (y los `.meta`).
+
+##### 7 · Pull Request y reporte (110-120 min)
+
+```bash
+gh pr create --base main --title "Clase 1 - Aldeano (cupo 10)" --body "Onboarding: controller y Vagar"
+gh pr view --comments
+```
+
+Sin la CLI, crea el PR en la web ([Cómo subir tus cambios](04_como_subir_cambios.md)). En 1-2 minutos el Action comenta; si hay ❌, corrige y haz `git push`.
+
+**Código del paso 5** (copia y pega; los nombres ya son los de tu máquina):
+
+```csharp
+// Assets/_Alumnos/Aldeano/AldeanoController.cs
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Alumnos.Aldeano
+{
+    public class AldeanoController : MonoBehaviour
+    {
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
+
+        void Awake()
+        {
+            ctx.Fijar("agente", GetComponent<Agente>());
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new AldeanoVagar() }, ctx);   // por ahora solo este estado
+        }
+
+        void OnEnable() { maq.Iniciar("AldeanoVagar"); }
+        void Update() { maq.Actualizar(Time.deltaTime); }
+    }
+}
+
+// Assets/_Alumnos/Aldeano/AldeanoVagar.cs
+using UnityEngine;
+
+namespace Alumnos.Aldeano
+{
+    public class AldeanoVagar : Estado
+    {
+        public override void Entrar(string anterior)
+        {
+            Debug.Log("Aldeano: entre a Vagar");   // prueba de vida: debe salir en la consola al hacer Play
+        }
+
+        public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
+
+        public override string AlRecibir(string trigger, int valor) { return null; }
+    }
+}
+```
+
+¿Terminaste antes? Es opcional y no se califica hoy: empieza el siguiente estado (la clase 2 trae `AldeanoMuerto`, `AldeanoAsustarse`).
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
 | `AldeanoController.cs` | **Nuevo.** `class AldeanoController : MonoBehaviour` dentro de `namespace Alumnos.Aldeano`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Vagar`. |
 | `AldeanoVagar.cs` | **Nuevo.** `class AldeanoVagar : Estado`. Pasea sin rumbo por la aldea evitando arboles. Animación: `Caminar`. |
-| `AldeanoMuerto.cs` | **Nuevo.** `class AldeanoMuerto : Estado`. Global. Animación: `Muerte1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Esqueleto y paseo con Wander; muerte.
+- Onboarding y primer commit: el Controller crea la Maquina e inicia en Vagar (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`.
 
-Todavía NO se pide: `AldeanoCharlar`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoFestejo`.
+Todavía NO se pide: `AldeanoCharlar`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoFestejo`, `AldeanoMuerto`.
 
 **Lista de comprobación antes del PR**
 
@@ -186,31 +290,31 @@ git checkout -b clase-1/10-aldeano
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Aldeano
-git commit -m "clase 1: Aldeano - Vagar, Muerto"
+git commit -m "clase 1: Aldeano - Vagar"
 git push -u origin clase-1/10-aldeano
 ```
 
 ### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-2/10-aldeano`  ·  **Avance esperado:** 4 de 7 estados (57%)
+**Rama:** `clase-2/10-aldeano`  ·  **Avance esperado:** 3 de 7 estados (43%)
 
-![Diagrama de estados de Aldeano](img/m10_aldeano_5.svg)
+![Diagrama de estados de Aldeano](img/m10_aldeano_6.svg)
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
-| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoAsustarse()`, `new AldeanoHuir()`. |
+| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoMuerto()`, `new AldeanoAsustarse()`. |
+| `AldeanoMuerto.cs` | **Nuevo.** `class AldeanoMuerto : Estado`. Global. Animación: `Muerte1`. |
 | `AldeanoAsustarse.cs` | **Nuevo.** `class AldeanoAsustarse : Estado`. Reaccion de susto 0.8 s al ver un enemigo o oir Alertas. Animación: `Miedo`. |
-| `AldeanoHuir.cs` | **Nuevo.** `class AldeanoHuir : Estado`. Se aleja del enemigo (con sesgo hacia el granero). Animación: `Correr`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Detecta enemigos y huye con Flee.
+- Muerto: Global. Asustarse: Reaccion de susto 0.8 s al ver un enemigo o oir Alertas.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`.
 
-Todavía NO se pide: `AldeanoCharlar`, `AldeanoEsconderse`, `AldeanoFestejo`.
+Todavía NO se pide: `AldeanoCharlar`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -230,31 +334,31 @@ git checkout -b clase-2/10-aldeano
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Aldeano
-git commit -m "clase 2: Aldeano - Asustarse, Huir"
+git commit -m "clase 2: Aldeano - Muerto, Asustarse"
 git push -u origin clase-2/10-aldeano
 ```
 
 ### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-3/10-aldeano`  ·  **Avance esperado:** 5 de 7 estados (71%)  ·  **Steering:** Wander
+**Rama:** `clase-3/10-aldeano`  ·  **Avance esperado:** 4 de 7 estados (57%)  ·  **Steering:** Wander
 
-![Diagrama de estados de Aldeano](img/m10_aldeano_6.svg)
+![Diagrama de estados de Aldeano](img/m10_aldeano_7.svg)
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
-| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoEsconderse()`. |
-| `AldeanoEsconderse.cs` | **Nuevo.** `class AldeanoEsconderse : Estado`. Se pega a un escondite (casa/granero/rocas) fuera de la línea de visión del enemigo. Animación: `Agachado`. |
+| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoHuir()`. |
+| `AldeanoHuir.cs` | **Nuevo.** `class AldeanoHuir : Estado`. Se aleja del enemigo (con sesgo hacia el granero). Animación: `Correr`. |
 | `../Steering/SteeringWander.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Wander(Vector3 pos, Vector3 adelante, ref float angulo, float radio, float distancia, float jitter, float vMax)`. Prueba: Recorre una zona 30 s sin quedarse quieto ni moverse a tirones; no se sale del NavMesh. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Se esconde (Hide/Arrive) y espera a que pase el peligro.
+- Huir: Se aleja del enemigo (con sesgo hacia el granero).
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse` y las del steering de esta clase.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir` y las del steering de esta clase.
 
-Todavía NO se pide: `AldeanoCharlar`, `AldeanoFestejo`.
+Todavía NO se pide: `AldeanoCharlar`, `AldeanoEsconderse`, `AldeanoFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -274,7 +378,7 @@ git checkout -b clase-3/10-aldeano
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Aldeano  Assets/_Alumnos/Steering
-git commit -m "clase 3: Aldeano - Esconderse"
+git commit -m "clase 3: Aldeano - Huir"
 git push -u origin clase-3/10-aldeano
 ```
 
@@ -282,17 +386,18 @@ git push -u origin clase-3/10-aldeano
 
 **Rama:** `clase-4/10-aldeano`  ·  **Avance esperado:** 6 de 7 estados (86%)
 
-![Diagrama de estados de Aldeano](img/m10_aldeano_7.svg)
+![Diagrama de estados de Aldeano](img/m10_aldeano_8.svg)
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
-| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoCharlar()`. |
+| `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new AldeanoEsconderse()`, `new AldeanoCharlar()`. |
+| `AldeanoEsconderse.cs` | **Nuevo.** `class AldeanoEsconderse : Estado`. Se pega a un escondite (casa/granero/rocas) fuera de la línea de visión del enemigo. Animación: `Agachado`. |
 | `AldeanoCharlar.cs` | **Nuevo.** `class AldeanoCharlar : Estado`. Se detiene 3 s con otro aldeano cercano. Animación: `Hablar / Saludar`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Interaccion entre aldeanos (comunicación por Sensor/Agente.Todos).
+- Esconderse: Se pega a un escondite (casa/granero/rocas) fuera de la línea de visión del enemigo. Charlar: Se detiene 3 s con otro aldeano cercano.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoCharlar`.
@@ -317,7 +422,7 @@ git checkout -b clase-4/10-aldeano
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Aldeano
-git commit -m "clase 4: Aldeano - Charlar"
+git commit -m "clase 4: Aldeano - Esconderse, Charlar"
 git push -u origin clase-4/10-aldeano
 ```
 
@@ -325,7 +430,7 @@ git push -u origin clase-4/10-aldeano
 
 **Rama:** `clase-5/10-aldeano`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Aldeano](img/m10_aldeano_8.svg)
+![Diagrama de estados de Aldeano](img/m10_aldeano_9.svg)
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
@@ -335,7 +440,7 @@ git push -u origin clase-4/10-aldeano
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Celebra o llora segun el resultado. Escucha Alertas del Guardia.
+- Festejo: Global: celebra en victoria, llora en derrota.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoCharlar`, `AldeanoFestejo`.
@@ -362,25 +467,23 @@ git commit -m "clase 5: Aldeano - Festejo"
 git push -u origin clase-5/10-aldeano
 ```
 
-### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 6 · Lun 30 nov · Colchón (opcional, no se califica) · PR a más tardar ese día, 23:59 (CDMX)
 
 **Rama:** `clase-6/10-aldeano`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Aldeano](img/m10_aldeano_9.svg)
+![Diagrama de estados de Aldeano](img/m10_aldeano_10.svg)
 
 | Archivo (en `Assets/_Alumnos/Aldeano/`) | Qué debe tener |
 | --- | --- |
 | `AldeanoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
-| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| (ninguno obligatorio) | Colchón: sin contenido nuevo. Solo corriges lo que marcó el Action o terminas lo que se quedó atrás. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Pulido, cero basura, demo.
-- Una oleada completa de principio a fin sin errores ni avisos en la consola.
-- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
-- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
-- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+- Esta clase **no tiene contenido nuevo y no cuenta para la calificación** (el promedio es de las clases 1 a 5).
+- Úsala para: corregir los ❌ que dejó el Action, terminar estados atrasados y probar tu máquina junto con las otras.
+- Si necesitas entregar correcciones, crea la rama `clase-6/10-aldeano` y su PR; si no, no hace falta.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `AldeanoVagar`, `AldeanoMuerto`, `AldeanoAsustarse`, `AldeanoHuir`, `AldeanoEsconderse`, `AldeanoCharlar`, `AldeanoFestejo`.
 
@@ -402,7 +505,7 @@ git checkout -b clase-6/10-aldeano
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Aldeano
-git commit -m "clase 6: Aldeano - pulido final"
+git commit -m "clase 6: Aldeano - correcciones"
 git push -u origin clase-6/10-aldeano
 ```
 
@@ -413,7 +516,7 @@ git push -u origin clase-6/10-aldeano
 | Funciona en el juego | 50 | El agente/sistema hace lo pedido en Play, sin errores en consola, con el prefab real. |
 | Estados entregados | 30 | Cumple los estados de ESA clase (ver tabla). Cada estado que falta resta proporcionalmente. |
 | Codigo y rendimiento | 20 | Una clase por estado con prefijo del rol, ASCII, sin new/LINQ en Update, eventos desuscritos, cero basura medido. |
-| Total por clase | 100 | La calificación final es el promedio de las 6 entregas (cada clase pesa igual). |
+| Total por clase | 100 | La calificación final es el promedio de las 5 entregas de las clases 1 a 5 (cada una pesa igual). La clase 6 es colchón y no cuenta. |
 
 ## 7. Esqueleto de código
 

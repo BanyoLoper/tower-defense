@@ -12,7 +12,7 @@ Todo se lee directamente en GitHub (carpeta [`docs/`](docs/)). Hay una version H
 | [Guia de inicio](docs/03_como_empezar.md) | **Leela primero**: como encajan las piezas, tu primera hora, flujo de Git y ejemplo completo |
 | [Como subir tus cambios](docs/04_como_subir_cambios.md) | Paso a paso (consola y GitHub Desktop): rama, commit, push, PR y leer el reporte |
 | [Troubleshooting](docs/05_troubleshooting.md) | **Si el pipeline falla**: cada mensaje del Action y el error de Git mas comun, con la solucion en consola |
-| [Plan general](docs/00_indice_y_plan.md) | Pesos, reparto, calendario de las 6 clases, dependencias y rubrica |
+| [Plan general](docs/00_indice_y_plan.md) | Pesos, reparto, calendario de las 5 clases + colchon, dependencias y rubrica |
 | [Estado general](docs/01_estado_general.md) | `Estado`, `Contexto` y `Maquina` (la base de todas las maquinas) |
 | [Steering behaviours](docs/02_steering_behaviors.md) | Los 9 behaviours con diagrama, firma y prueba de aceptacion |
 
@@ -41,16 +41,16 @@ Cada alumno tiene su ficha con diagrama de estados, tablas, dependencias, entreg
 
 ## Calendario de entregas
 
-Una entrega por clase. El PR se crea **ese mismo dia** (limite 23:59, hora CDMX). El lunes 16 de noviembre es puente: no hay clase.
+Cinco entregas calificadas (clases 1 a 5) y una clase 6 de colchon. El PR se crea **ese mismo dia** (limite 23:59, hora CDMX). El lunes 16 de noviembre es puente: no hay clase.
 
 | Clase | Dia | Rama | Que entregas | Como subirlo |
 |---|---|---|---|---|
-| 1 | Lun 9 nov | `clase-1/<cupo>-<maquina>` | Controller + primeros estados (ver tu ficha) | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 1 | Lun 9 nov | `clase-1/<cupo>-<maquina>` | **Onboarding**: recorres todo, Controller + estado inicial y tu primer commit/PR (paso a paso en tu ficha) | [Como subir cambios](docs/04_como_subir_cambios.md) |
 | 2 | Mie 11 nov | `clase-2/<cupo>-<maquina>` | Estados de la clase 2 + steering de la clase 2 si te toca | [Como subir cambios](docs/04_como_subir_cambios.md) |
 | 3 | Mie 18 nov | `clase-3/<cupo>-<maquina>` | Estados de la clase 3 + steering de la clase 3 si te toca | [Como subir cambios](docs/04_como_subir_cambios.md) |
 | 4 | Lun 23 nov | `clase-4/<cupo>-<maquina>` | Estados de la clase 4 | [Como subir cambios](docs/04_como_subir_cambios.md) |
 | 5 | Mie 25 nov | `clase-5/<cupo>-<maquina>` | Estados de la clase 5 (maquina completa) | [Como subir cambios](docs/04_como_subir_cambios.md) |
-| 6 | Lun 30 nov | `clase-6/<cupo>-<maquina>` | Pulido final, cero basura y demo en vivo | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 6 | Lun 30 nov | `clase-6/<cupo>-<maquina>` | **Colchon** (opcional, no se califica): corregir pendientes. Sin contenido nuevo | [Como subir cambios](docs/04_como_subir_cambios.md) |
 
 Si algo falla en el pipeline: [Troubleshooting](docs/05_troubleshooting.md). Las fechas oficiales que usa el Action estan en [`.github/entregas/calendario.json`](.github/entregas/calendario.json).
 

@@ -2,7 +2,7 @@
 
 [Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
-Juego de torres con 14 máquinas de estados y 9 steering behaviours, uno o varios por alumno. El instructor entrega el juego base (modelos, mapa, economía, torres, HUD, cámara, efectos); los alumnos escriben **solo código**. 6 clases de 2 horas, una entrega calificada por clase.
+Juego de torres con 14 máquinas de estados y 9 steering behaviours, uno o varios por alumno. El instructor entrega el juego base (modelos, mapa, economía, torres, HUD, cámara, efectos); los alumnos escriben **solo código**. 5 clases de 2 horas con entrega calificada (la clase 1 es onboarding) y una sexta de colchón sin contenido nuevo.
 
 ## Ruta de lectura recomendada
 
@@ -38,8 +38,8 @@ Juego de torres con 14 máquinas de estados y 9 steering behaviours, uno o vario
 
 | Behaviour | Peso | Entrega |
 | --- | --- | --- |
-| [Seek (buscar)](02_steering_behaviors.md#seek-buscar-2-pts) | 2 | Clase 1 |
-| [Flee (huir)](02_steering_behaviors.md#flee-huir-2-pts) | 2 | Clase 1 |
+| [Seek (buscar)](02_steering_behaviors.md#seek-buscar-2-pts) | 2 | Clase 2 |
+| [Flee (huir)](02_steering_behaviors.md#flee-huir-2-pts) | 2 | Clase 2 |
 | [Arrive (llegar)](02_steering_behaviors.md#arrive-llegar-4-pts) | 4 | Clase 2 |
 | [Path Following (seguir camino)](02_steering_behaviors.md#path-following-seguir-camino-7-pts) | 7 | Clase 2 |
 | [Pursuit (perseguir con predicción)](02_steering_behaviors.md#pursuit-perseguir-con-predicción-6-pts) | 6 | Clase 3 |
@@ -88,24 +88,24 @@ Cada alumno (cupo) lleva **una máquina** y, si le toca, uno o más steering. Lo
 
 > **Puente:** el lunes 16 de noviembre no hay clase. Entre la clase 2 (mié 11) y la clase 3 (mié 18) pasa una semana completa: es el momento para adelantar o ponerse al corriente. Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
 
-Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado entre paréntesis). La clase 6 es la entrega final con pulido: todos los estados, rendimiento y demo en vivo.
+Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado entre paréntesis). La clase 1 es onboarding (controller + estado inicial + primer commit). La clase 5 cierra la máquina completa. La clase 6 es colchón: solo para corregir pendientes.
 
 | Cupo | Máquina | Clase 1 Lun 9 nov | Clase 2 Mié 11 nov | Clase 3 Mié 18 nov | Clase 4 Lun 23 nov | Clase 5 Mié 25 nov | Clase 6 Lun 30 nov |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **01** | [Soldado](m01_soldado.md) | Avanzar, Muerto (2/6) | Perseguir (3/6) **Steering:** PathFollowing | Atacar (4/6) | Aturdido (5/6) | Festejo (6/6) | pulido final (6/6) |
-| **02** | [Bruto](m02_bruto.md) | Avanzar, Muerto (2/8) | Perseguir (3/8) **Steering:** Arrive | CargarGolpe, GolpePesado (5/8) | Recuperar (6/8) | Furia, Festejo (8/8) | pulido final (8/8) |
-| **03** | [Jefe](m03_jefe.md) | Aparicion, Avanzar, Muerto (3/7) | Atacar (4/7) | Invocar (5/7) | OndaChoque (6/7) | Furia (7/7) | pulido final (7/7) |
-| **04** | [Lancero](m04_lancero.md) | Avanzar, Muerto (2/7) **Steering:** Seek | Acercarse (3/7) | Estocada (4/7) | Retroceder (5/7) | Aturdido, Festejo (7/7) | pulido final (7/7) |
-| **05** | [MagoEnemigo](m05_magoenemigo.md) | Avanzar, Muerto (2/8) | Posicionarse (3/8) | Lanzar, Recargar (5/8) | Huir (6/8) | Aturdido, Festejo (8/8) | pulido final (8/8) |
-| **06** | [Ladron](m06_ladron.md) | Merodear, Acercarse, Muerto (3/8) | Robar (4/8) | Huir (5/8) | Escapar (6/8) | Aturdido, Festejo (8/8) | pulido final (8/8) |
-| **07** | [TorreLanzadora](m07_torrelanzadora.md) | Vigilando, Destruida (2/6) | Apuntando (3/6) | Disparando, Recargando (5/6) | Danada (6/6) **Steering:** Hide | pulido final (6/6) | pulido final (6/6) |
-| **08** | [TorreMaga](m08_torremaga.md) | Vigilando, Destruida (2/6) | Cargando (3/6) | Lanzando, Enfriando (5/6) | Sobrecarga (6/6) **Steering:** ObstacleAvoidance | pulido final (6/6) | pulido final (6/6) |
-| **09** | [Guardia](m09_guardia.md) | Patrullar, Muerto (2/8) **Steering:** Flee | Perseguir (3/8) | Combatir (4/8) | Alertar (5/8) | Regresar, Descansar, Festejo (8/8) | pulido final (8/8) |
-| **10** | [Aldeano](m10_aldeano.md) | Vagar, Muerto (2/7) | Asustarse, Huir (4/7) | Esconderse (5/7) **Steering:** Wander | Charlar (6/7) | Festejo (7/7) | pulido final (7/7) |
-| **11** | [Minero](m11_minero.md) | IrAMina, Minar, Muerto (3/8) | IrAlGranero, Depositar (5/8) | Huir (6/8) | Esconderse (7/8) | Festejo (8/8) | pulido final (8/8) |
-| **12** | [Reparador](m12_reparador.md) | Esperar, Muerto (2/6) | IrAReparar (3/6) | Martillar (4/6) **Steering:** Evade | Huir (5/6) | Festejo (6/6) | pulido final (6/6) |
-| **13** | [Director](m13_director.md) | Preparacion, Aviso (2/8) | Oleada (3/8) | Limpieza, Bono (5/8) | Jefe, Victoria, Derrota (8/8) | pulido final (8/8) | pulido final (8/8) |
-| **14** | [Tutorial](m14_tutorial.md) | Bienvenida, ElegirPlataforma (2/7) | Construir (3/7) | Gemas (4/7) **Steering:** Pursuit | LlamarOleada, Observar (6/7) | Fin (7/7) | pulido final (7/7) |
+| **01** | [Soldado](m01_soldado.md) | Avanzar (1/6) | Muerto (2/6) **Steering:** PathFollowing | Perseguir (3/6) | Atacar, Aturdido (5/6) | Festejo (6/6) | colch&oacute;n (6/6) |
+| **02** | [Bruto](m02_bruto.md) | Avanzar (1/8) | Muerto (2/8) **Steering:** Arrive | Perseguir, CargarGolpe (4/8) | GolpePesado, Recuperar (6/8) | Furia, Festejo (8/8) | colch&oacute;n (8/8) |
+| **03** | [Jefe](m03_jefe.md) | Aparicion (1/7) | Avanzar (2/7) | Muerto, Atacar (4/7) | Invocar, OndaChoque (6/7) | Furia (7/7) | colch&oacute;n (7/7) |
+| **04** | [Lancero](m04_lancero.md) | Avanzar (1/7) | Muerto (2/7) **Steering:** Seek | Acercarse, Estocada (4/7) | Retroceder, Aturdido (6/7) | Festejo (7/7) | colch&oacute;n (7/7) |
+| **05** | [MagoEnemigo](m05_magoenemigo.md) | Avanzar (1/8) | Muerto, Posicionarse (3/8) | Lanzar, Recargar (5/8) | Huir, Aturdido (7/8) | Festejo (8/8) | colch&oacute;n (8/8) |
+| **06** | [Ladron](m06_ladron.md) | Merodear (1/8) | Acercarse, Muerto (3/8) | Robar, Huir (5/8) | Escapar, Aturdido (7/8) | Festejo (8/8) | colch&oacute;n (8/8) |
+| **07** | [TorreLanzadora](m07_torrelanzadora.md) | Vigilando (1/6) | Destruida, Apuntando (3/6) | Disparando, Recargando (5/6) | colch&oacute;n (5/6) **Steering:** Hide | Danada (6/6) | colch&oacute;n (6/6) |
+| **08** | [TorreMaga](m08_torremaga.md) | Vigilando (1/6) | Destruida, Cargando (3/6) | Lanzando, Enfriando (5/6) | colch&oacute;n (5/6) **Steering:** ObstacleAvoidance | Sobrecarga (6/6) | colch&oacute;n (6/6) |
+| **09** | [Guardia](m09_guardia.md) | Patrullar (1/8) | Muerto (2/8) **Steering:** Flee | Perseguir, Combatir (4/8) | Alertar, Regresar (6/8) | Descansar, Festejo (8/8) | colch&oacute;n (8/8) |
+| **10** | [Aldeano](m10_aldeano.md) | Vagar (1/7) | Muerto, Asustarse (3/7) | Huir (4/7) **Steering:** Wander | Esconderse, Charlar (6/7) | Festejo (7/7) | colch&oacute;n (7/7) |
+| **11** | [Minero](m11_minero.md) | IrAMina (1/8) | Minar, Muerto (3/8) | IrAlGranero, Depositar (5/8) | Huir, Esconderse (7/8) | Festejo (8/8) | colch&oacute;n (8/8) |
+| **12** | [Reparador](m12_reparador.md) | Esperar (1/6) | Muerto (2/6) | IrAReparar (3/6) **Steering:** Evade | Martillar, Huir (5/6) | Festejo (6/6) | colch&oacute;n (6/6) |
+| **13** | [Director](m13_director.md) | Preparacion (1/8) | Aviso, Oleada (3/8) | Limpieza, Bono (5/8) | Jefe, Victoria (7/8) | Derrota (8/8) | colch&oacute;n (8/8) |
+| **14** | [Tutorial](m14_tutorial.md) | Bienvenida (1/7) | ElegirPlataforma, Construir (3/7) | Gemas (4/7) **Steering:** Pursuit | LlamarOleada, Observar (6/7) | Fin (7/7) | colch&oacute;n (7/7) |
 
 ### Avance acumulado por clase (mapa de calor)
 
@@ -115,31 +115,31 @@ Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado
 
 | Clase | Behaviours que deben quedar listos |
 | --- | --- |
-| **1** | Seek (cupo 04), Flee (cupo 09) |
-| **2** | Arrive (cupo 02), PathFollowing (cupo 01) |
+| **1** | — |
+| **2** | Seek (cupo 04), Flee (cupo 09), Arrive (cupo 02), PathFollowing (cupo 01) |
 | **3** | Pursuit (cupo 14), Evade (cupo 12), Wander (cupo 10) |
 | **4** | ObstacleAvoidance (cupo 08), Hide (cupo 07) |
-| **5** | pulido y ajuste fino |
-| **6** | pulido y ajuste fino |
+| **5** | — |
+| **6** | colchón (sin contenido nuevo) |
 
 ### Avance porcentual (estados) por clase
 
 | Clase | 1 Lun 9 nov | 2 Mie 11 nov | 3 Mie 18 nov | 4 Lun 23 nov | 5 Mie 25 nov | 6 Lun 30 nov |
 | --- | --- | --- | --- | --- | --- | --- |
-| 01 Soldado | 33% | 50% | 67% | 83% | 100% | 100% |
-| 02 Bruto | 25% | 38% | 62% | 75% | 100% | 100% |
-| 03 Jefe | 43% | 57% | 71% | 86% | 100% | 100% |
-| 04 Lancero | 29% | 43% | 57% | 71% | 100% | 100% |
-| 05 MagoEnemigo | 25% | 38% | 62% | 75% | 100% | 100% |
-| 06 Ladron | 38% | 50% | 62% | 75% | 100% | 100% |
-| 07 TorreLanzadora | 33% | 50% | 83% | 100% | 100% | 100% |
-| 08 TorreMaga | 33% | 50% | 83% | 100% | 100% | 100% |
-| 09 Guardia | 25% | 38% | 50% | 62% | 100% | 100% |
-| 10 Aldeano | 29% | 57% | 71% | 86% | 100% | 100% |
-| 11 Minero | 38% | 62% | 75% | 88% | 100% | 100% |
-| 12 Reparador | 33% | 50% | 67% | 83% | 100% | 100% |
-| 13 Director | 25% | 38% | 62% | 100% | 100% | 100% |
-| 14 Tutorial | 29% | 43% | 57% | 86% | 100% | 100% |
+| 01 Soldado | 17% | 33% | 50% | 83% | 100% | 100% |
+| 02 Bruto | 12% | 25% | 50% | 75% | 100% | 100% |
+| 03 Jefe | 14% | 29% | 57% | 86% | 100% | 100% |
+| 04 Lancero | 14% | 29% | 57% | 86% | 100% | 100% |
+| 05 MagoEnemigo | 12% | 38% | 62% | 88% | 100% | 100% |
+| 06 Ladron | 12% | 38% | 62% | 88% | 100% | 100% |
+| 07 TorreLanzadora | 17% | 50% | 83% | 83% | 100% | 100% |
+| 08 TorreMaga | 17% | 50% | 83% | 83% | 100% | 100% |
+| 09 Guardia | 12% | 25% | 50% | 75% | 100% | 100% |
+| 10 Aldeano | 14% | 43% | 57% | 86% | 100% | 100% |
+| 11 Minero | 12% | 38% | 62% | 88% | 100% | 100% |
+| 12 Reparador | 17% | 33% | 50% | 83% | 100% | 100% |
+| 13 Director | 12% | 38% | 62% | 88% | 100% | 100% |
+| 14 Tutorial | 14% | 43% | 57% | 86% | 100% | 100% |
 
 ### Rúbrica por clase
 
@@ -148,7 +148,7 @@ Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado
 | Funciona en el juego | 50 | El agente/sistema hace lo pedido en Play, sin errores en consola, con el prefab real. |
 | Estados entregados | 30 | Cumple los estados de ESA clase (ver tabla). Cada estado que falta resta proporcionalmente. |
 | Codigo y rendimiento | 20 | Una clase por estado con prefijo del rol, ASCII, sin new/LINQ en Update, eventos desuscritos, cero basura medido. |
-| Total por clase | 100 | La calificación final es el promedio de las 6 entregas (cada clase pesa igual). |
+| Total por clase | 100 | La calificación final es el promedio de las 5 entregas de las clases 1 a 5 (cada una pesa igual). La clase 6 es colchón y no cuenta. |
 
 ## 4. Dependencias
 
@@ -171,7 +171,7 @@ Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado
 | [Director](m13_director.md) |  |  |  |  |  |  |  |  |  |
 | [Tutorial](m14_tutorial.md) |  |  |  |  |  |  |  |  |  |
 | Responsable (cupo) | 04 | 09 | 02 | 01 | 14 | 12 | 10 | 08 | 07 |
-| Entrega (clase) | 1 | 1 | 2 | 2 | 3 | 3 | 3 | 4 | 4 |
+| Entrega (clase) | 2 | 2 | 2 | 2 | 3 | 3 | 3 | 4 | 4 |
 
 Mientras el steering no llegue, tu estado usa movimiento directo con `Cuerpo.Mover`. Cuando el compañero lo entregue, cambias una línea. Nadie se queda bloqueado.
 

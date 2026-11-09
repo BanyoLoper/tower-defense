@@ -12,15 +12,15 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
-    },
-    {
-     "nombre": "Perseguir",
      "clase": 2
     },
     {
-     "nombre": "Atacar",
+     "nombre": "Perseguir",
      "clase": 3
+    },
+    {
+     "nombre": "Atacar",
+     "clase": 4
     },
     {
      "nombre": "Aturdido",
@@ -50,11 +50,11 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Perseguir",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "CargarGolpe",
@@ -62,7 +62,7 @@
     },
     {
      "nombre": "GolpePesado",
-     "clase": 3
+     "clase": 4
     },
     {
      "nombre": "Recuperar",
@@ -96,19 +96,19 @@
     },
     {
      "nombre": "Avanzar",
-     "clase": 1
-    },
-    {
-     "nombre": "Muerto",
-     "clase": 1
-    },
-    {
-     "nombre": "Atacar",
      "clase": 2
     },
     {
-     "nombre": "Invocar",
+     "nombre": "Muerto",
      "clase": 3
+    },
+    {
+     "nombre": "Atacar",
+     "clase": 3
+    },
+    {
+     "nombre": "Invocar",
+     "clase": 4
     },
     {
      "nombre": "OndaChoque",
@@ -133,11 +133,11 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Acercarse",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Estocada",
@@ -149,7 +149,7 @@
     },
     {
      "nombre": "Aturdido",
-     "clase": 5
+     "clase": 4
     },
     {
      "nombre": "Festejo",
@@ -159,7 +159,7 @@
    "steering": [
     {
      "nombre": "Seek",
-     "clase": 1
+     "clase": 2
     }
    ]
   },
@@ -175,7 +175,7 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Posicionarse",
@@ -195,7 +195,7 @@
     },
     {
      "nombre": "Aturdido",
-     "clase": 5
+     "clase": 4
     },
     {
      "nombre": "Festejo",
@@ -216,15 +216,15 @@
     },
     {
      "nombre": "Acercarse",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Robar",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Huir",
@@ -236,7 +236,7 @@
     },
     {
      "nombre": "Aturdido",
-     "clase": 5
+     "clase": 4
     },
     {
      "nombre": "Festejo",
@@ -257,7 +257,7 @@
     },
     {
      "nombre": "Destruida",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Apuntando",
@@ -273,7 +273,7 @@
     },
     {
      "nombre": "Danada",
-     "clase": 4
+     "clase": 5
     }
    ],
    "steering": [
@@ -295,7 +295,7 @@
     },
     {
      "nombre": "Destruida",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Cargando",
@@ -311,7 +311,7 @@
     },
     {
      "nombre": "Sobrecarga",
-     "clase": 4
+     "clase": 5
     }
    ],
    "steering": [
@@ -333,11 +333,11 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Perseguir",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Combatir",
@@ -349,7 +349,7 @@
     },
     {
      "nombre": "Regresar",
-     "clase": 5
+     "clase": 4
     },
     {
      "nombre": "Descansar",
@@ -363,7 +363,7 @@
    "steering": [
     {
      "nombre": "Flee",
-     "clase": 1
+     "clase": 2
     }
    ]
   },
@@ -379,7 +379,7 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Asustarse",
@@ -387,11 +387,11 @@
     },
     {
      "nombre": "Huir",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Esconderse",
-     "clase": 3
+     "clase": 4
     },
     {
      "nombre": "Charlar",
@@ -421,23 +421,23 @@
     },
     {
      "nombre": "Minar",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Muerto",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "IrAlGranero",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Depositar",
-     "clase": 2
+     "clase": 3
     },
     {
      "nombre": "Huir",
-     "clase": 3
+     "clase": 4
     },
     {
      "nombre": "Esconderse",
@@ -462,15 +462,15 @@
     },
     {
      "nombre": "Muerto",
-     "clase": 1
-    },
-    {
-     "nombre": "IrAReparar",
      "clase": 2
     },
     {
-     "nombre": "Martillar",
+     "nombre": "IrAReparar",
      "clase": 3
+    },
+    {
+     "nombre": "Martillar",
+     "clase": 4
     },
     {
      "nombre": "Huir",
@@ -500,7 +500,7 @@
     },
     {
      "nombre": "Aviso",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Oleada",
@@ -524,7 +524,7 @@
     },
     {
      "nombre": "Derrota",
-     "clase": 4
+     "clase": 5
     }
    ],
    "steering": []
@@ -541,7 +541,7 @@
     },
     {
      "nombre": "ElegirPlataforma",
-     "clase": 1
+     "clase": 2
     },
     {
      "nombre": "Construir",

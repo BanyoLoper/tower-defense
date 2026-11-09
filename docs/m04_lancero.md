@@ -20,7 +20,7 @@ Las flechas se leen "desde → hasta" con la condición que dispara el cambio. E
 
 1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/04-lancero`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde la oleada 2.*
-3. **Crea estos archivos** en `Assets/_Alumnos/Lancero/`: `LanceroController.cs`, `LanceroAvanzar.cs`, `LanceroMuerto.cs`.
+3. **Crea estos archivos** en `Assets/_Alumnos/Lancero/`: `LanceroController.cs`, `LanceroAvanzar.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
 5. **Primer estado:** en `Entrar` pide la animación (`Caminar`) y en `Actualizar` haz lo mínimo (mover con `Cuerpo.Mover`).
 6. **Play:** en cuanto existe `LanceroController`, el sistema lo usa en lugar del demo. Si ves tu primer estado funcionando, sigue con el siguiente.
@@ -90,8 +90,8 @@ Guía completa con diagramas: [guía de inicio](03_como_empezar.md).
 | Behaviour | Responsable | Se entrega en | Mientras tanto |
 | --- | --- | --- | --- |
 | [`Steering.PathFollowing`](02_steering_behaviors.md#path-following-seguir-camino-7-pts) | Cupo 01 (Soldado) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
-| [`Steering.Seek`](02_steering_behaviors.md#seek-buscar-2-pts) | Cupo 04 (Lancero) | Clase 1 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
-| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 1 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
+| [`Steering.Seek`](02_steering_behaviors.md#seek-buscar-2-pts) | Cupo 04 (Lancero) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
+| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 | [`Steering.Arrive`](02_steering_behaviors.md#arrive-llegar-4-pts) | Cupo 02 (Bruto) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 
 El archivo `Steering.cs` ya existe como clase parcial vacía: cada responsable agrega SU archivo `Steering<Nombre>.cs`. Tu máquina solo llama a `Steering.<Nombre>(...)` cuando exista.
@@ -100,7 +100,7 @@ El archivo `Steering.cs` ya existe como clase parcial vacía: cada responsable a
 
 | Behaviour | Pts | Entrega | Lo usan |
 | --- | --- | --- | --- |
-| [Seek (buscar)](02_steering_behaviors.md#seek-buscar-2-pts) | 2 | Clase 1 | Soldado, Bruto, Jefe, Lancero |
+| [Seek (buscar)](02_steering_behaviors.md#seek-buscar-2-pts) | 2 | Clase 2 | Soldado, Bruto, Jefe, Lancero |
 
 ### Cómo probar tu steering aislado
 
@@ -134,12 +134,12 @@ Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguie
 
 | Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** Lun 9 nov | Avanzar, Muerto | 2/7 · 29% | Esqueleto, ruta y muerte. | Seek |
-| **2** Mié 11 nov | Acercarse | 3/7 · 43% | Persecucion hasta distancia de ataque con Seek. | — |
-| **3** Mié 18 nov | Estocada | 4/7 · 57% | Ataque a media distancia con cadencia. | — |
-| **4** Lun 23 nov | Retroceder | 5/7 · 71% | Mantiene distancia con Flee; ciclo estocada-retroceso estable. | — |
-| **5** Mié 25 nov | Aturdido, Festejo | 7/7 · 100% | Reaccion al daño y festejo. | — |
-| **6** Lun 30 nov | (pulido) | 7/7 · 100% | Pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | Avanzar | 1/7 · 14% | Onboarding y primer commit: el Controller crea la Maquina e inicia en Avanzar (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision. | — |
+| **2** Mié 11 nov | Muerto | 2/7 · 29% | Muerto: Global. | Seek |
+| **3** Mié 18 nov | Acercarse, Estocada | 4/7 · 57% | Acercarse: Va hacia el hostil hasta quedar a ~2.8 m. Estocada: Pica con la lanza desde su alcance (daño 11). | — |
+| **4** Lun 23 nov | Retroceder, Aturdido | 6/7 · 86% | Retroceder: Si el hostil esta a &lt; 1.4 m, se aleja 1 s para recuperar distancia. Aturdido: Reaccion al daño. | — |
+| **5** Mié 25 nov | Festejo | 7/7 · 100% | Festejo: Global. | — |
+| **6** Lun 30 nov | (colch&oacute;n) | 7/7 · 100% | Colchon (opcional): se usa solo para corregir pendientes o para ponerse al corriente. No hay estados nuevos. | — |
 
 Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
 
@@ -147,28 +147,131 @@ Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting 
 
 > Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
 
-### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 1 · Lun 9 nov · Onboarding y primer commit · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-1/04-lancero`  ·  **Avance esperado:** 2 de 7 estados (29%)  ·  **Steering:** Seek
+**Rama:** `clase-1/04-lancero`  ·  **Avance esperado:** 1 de 7 estados (14%)
 
 ![Diagrama de estados de Lancero enemigo](img/m04_lancero_4.svg)
+
+#### Onboarding (2 horas): recorre todo y sube tu primer commit
+
+![Linea de tiempo del onboarding de 2 horas](img/m04_lancero_5.svg)
+
+> Hoy no se califica cuánto programaste, sino que **recorriste el flujo completo una vez**: clonar, correr el juego, leer tu ficha, crear tu rama, hacer que tu máquina arranque y llegar hasta un PR revisado. Todo lo demás se construye sobre esto.
+
+##### 1 · Clonar y abrir (0-15 min)
+
+```bash
+git clone https://github.com/BanyoLoper/tower-defense.git td
+cd td
+git status
+```
+
+Abre la carpeta `td` con Unity `6000.3.10f1` (la primera vez tarda). Debe decir `On branch main` y *working tree clean*. Si falla: [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+##### 2 · Jugar la base (15-30 min)
+
+Abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Pulsa ESPACIO para llamar oleadas; mira cómo aparecen enemigos y torres y recorre la Hierarchy. Así sabes qué hace el juego sin tu código.
+
+##### 3 · Leer tu ficha y el Estado base (30-50 min)
+
+Lee de esta ficha el diagrama de estados, *Qué es tu máquina* y las reglas. Abre `Assets/_Granero/Scripts/Maquina/` y mira `Estado.cs`, `Maquina.cs` y `Contexto.cs`; la explicación está en [Estado general](01_estado_general.md).
+
+##### 4 · Crear tu rama (50-60 min)
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/04-lancero
+```
+
+Es la rama de hoy; el nombre debe ser exacto.
+
+##### 5 · Controller + estado inicial (60-95 min)
+
+Crea los dos archivos de abajo en `Assets/_Alumnos/Lancero/` (Unity genera los `.meta`). Es la versión mínima del esqueleto completo que aparece más abajo en esta ficha: solo registra `LanceroAvanzar`. Pulsa Play y, si hace falta, llama oleadas con ESPACIO hasta que aparezca tu agente (desde la oleada 2): la consola debe mostrar *Lancero: entre a Avanzar*.
+
+##### 6 · Primer commit y push (95-110 min)
+
+```bash
+git status
+git add Assets/_Alumnos/Lancero
+git commit -m "clase 1: Lancero - controller y Avanzar"
+git push -u origin clase-1/04-lancero
+```
+
+`git status` debe mostrar solo tu carpeta (y los `.meta`).
+
+##### 7 · Pull Request y reporte (110-120 min)
+
+```bash
+gh pr create --base main --title "Clase 1 - Lancero (cupo 04)" --body "Onboarding: controller y Avanzar"
+gh pr view --comments
+```
+
+Sin la CLI, crea el PR en la web ([Cómo subir tus cambios](04_como_subir_cambios.md)). En 1-2 minutos el Action comenta; si hay ❌, corrige y haz `git push`.
+
+**Código del paso 5** (copia y pega; los nombres ya son los de tu máquina):
+
+```csharp
+// Assets/_Alumnos/Lancero/LanceroController.cs
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Alumnos.Lancero
+{
+    public class LanceroController : MonoBehaviour
+    {
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
+
+        void Awake()
+        {
+            ctx.Fijar("agente", GetComponent<Agente>());
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new LanceroAvanzar() }, ctx);   // por ahora solo este estado
+        }
+
+        void OnEnable() { maq.Iniciar("LanceroAvanzar"); }
+        void Update() { maq.Actualizar(Time.deltaTime); }
+    }
+}
+
+// Assets/_Alumnos/Lancero/LanceroAvanzar.cs
+using UnityEngine;
+
+namespace Alumnos.Lancero
+{
+    public class LanceroAvanzar : Estado
+    {
+        public override void Entrar(string anterior)
+        {
+            Debug.Log("Lancero: entre a Avanzar");   // prueba de vida: debe salir en la consola al hacer Play
+        }
+
+        public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
+
+        public override string AlRecibir(string trigger, int valor) { return null; }
+    }
+}
+```
+
+¿Terminaste antes? Es opcional y no se califica hoy: empieza el siguiente estado (la clase 2 trae `LanceroMuerto`).
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
 | `LanceroController.cs` | **Nuevo.** `class LanceroController : MonoBehaviour` dentro de `namespace Alumnos.Lancero`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Avanzar`. |
 | `LanceroAvanzar.cs` | **Nuevo.** `class LanceroAvanzar : Estado`. Sigue la ruta. Animación: `Caminar`. |
-| `LanceroMuerto.cs` | **Nuevo.** `class LanceroMuerto : Estado`. Global. Animación: `Muerte1`. |
-| `../Steering/SteeringSeek.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Seek(Vector3 pos, Vector3 destino, float vMax)`. Prueba: Un agente de prueba llega a un punto movil sin atravesar el suelo y se detiene a 0.3 m (o sigue pasando, segun el caso). |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Esqueleto, ruta y muerte.
+- Onboarding y primer commit: el Controller crea la Maquina e inicia en Avanzar (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: desde la oleada 2.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto` y las del steering de esta clase.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`.
 
-Todavía NO se pide: `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`.
+Todavía NO se pide: `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`, `LanceroMuerto`.
 
 **Lista de comprobación antes del PR**
 
@@ -187,31 +290,32 @@ git pull
 git checkout -b clase-1/04-lancero
 # ... programas y pruebas en Unity ...
 git status
-git add Assets/_Alumnos/Lancero  Assets/_Alumnos/Steering
-git commit -m "clase 1: Lancero - Avanzar, Muerto"
+git add Assets/_Alumnos/Lancero
+git commit -m "clase 1: Lancero - Avanzar"
 git push -u origin clase-1/04-lancero
 ```
 
 ### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-2/04-lancero`  ·  **Avance esperado:** 3 de 7 estados (43%)
+**Rama:** `clase-2/04-lancero`  ·  **Avance esperado:** 2 de 7 estados (29%)  ·  **Steering:** Seek
 
-![Diagrama de estados de Lancero enemigo](img/m04_lancero_5.svg)
+![Diagrama de estados de Lancero enemigo](img/m04_lancero_6.svg)
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
-| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroAcercarse()`. |
-| `LanceroAcercarse.cs` | **Nuevo.** `class LanceroAcercarse : Estado`. Va hacia el hostil hasta quedar a ~2.8 m. Animación: `Correr`. |
+| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroMuerto()`. |
+| `LanceroMuerto.cs` | **Nuevo.** `class LanceroMuerto : Estado`. Global. Animación: `Muerte1`. |
+| `../Steering/SteeringSeek.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Seek(Vector3 pos, Vector3 destino, float vMax)`. Prueba: Un agente de prueba llega a un punto movil sin atravesar el suelo y se detiene a 0.3 m (o sigue pasando, segun el caso). |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Persecucion hasta distancia de ataque con Seek.
+- Muerto: Global.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: desde la oleada 2.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto` y las del steering de esta clase.
 
-Todavía NO se pide: `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`.
+Todavía NO se pide: `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -230,8 +334,8 @@ git pull
 git checkout -b clase-2/04-lancero
 # ... programas y pruebas en Unity ...
 git status
-git add Assets/_Alumnos/Lancero
-git commit -m "clase 2: Lancero - Acercarse"
+git add Assets/_Alumnos/Lancero  Assets/_Alumnos/Steering
+git commit -m "clase 2: Lancero - Muerto"
 git push -u origin clase-2/04-lancero
 ```
 
@@ -239,17 +343,18 @@ git push -u origin clase-2/04-lancero
 
 **Rama:** `clase-3/04-lancero`  ·  **Avance esperado:** 4 de 7 estados (57%)
 
-![Diagrama de estados de Lancero enemigo](img/m04_lancero_6.svg)
+![Diagrama de estados de Lancero enemigo](img/m04_lancero_7.svg)
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
-| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroEstocada()`. |
+| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroAcercarse()`, `new LanceroEstocada()`. |
+| `LanceroAcercarse.cs` | **Nuevo.** `class LanceroAcercarse : Estado`. Va hacia el hostil hasta quedar a ~2.8 m. Animación: `Correr`. |
 | `LanceroEstocada.cs` | **Nuevo.** `class LanceroEstocada : Estado`. Pica con la lanza desde su alcance (daño 11). Animación: `Atacar1 / Atacar2`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Ataque a media distancia con cadencia.
+- Acercarse: Va hacia el hostil hasta quedar a ~2.8 m. Estocada: Pica con la lanza desde su alcance (daño 11).
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: desde la oleada 2.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`, `LanceroEstocada`.
@@ -274,30 +379,31 @@ git checkout -b clase-3/04-lancero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Lancero
-git commit -m "clase 3: Lancero - Estocada"
+git commit -m "clase 3: Lancero - Acercarse, Estocada"
 git push -u origin clase-3/04-lancero
 ```
 
 ### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-4/04-lancero`  ·  **Avance esperado:** 5 de 7 estados (71%)
+**Rama:** `clase-4/04-lancero`  ·  **Avance esperado:** 6 de 7 estados (86%)
 
-![Diagrama de estados de Lancero enemigo](img/m04_lancero_7.svg)
+![Diagrama de estados de Lancero enemigo](img/m04_lancero_8.svg)
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
-| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroRetroceder()`. |
+| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroRetroceder()`, `new LanceroAturdido()`. |
 | `LanceroRetroceder.cs` | **Nuevo.** `class LanceroRetroceder : Estado`. Si el hostil esta a &lt; 1.4 m, se aleja 1 s para recuperar distancia. Animación: `Caminar`. |
+| `LanceroAturdido.cs` | **Nuevo.** `class LanceroAturdido : Estado`. Reaccion al daño. Animación: `Dano1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Mantiene distancia con Flee; ciclo estocada-retroceso estable.
+- Retroceder: Si el hostil esta a &lt; 1.4 m, se aleja 1 s para recuperar distancia. Aturdido: Reaccion al daño.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: desde la oleada 2.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`.
 
-Todavía NO se pide: `LanceroAturdido`, `LanceroFestejo`.
+Todavía NO se pide: `LanceroFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -317,7 +423,7 @@ git checkout -b clase-4/04-lancero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Lancero
-git commit -m "clase 4: Lancero - Retroceder"
+git commit -m "clase 4: Lancero - Retroceder, Aturdido"
 git push -u origin clase-4/04-lancero
 ```
 
@@ -325,18 +431,17 @@ git push -u origin clase-4/04-lancero
 
 **Rama:** `clase-5/04-lancero`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Lancero enemigo](img/m04_lancero_8.svg)
+![Diagrama de estados de Lancero enemigo](img/m04_lancero_9.svg)
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
-| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroAturdido()`, `new LanceroFestejo()`. |
-| `LanceroAturdido.cs` | **Nuevo.** `class LanceroAturdido : Estado`. Reaccion al daño. Animación: `Dano1`. |
+| `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new LanceroFestejo()`. |
 | `LanceroFestejo.cs` | **Nuevo.** `class LanceroFestejo : Estado`. Global. Animación: `Celebrar1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Reaccion al daño y festejo.
+- Festejo: Global.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: desde la oleada 2.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`.
@@ -359,29 +464,27 @@ git checkout -b clase-5/04-lancero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Lancero
-git commit -m "clase 5: Lancero - Aturdido, Festejo"
+git commit -m "clase 5: Lancero - Festejo"
 git push -u origin clase-5/04-lancero
 ```
 
-### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 6 · Lun 30 nov · Colchón (opcional, no se califica) · PR a más tardar ese día, 23:59 (CDMX)
 
 **Rama:** `clase-6/04-lancero`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Lancero enemigo](img/m04_lancero_9.svg)
+![Diagrama de estados de Lancero enemigo](img/m04_lancero_10.svg)
 
 | Archivo (en `Assets/_Alumnos/Lancero/`) | Qué debe tener |
 | --- | --- |
 | `LanceroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
-| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| (ninguno obligatorio) | Colchón: sin contenido nuevo. Solo corriges lo que marcó el Action o terminas lo que se quedó atrás. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Pulido, cero basura, demo.
-- Una oleada completa de principio a fin sin errores ni avisos en la consola.
-- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
-- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
-- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+- Esta clase **no tiene contenido nuevo y no cuenta para la calificación** (el promedio es de las clases 1 a 5).
+- Úsala para: corregir los ❌ que dejó el Action, terminar estados atrasados y probar tu máquina junto con las otras.
+- Si necesitas entregar correcciones, crea la rama `clase-6/04-lancero` y su PR; si no, no hace falta.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `LanceroAvanzar`, `LanceroMuerto`, `LanceroAcercarse`, `LanceroEstocada`, `LanceroRetroceder`, `LanceroAturdido`, `LanceroFestejo`.
 
@@ -403,7 +506,7 @@ git checkout -b clase-6/04-lancero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Lancero
-git commit -m "clase 6: Lancero - pulido final"
+git commit -m "clase 6: Lancero - correcciones"
 git push -u origin clase-6/04-lancero
 ```
 
@@ -414,7 +517,7 @@ git push -u origin clase-6/04-lancero
 | Funciona en el juego | 50 | El agente/sistema hace lo pedido en Play, sin errores en consola, con el prefab real. |
 | Estados entregados | 30 | Cumple los estados de ESA clase (ver tabla). Cada estado que falta resta proporcionalmente. |
 | Codigo y rendimiento | 20 | Una clase por estado con prefijo del rol, ASCII, sin new/LINQ en Update, eventos desuscritos, cero basura medido. |
-| Total por clase | 100 | La calificación final es el promedio de las 6 entregas (cada clase pesa igual). |
+| Total por clase | 100 | La calificación final es el promedio de las 5 entregas de las clases 1 a 5 (cada una pesa igual). La clase 6 es colchón y no cuenta. |
 
 ## 7. Esqueleto de código
 
