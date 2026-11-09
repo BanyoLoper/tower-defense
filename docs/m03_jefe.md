@@ -20,7 +20,7 @@ Las flechas se leen "desde → hasta" con la condición que dispara el cambio. E
 
 1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/03-jefe`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: oleada 5.*
-3. **Crea estos archivos** en `Assets/_Alumnos/Jefe/`: `JefeController.cs`, `JefeAparicion.cs`, `JefeAvanzar.cs`, `JefeMuerto.cs`.
+3. **Crea estos archivos** en `Assets/_Alumnos/Jefe/`: `JefeController.cs`, `JefeAparicion.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
 5. **Primer estado:** en `Entrar` pide la animación (`Enojado`) y en `Actualizar` haz lo mínimo (mover con `Cuerpo.Mover`).
 6. **Play:** en cuanto existe `JefeController`, el sistema lo usa en lugar del demo. Si ves tu primer estado funcionando, sigue con el siguiente.
@@ -92,7 +92,7 @@ Guía completa con diagramas: [guía de inicio](03_como_empezar.md).
 | Behaviour | Responsable | Se entrega en | Mientras tanto |
 | --- | --- | --- | --- |
 | [`Steering.PathFollowing`](02_steering_behaviors.md#path-following-seguir-camino-7-pts) | Cupo 01 (Soldado) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
-| [`Steering.Seek`](02_steering_behaviors.md#seek-buscar-2-pts) | Cupo 04 (Lancero) | Clase 1 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
+| [`Steering.Seek`](02_steering_behaviors.md#seek-buscar-2-pts) | Cupo 04 (Lancero) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 | [`Steering.ObstacleAvoidance`](02_steering_behaviors.md#obstacle-avoidance-evitar-obstaculos-10-pts) | Cupo 08 (TorreMaga) | Clase 4 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 
 El archivo `Steering.cs` ya existe como clase parcial vacía: cada responsable agrega SU archivo `Steering<Nombre>.cs`. Tu máquina solo llama a `Steering.<Nombre>(...)` cuando exista.
@@ -105,12 +105,12 @@ Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguie
 
 | Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** Lun 9 nov | Aparicion, Avanzar, Muerto | 3/7 · 43% | Entrada con rugido (Fx + cámara), camina la ruta y muere. | — |
-| **2** Mié 11 nov | Atacar | 4/7 · 57% | Combo de 3 golpes con daño y alcance correctos. | — |
-| **3** Mié 18 nov | Invocar | 5/7 · 71% | Invoca soldados con Juego.Aparecer, con límite y cooldown. | — |
-| **4** Lun 23 nov | OndaChoque | 6/7 · 86% | Ataque en área con Efectos y daño por radio (sin basura). | — |
-| **5** Mié 25 nov | Furia | 7/7 · 100% | Fase de furia y avisos al Director/Camara. Integracion con la victoria. | — |
-| **6** Lun 30 nov | (pulido) | 7/7 · 100% | Balance (que sea ganable), pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | Aparicion | 1/7 · 14% | Onboarding y primer commit: el Controller crea la Maquina e inicia en Aparicion (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision. | — |
+| **2** Mié 11 nov | Avanzar | 2/7 · 29% | Avanzar: Camina la ruta hacia el granero. | — |
+| **3** Mié 18 nov | Muerto, Atacar | 4/7 · 57% | Muerto: Global: Fx.Explosion y aviso al Director. Atacar: Combo de 3 golpes (Atacar1-3) con daño 70. | — |
+| **4** Lun 23 nov | Invocar, OndaChoque | 6/7 · 86% | Invocar: Cada 15 s llama 3 Soldados con Juego.Aparecer (max 6 vivos). OndaChoque: Ataque en área (radio 5): daño a todos los hostiles cercanos + Fx.Explosion. | — |
+| **5** Mié 25 nov | Furia | 7/7 · 100% | Furia: Vida &lt; 50%: más rápido y combos más cortos. Una sola vez. | — |
+| **6** Lun 30 nov | (colch&oacute;n) | 7/7 · 100% | Colchon (opcional): se usa solo para corregir pendientes o para ponerse al corriente. No hay estados nuevos. | — |
 
 Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
 
@@ -118,28 +118,131 @@ Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting 
 
 > Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
 
-### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 1 · Lun 9 nov · Onboarding y primer commit · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-1/03-jefe`  ·  **Avance esperado:** 3 de 7 estados (43%)
+**Rama:** `clase-1/03-jefe`  ·  **Avance esperado:** 1 de 7 estados (14%)
 
 ![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_4.svg)
+
+#### Onboarding (2 horas): recorre todo y sube tu primer commit
+
+![Linea de tiempo del onboarding de 2 horas](img/m03_jefe_5.svg)
+
+> Hoy no se califica cuánto programaste, sino que **recorriste el flujo completo una vez**: clonar, correr el juego, leer tu ficha, crear tu rama, hacer que tu máquina arranque y llegar hasta un PR revisado. Todo lo demás se construye sobre esto.
+
+##### 1 · Clonar y abrir (0-15 min)
+
+```bash
+git clone https://github.com/BanyoLoper/tower-defense.git td
+cd td
+git status
+```
+
+Abre la carpeta `td` con Unity `6000.3.10f1` (la primera vez tarda). Debe decir `On branch main` y *working tree clean*. Si falla: [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+##### 2 · Jugar la base (15-30 min)
+
+Abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Pulsa ESPACIO para llamar oleadas; mira cómo aparecen enemigos y torres y recorre la Hierarchy. Así sabes qué hace el juego sin tu código.
+
+##### 3 · Leer tu ficha y el Estado base (30-50 min)
+
+Lee de esta ficha el diagrama de estados, *Qué es tu máquina* y las reglas. Abre `Assets/_Granero/Scripts/Maquina/` y mira `Estado.cs`, `Maquina.cs` y `Contexto.cs`; la explicación está en [Estado general](01_estado_general.md).
+
+##### 4 · Crear tu rama (50-60 min)
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/03-jefe
+```
+
+Es la rama de hoy; el nombre debe ser exacto.
+
+##### 5 · Controller + estado inicial (60-95 min)
+
+Crea los dos archivos de abajo en `Assets/_Alumnos/Jefe/` (Unity genera los `.meta`). Es la versión mínima del esqueleto completo que aparece más abajo en esta ficha: solo registra `JefeAparicion`. Pulsa Play y, si hace falta, llama oleadas con ESPACIO hasta que aparezca tu agente (oleada 5): la consola debe mostrar *Jefe: entre a Aparicion*.
+
+##### 6 · Primer commit y push (95-110 min)
+
+```bash
+git status
+git add Assets/_Alumnos/Jefe
+git commit -m "clase 1: Jefe - controller y Aparicion"
+git push -u origin clase-1/03-jefe
+```
+
+`git status` debe mostrar solo tu carpeta (y los `.meta`).
+
+##### 7 · Pull Request y reporte (110-120 min)
+
+```bash
+gh pr create --base main --title "Clase 1 - Jefe (cupo 03)" --body "Onboarding: controller y Aparicion"
+gh pr view --comments
+```
+
+Sin la CLI, crea el PR en la web ([Cómo subir tus cambios](04_como_subir_cambios.md)). En 1-2 minutos el Action comenta; si hay ❌, corrige y haz `git push`.
+
+**Código del paso 5** (copia y pega; los nombres ya son los de tu máquina):
+
+```csharp
+// Assets/_Alumnos/Jefe/JefeController.cs
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Alumnos.Jefe
+{
+    public class JefeController : MonoBehaviour
+    {
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
+
+        void Awake()
+        {
+            ctx.Fijar("agente", GetComponent<Agente>());
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new JefeAparicion() }, ctx);   // por ahora solo este estado
+        }
+
+        void OnEnable() { maq.Iniciar("JefeAparicion"); }
+        void Update() { maq.Actualizar(Time.deltaTime); }
+    }
+}
+
+// Assets/_Alumnos/Jefe/JefeAparicion.cs
+using UnityEngine;
+
+namespace Alumnos.Jefe
+{
+    public class JefeAparicion : Estado
+    {
+        public override void Entrar(string anterior)
+        {
+            Debug.Log("Jefe: entre a Aparicion");   // prueba de vida: debe salir en la consola al hacer Play
+        }
+
+        public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
+
+        public override string AlRecibir(string trigger, int valor) { return null; }
+    }
+}
+```
+
+¿Terminaste antes? Es opcional y no se califica hoy: empieza el siguiente estado (la clase 2 trae `JefeAvanzar`).
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
 | `JefeController.cs` | **Nuevo.** `class JefeController : MonoBehaviour` dentro de `namespace Alumnos.Jefe`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Aparicion`. |
 | `JefeAparicion.cs` | **Nuevo.** `class JefeAparicion : Estado`. Rugido de entrada (2 s): Fx.OndaSuelo + CamaraRTS.I.Sacudir. Animación: `Enojado`. |
-| `JefeAvanzar.cs` | **Nuevo.** `class JefeAvanzar : Estado`. Camina la ruta hacia el granero. Animación: `Caminar`. |
-| `JefeMuerto.cs` | **Nuevo.** `class JefeMuerto : Estado`. Global: Fx.Explosion y aviso al Director. Animación: `Muerte1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Entrada con rugido (Fx + cámara), camina la ruta y muere.
+- Onboarding y primer commit: el Controller crea la Maquina e inicia en Aparicion (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleada 5.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`.
 
-Todavía NO se pide: `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`.
+Todavía NO se pide: `JefeAvanzar`, `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`, `JefeMuerto`.
 
 **Lista de comprobación antes del PR**
 
@@ -159,30 +262,30 @@ git checkout -b clase-1/03-jefe
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Jefe
-git commit -m "clase 1: Jefe - Aparicion, Avanzar, Muerto"
+git commit -m "clase 1: Jefe - Aparicion"
 git push -u origin clase-1/03-jefe
 ```
 
 ### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-2/03-jefe`  ·  **Avance esperado:** 4 de 7 estados (57%)
+**Rama:** `clase-2/03-jefe`  ·  **Avance esperado:** 2 de 7 estados (29%)
 
-![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_5.svg)
+![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_6.svg)
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
-| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeAtacar()`. |
-| `JefeAtacar.cs` | **Nuevo.** `class JefeAtacar : Estado`. Combo de 3 golpes (Atacar1-3) con daño 70. Animación: `Atacar1-3`. |
+| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeAvanzar()`. |
+| `JefeAvanzar.cs` | **Nuevo.** `class JefeAvanzar : Estado`. Camina la ruta hacia el granero. Animación: `Caminar`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Combo de 3 golpes con daño y alcance correctos.
+- Avanzar: Camina la ruta hacia el granero.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleada 5.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`.
 
-Todavía NO se pide: `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`.
+Todavía NO se pide: `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`, `JefeMuerto`.
 
 **Lista de comprobación antes del PR**
 
@@ -202,30 +305,31 @@ git checkout -b clase-2/03-jefe
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Jefe
-git commit -m "clase 2: Jefe - Atacar"
+git commit -m "clase 2: Jefe - Avanzar"
 git push -u origin clase-2/03-jefe
 ```
 
 ### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-3/03-jefe`  ·  **Avance esperado:** 5 de 7 estados (71%)
+**Rama:** `clase-3/03-jefe`  ·  **Avance esperado:** 4 de 7 estados (57%)
 
-![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_6.svg)
+![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_7.svg)
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
-| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeInvocar()`. |
-| `JefeInvocar.cs` | **Nuevo.** `class JefeInvocar : Estado`. Cada 15 s llama 3 Soldados con Juego.Aparecer (max 6 vivos). Animación: `Enojado + Fx.Aura`. |
+| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeMuerto()`, `new JefeAtacar()`. |
+| `JefeMuerto.cs` | **Nuevo.** `class JefeMuerto : Estado`. Global: Fx.Explosion y aviso al Director. Animación: `Muerte1`. |
+| `JefeAtacar.cs` | **Nuevo.** `class JefeAtacar : Estado`. Combo de 3 golpes (Atacar1-3) con daño 70. Animación: `Atacar1-3`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Invoca soldados con Juego.Aparecer, con límite y cooldown.
+- Muerto: Global: Fx.Explosion y aviso al Director. Atacar: Combo de 3 golpes (Atacar1-3) con daño 70.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleada 5.
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`, `JefeInvocar`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`.
 
-Todavía NO se pide: `JefeOndaChoque`, `JefeFuria`.
+Todavía NO se pide: `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`.
 
 **Lista de comprobación antes del PR**
 
@@ -245,7 +349,7 @@ git checkout -b clase-3/03-jefe
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Jefe
-git commit -m "clase 3: Jefe - Invocar"
+git commit -m "clase 3: Jefe - Muerto, Atacar"
 git push -u origin clase-3/03-jefe
 ```
 
@@ -253,17 +357,18 @@ git push -u origin clase-3/03-jefe
 
 **Rama:** `clase-4/03-jefe`  ·  **Avance esperado:** 6 de 7 estados (86%)
 
-![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_7.svg)
+![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_8.svg)
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
-| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeOndaChoque()`. |
+| `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new JefeInvocar()`, `new JefeOndaChoque()`. |
+| `JefeInvocar.cs` | **Nuevo.** `class JefeInvocar : Estado`. Cada 15 s llama 3 Soldados con Juego.Aparecer (max 6 vivos). Animación: `Enojado + Fx.Aura`. |
 | `JefeOndaChoque.cs` | **Nuevo.** `class JefeOndaChoque : Estado`. Ataque en área (radio 5): daño a todos los hostiles cercanos + Fx.Explosion. Animación: `Atacar3 + Fx`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Ataque en área con Efectos y daño por radio (sin basura).
+- Invocar: Cada 15 s llama 3 Soldados con Juego.Aparecer (max 6 vivos). OndaChoque: Ataque en área (radio 5): daño a todos los hostiles cercanos + Fx.Explosion.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleada 5.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`.
@@ -288,7 +393,7 @@ git checkout -b clase-4/03-jefe
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Jefe
-git commit -m "clase 4: Jefe - OndaChoque"
+git commit -m "clase 4: Jefe - Invocar, OndaChoque"
 git push -u origin clase-4/03-jefe
 ```
 
@@ -296,7 +401,7 @@ git push -u origin clase-4/03-jefe
 
 **Rama:** `clase-5/03-jefe`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_8.svg)
+![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_9.svg)
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
@@ -306,7 +411,7 @@ git push -u origin clase-4/03-jefe
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Fase de furia y avisos al Director/Camara. Integracion con la victoria.
+- Furia: Vida &lt; 50%: más rápido y combos más cortos. Una sola vez.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleada 5.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`.
@@ -333,25 +438,23 @@ git commit -m "clase 5: Jefe - Furia"
 git push -u origin clase-5/03-jefe
 ```
 
-### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 6 · Lun 30 nov · Colchón (opcional, no se califica) · PR a más tardar ese día, 23:59 (CDMX)
 
 **Rama:** `clase-6/03-jefe`  ·  **Avance esperado:** 7 de 7 estados (100%)
 
-![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_9.svg)
+![Diagrama de estados de Jefe (final de la oleada 5)](img/m03_jefe_10.svg)
 
 | Archivo (en `Assets/_Alumnos/Jefe/`) | Qué debe tener |
 | --- | --- |
 | `JefeController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
-| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| (ninguno obligatorio) | Colchón: sin contenido nuevo. Solo corriges lo que marcó el Action o terminas lo que se quedó atrás. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Balance (que sea ganable), pulido, cero basura, demo.
-- Una oleada completa de principio a fin sin errores ni avisos en la consola.
-- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
-- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
-- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+- Esta clase **no tiene contenido nuevo y no cuenta para la calificación** (el promedio es de las clases 1 a 5).
+- Úsala para: corregir los ❌ que dejó el Action, terminar estados atrasados y probar tu máquina junto con las otras.
+- Si necesitas entregar correcciones, crea la rama `clase-6/03-jefe` y su PR; si no, no hace falta.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `JefeAparicion`, `JefeAvanzar`, `JefeMuerto`, `JefeAtacar`, `JefeInvocar`, `JefeOndaChoque`, `JefeFuria`.
 
@@ -373,7 +476,7 @@ git checkout -b clase-6/03-jefe
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Jefe
-git commit -m "clase 6: Jefe - pulido final"
+git commit -m "clase 6: Jefe - correcciones"
 git push -u origin clase-6/03-jefe
 ```
 
@@ -384,7 +487,7 @@ git push -u origin clase-6/03-jefe
 | Funciona en el juego | 50 | El agente/sistema hace lo pedido en Play, sin errores en consola, con el prefab real. |
 | Estados entregados | 30 | Cumple los estados de ESA clase (ver tabla). Cada estado que falta resta proporcionalmente. |
 | Codigo y rendimiento | 20 | Una clase por estado con prefijo del rol, ASCII, sin new/LINQ en Update, eventos desuscritos, cero basura medido. |
-| Total por clase | 100 | La calificación final es el promedio de las 6 entregas (cada clase pesa igual). |
+| Total por clase | 100 | La calificación final es el promedio de las 5 entregas de las clases 1 a 5 (cada una pesa igual). La clase 6 es colchón y no cuenta. |
 
 ## 6. Esqueleto de código
 

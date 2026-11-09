@@ -17,8 +17,8 @@ Son funciones de movimiento: reciben posiciones y devuelven la **velocidad desea
 
 | Behaviour | Peso | Entrega | Responsable | Lo usan |
 | --- | --- | --- | --- | --- |
-| [Seek (buscar)](#seek-buscar-2-pts) | 2 | Clase 1 | Cupo 04 (Lancero) | Soldado, Bruto, Jefe, Lancero |
-| [Flee (huir)](#flee-huir-2-pts) | 2 | Clase 1 | Cupo 09 (Guardia) | Lancero, Aldeano, Minero, Reparador |
+| [Seek (buscar)](#seek-buscar-2-pts) | 2 | Clase 2 | Cupo 04 (Lancero) | Soldado, Bruto, Jefe, Lancero |
+| [Flee (huir)](#flee-huir-2-pts) | 2 | Clase 2 | Cupo 09 (Guardia) | Lancero, Aldeano, Minero, Reparador |
 | [Arrive (llegar)](#arrive-llegar-4-pts) | 4 | Clase 2 | Cupo 02 (Bruto) | Lancero, MagoEnemigo, Ladron, Guardia, Aldeano, Minero, Reparador |
 | [Path Following (seguir camino)](#path-following-seguir-camino-7-pts) | 7 | Clase 2 | Cupo 01 (Soldado) | Soldado, Bruto, Jefe, Lancero, MagoEnemigo, Ladron, Guardia, Minero |
 | [Pursuit (perseguir con predicción)](#pursuit-perseguir-con-predicción-6-pts) | 6 | Clase 3 | Cupo 14 (Tutorial) | Guardia, TorreLanzadora, TorreMaga |
@@ -47,7 +47,7 @@ public static Vector3 Seek(Vector3 pos, Vector3 destino, float vMax);
 
 ![Diagrama de Seek](img/02_steering_behaviors_1.svg)
 
-**Responsable:** cupo 04 (Lancero) · **entrega:** clase 1 · **lo usan:** [Soldado](m01_soldado.md), [Bruto](m02_bruto.md), [Jefe](m03_jefe.md), [Lancero](m04_lancero.md)
+**Responsable:** cupo 04 (Lancero) · **entrega:** clase 2 · **lo usan:** [Soldado](m01_soldado.md), [Bruto](m02_bruto.md), [Jefe](m03_jefe.md), [Lancero](m04_lancero.md)
 
 **Prueba de aceptación:** Un agente de prueba llega a un punto movil sin atravesar el suelo y se detiene a 0.3 m (o sigue pasando, segun el caso).
 
@@ -69,7 +69,7 @@ public static Vector3 Flee(Vector3 pos, Vector3 amenaza, float vMax, float radio
 
 ![Diagrama de Flee](img/02_steering_behaviors_2.svg)
 
-**Responsable:** cupo 09 (Guardia) · **entrega:** clase 1 · **lo usan:** [Lancero](m04_lancero.md), [Aldeano](m10_aldeano.md), [Minero](m11_minero.md), [Reparador](m12_reparador.md)
+**Responsable:** cupo 09 (Guardia) · **entrega:** clase 2 · **lo usan:** [Lancero](m04_lancero.md), [Aldeano](m10_aldeano.md), [Minero](m11_minero.md), [Reparador](m12_reparador.md)
 
 **Prueba de aceptación:** El agente se aleja de un cursor/enemigo y se detiene al salir del radio de panico.
 

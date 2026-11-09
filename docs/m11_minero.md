@@ -20,7 +20,7 @@ Las flechas se leen "desde → hasta" con la condición que dispara el cambio. E
 
 1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/11-minero`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde el inicio (nacen en la aldea).*
-3. **Crea estos archivos** en `Assets/_Alumnos/Minero/`: `MineroController.cs`, `MineroIrAMina.cs`, `MineroMinar.cs`, `MineroMuerto.cs`.
+3. **Crea estos archivos** en `Assets/_Alumnos/Minero/`: `MineroController.cs`, `MineroIrAMina.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
 5. **Primer estado:** en `Entrar` pide la animación (`Caminar`) y en `Actualizar` haz lo mínimo (mover con `Cuerpo.Mover`).
 6. **Play:** en cuanto existe `MineroController`, el sistema lo usa en lugar del demo. Si ves tu primer estado funcionando, sigue con el siguiente.
@@ -95,7 +95,7 @@ Guía completa con diagramas: [guía de inicio](03_como_empezar.md).
 | --- | --- | --- | --- |
 | [`Steering.Arrive`](02_steering_behaviors.md#arrive-llegar-4-pts) | Cupo 02 (Bruto) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 | [`Steering.PathFollowing`](02_steering_behaviors.md#path-following-seguir-camino-7-pts) | Cupo 01 (Soldado) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
-| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 1 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
+| [`Steering.Flee`](02_steering_behaviors.md#flee-huir-2-pts) | Cupo 09 (Guardia) | Clase 2 | usa `Cuerpo.Mover` con dirección directa hacia el objetivo |
 
 El archivo `Steering.cs` ya existe como clase parcial vacía: cada responsable agrega SU archivo `Steering<Nombre>.cs`. Tu máquina solo llama a `Steering.<Nombre>(...)` cuando exista.
 
@@ -107,12 +107,12 @@ Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguie
 
 | Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** Lun 9 nov | IrAMina, Minar, Muerto | 3/8 · 38% | Esqueleto: va a la mina y pica en ciclo; muerte. | — |
-| **2** Mié 11 nov | IrAlGranero, Depositar | 5/8 · 62% | Ciclo completo con Economia.Agregar visible en el HUD. | — |
-| **3** Mié 18 nov | Huir | 6/8 · 75% | Deteccion de peligro y huida con Flee. | — |
-| **4** Lun 23 nov | Esconderse | 7/8 · 88% | Escondite y retorno al trabajo con la carga. | — |
-| **5** Mié 25 nov | Festejo | 8/8 · 100% | Festejo + escucha de Alertas. Camino calculado solo al entrar al estado. | — |
-| **6** Lun 30 nov | (pulido) | 8/8 · 100% | Pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | IrAMina | 1/8 · 12% | Onboarding y primer commit: el Controller crea la Maquina e inicia en IrAMina (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision. | — |
+| **2** Mié 11 nov | Minar, Muerto | 3/8 · 38% | Minar: Pica 5 s en su sitio. Muerto: Global: la carga se pierde. | — |
+| **3** Mié 18 nov | IrAlGranero, Depositar | 5/8 · 62% | IrAlGranero: Lleva las gemas al granero. Depositar: Entrega: Economia.Agregar(6). | — |
+| **4** Lun 23 nov | Huir, Esconderse | 7/8 · 88% | Huir: Se aleja del enemigo (conserva la carga). Esconderse: Espera escondido 4 s a que pase el peligro. | — |
+| **5** Mié 25 nov | Festejo | 8/8 · 100% | Festejo: Global. | — |
+| **6** Lun 30 nov | (colch&oacute;n) | 8/8 · 100% | Colchon (opcional): se usa solo para corregir pendientes o para ponerse al corriente. No hay estados nuevos. | — |
 
 Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
 
@@ -120,28 +120,131 @@ Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting 
 
 > Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
 
-### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 1 · Lun 9 nov · Onboarding y primer commit · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-1/11-minero`  ·  **Avance esperado:** 3 de 8 estados (38%)
+**Rama:** `clase-1/11-minero`  ·  **Avance esperado:** 1 de 8 estados (12%)
 
 ![Diagrama de estados de Minero](img/m11_minero_4.svg)
+
+#### Onboarding (2 horas): recorre todo y sube tu primer commit
+
+![Linea de tiempo del onboarding de 2 horas](img/m11_minero_5.svg)
+
+> Hoy no se califica cuánto programaste, sino que **recorriste el flujo completo una vez**: clonar, correr el juego, leer tu ficha, crear tu rama, hacer que tu máquina arranque y llegar hasta un PR revisado. Todo lo demás se construye sobre esto.
+
+##### 1 · Clonar y abrir (0-15 min)
+
+```bash
+git clone https://github.com/BanyoLoper/tower-defense.git td
+cd td
+git status
+```
+
+Abre la carpeta `td` con Unity `6000.3.10f1` (la primera vez tarda). Debe decir `On branch main` y *working tree clean*. Si falla: [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+##### 2 · Jugar la base (15-30 min)
+
+Abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Pulsa ESPACIO para llamar oleadas; mira cómo aparecen enemigos y torres y recorre la Hierarchy. Así sabes qué hace el juego sin tu código.
+
+##### 3 · Leer tu ficha y el Estado base (30-50 min)
+
+Lee de esta ficha el diagrama de estados, *Qué es tu máquina* y las reglas. Abre `Assets/_Granero/Scripts/Maquina/` y mira `Estado.cs`, `Maquina.cs` y `Contexto.cs`; la explicación está en [Estado general](01_estado_general.md).
+
+##### 4 · Crear tu rama (50-60 min)
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/11-minero
+```
+
+Es la rama de hoy; el nombre debe ser exacto.
+
+##### 5 · Controller + estado inicial (60-95 min)
+
+Crea los dos archivos de abajo en `Assets/_Alumnos/Minero/` (Unity genera los `.meta`). Es la versión mínima del esqueleto completo que aparece más abajo en esta ficha: solo registra `MineroIrAMina`. Pulsa Play y, si hace falta, llama oleadas con ESPACIO hasta que aparezca tu agente (desde el inicio (nacen en la aldea)): la consola debe mostrar *Minero: entre a IrAMina*.
+
+##### 6 · Primer commit y push (95-110 min)
+
+```bash
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 1: Minero - controller y IrAMina"
+git push -u origin clase-1/11-minero
+```
+
+`git status` debe mostrar solo tu carpeta (y los `.meta`).
+
+##### 7 · Pull Request y reporte (110-120 min)
+
+```bash
+gh pr create --base main --title "Clase 1 - Minero (cupo 11)" --body "Onboarding: controller y IrAMina"
+gh pr view --comments
+```
+
+Sin la CLI, crea el PR en la web ([Cómo subir tus cambios](04_como_subir_cambios.md)). En 1-2 minutos el Action comenta; si hay ❌, corrige y haz `git push`.
+
+**Código del paso 5** (copia y pega; los nombres ya son los de tu máquina):
+
+```csharp
+// Assets/_Alumnos/Minero/MineroController.cs
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Alumnos.Minero
+{
+    public class MineroController : MonoBehaviour
+    {
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
+
+        void Awake()
+        {
+            ctx.Fijar("agente", GetComponent<Agente>());
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new MineroIrAMina() }, ctx);   // por ahora solo este estado
+        }
+
+        void OnEnable() { maq.Iniciar("MineroIrAMina"); }
+        void Update() { maq.Actualizar(Time.deltaTime); }
+    }
+}
+
+// Assets/_Alumnos/Minero/MineroIrAMina.cs
+using UnityEngine;
+
+namespace Alumnos.Minero
+{
+    public class MineroIrAMina : Estado
+    {
+        public override void Entrar(string anterior)
+        {
+            Debug.Log("Minero: entre a IrAMina");   // prueba de vida: debe salir en la consola al hacer Play
+        }
+
+        public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
+
+        public override string AlRecibir(string trigger, int valor) { return null; }
+    }
+}
+```
+
+¿Terminaste antes? Es opcional y no se califica hoy: empieza el siguiente estado (la clase 2 trae `MineroMinar`, `MineroMuerto`).
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
 | `MineroController.cs` | **Nuevo.** `class MineroController : MonoBehaviour` dentro de `namespace Alumnos.Minero`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `IrAMina`. |
 | `MineroIrAMina.cs` | **Nuevo.** `class MineroIrAMina : Estado`. Camina a su mina (puntosMina) con Camino. Animación: `Caminar`. |
-| `MineroMinar.cs` | **Nuevo.** `class MineroMinar : Estado`. Pica 5 s en su sitio. Animación: `Minar / MinarLoop`. |
-| `MineroMuerto.cs` | **Nuevo.** `class MineroMuerto : Estado`. Global: la carga se pierde. Animación: `Muerte1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Esqueleto: va a la mina y pica en ciclo; muerte.
+- Onboarding y primer commit: el Controller crea la Maquina e inicia en IrAMina (puede ser un esqueleto que solo escribe un mensaje en consola). Compila, se ve en Play y el PR pasa la revision.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`.
 
-Todavía NO se pide: `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+Todavía NO se pide: `MineroMinar`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`, `MineroMuerto`.
 
 **Lista de comprobación antes del PR**
 
@@ -161,31 +264,31 @@ git checkout -b clase-1/11-minero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Minero
-git commit -m "clase 1: Minero - IrAMina, Minar, Muerto"
+git commit -m "clase 1: Minero - IrAMina"
 git push -u origin clase-1/11-minero
 ```
 
 ### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-2/11-minero`  ·  **Avance esperado:** 5 de 8 estados (62%)
+**Rama:** `clase-2/11-minero`  ·  **Avance esperado:** 3 de 8 estados (38%)
 
-![Diagrama de estados de Minero](img/m11_minero_5.svg)
+![Diagrama de estados de Minero](img/m11_minero_6.svg)
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
-| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroIrAlGranero()`, `new MineroDepositar()`. |
-| `MineroIrAlGranero.cs` | **Nuevo.** `class MineroIrAlGranero : Estado`. Lleva las gemas al granero. Animación: `Caminar`. |
-| `MineroDepositar.cs` | **Nuevo.** `class MineroDepositar : Estado`. Entrega: Economia.Agregar(6). Animación: `Recolectar`. |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroMinar()`, `new MineroMuerto()`. |
+| `MineroMinar.cs` | **Nuevo.** `class MineroMinar : Estado`. Pica 5 s en su sitio. Animación: `Minar / MinarLoop`. |
+| `MineroMuerto.cs` | **Nuevo.** `class MineroMuerto : Estado`. Global: la carga se pierde. Animación: `Muerte1`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Ciclo completo con Economia.Agregar visible en el HUD.
+- Minar: Pica 5 s en su sitio. Muerto: Global: la carga se pierde.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`.
 
-Todavía NO se pide: `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+Todavía NO se pide: `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -205,30 +308,31 @@ git checkout -b clase-2/11-minero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Minero
-git commit -m "clase 2: Minero - IrAlGranero, Depositar"
+git commit -m "clase 2: Minero - Minar, Muerto"
 git push -u origin clase-2/11-minero
 ```
 
 ### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
 
-**Rama:** `clase-3/11-minero`  ·  **Avance esperado:** 6 de 8 estados (75%)
+**Rama:** `clase-3/11-minero`  ·  **Avance esperado:** 5 de 8 estados (62%)
 
-![Diagrama de estados de Minero](img/m11_minero_6.svg)
+![Diagrama de estados de Minero](img/m11_minero_7.svg)
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
-| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroHuir()`. |
-| `MineroHuir.cs` | **Nuevo.** `class MineroHuir : Estado`. Se aleja del enemigo (conserva la carga). Animación: `Correr`. |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroIrAlGranero()`, `new MineroDepositar()`. |
+| `MineroIrAlGranero.cs` | **Nuevo.** `class MineroIrAlGranero : Estado`. Lleva las gemas al granero. Animación: `Caminar`. |
+| `MineroDepositar.cs` | **Nuevo.** `class MineroDepositar : Estado`. Entrega: Economia.Agregar(6). Animación: `Recolectar`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Deteccion de peligro y huida con Flee.
+- IrAlGranero: Lleva las gemas al granero. Depositar: Entrega: Economia.Agregar(6).
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
-**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`.
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`.
 
-Todavía NO se pide: `MineroEsconderse`, `MineroFestejo`.
+Todavía NO se pide: `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
 
 **Lista de comprobación antes del PR**
 
@@ -248,7 +352,7 @@ git checkout -b clase-3/11-minero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Minero
-git commit -m "clase 3: Minero - Huir"
+git commit -m "clase 3: Minero - IrAlGranero, Depositar"
 git push -u origin clase-3/11-minero
 ```
 
@@ -256,17 +360,18 @@ git push -u origin clase-3/11-minero
 
 **Rama:** `clase-4/11-minero`  ·  **Avance esperado:** 7 de 8 estados (88%)
 
-![Diagrama de estados de Minero](img/m11_minero_7.svg)
+![Diagrama de estados de Minero](img/m11_minero_8.svg)
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
-| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroEsconderse()`. |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroHuir()`, `new MineroEsconderse()`. |
+| `MineroHuir.cs` | **Nuevo.** `class MineroHuir : Estado`. Se aleja del enemigo (conserva la carga). Animación: `Correr`. |
 | `MineroEsconderse.cs` | **Nuevo.** `class MineroEsconderse : Estado`. Espera escondido 4 s a que pase el peligro. Animación: `Agachado`. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Escondite y retorno al trabajo con la carga.
+- Huir: Se aleja del enemigo (conserva la carga). Esconderse: Espera escondido 4 s a que pase el peligro.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`.
@@ -291,7 +396,7 @@ git checkout -b clase-4/11-minero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Minero
-git commit -m "clase 4: Minero - Esconderse"
+git commit -m "clase 4: Minero - Huir, Esconderse"
 git push -u origin clase-4/11-minero
 ```
 
@@ -299,7 +404,7 @@ git push -u origin clase-4/11-minero
 
 **Rama:** `clase-5/11-minero`  ·  **Avance esperado:** 8 de 8 estados (100%)
 
-![Diagrama de estados de Minero](img/m11_minero_8.svg)
+![Diagrama de estados de Minero](img/m11_minero_9.svg)
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
@@ -309,7 +414,7 @@ git push -u origin clase-4/11-minero
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Festejo + escucha de Alertas. Camino calculado solo al entrar al estado.
+- Festejo: Global.
 - Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
@@ -336,25 +441,23 @@ git commit -m "clase 5: Minero - Festejo"
 git push -u origin clase-5/11-minero
 ```
 
-### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+### Clase 6 · Lun 30 nov · Colchón (opcional, no se califica) · PR a más tardar ese día, 23:59 (CDMX)
 
 **Rama:** `clase-6/11-minero`  ·  **Avance esperado:** 8 de 8 estados (100%)
 
-![Diagrama de estados de Minero](img/m11_minero_9.svg)
+![Diagrama de estados de Minero](img/m11_minero_10.svg)
 
 | Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
 | --- | --- |
 | `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
-| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| (ninguno obligatorio) | Colchón: sin contenido nuevo. Solo corriges lo que marcó el Action o terminas lo que se quedó atrás. |
 | `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
 
 **Qué debe verse en Play al terminar esta clase**
 
-- Pulido, cero basura, demo.
-- Una oleada completa de principio a fin sin errores ni avisos en la consola.
-- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
-- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
-- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+- Esta clase **no tiene contenido nuevo y no cuenta para la calificación** (el promedio es de las clases 1 a 5).
+- Úsala para: corregir los ❌ que dejó el Action, terminar estados atrasados y probar tu máquina junto con las otras.
+- Si necesitas entregar correcciones, crea la rama `clase-6/11-minero` y su PR; si no, no hace falta.
 
 **Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
 
@@ -376,7 +479,7 @@ git checkout -b clase-6/11-minero
 # ... programas y pruebas en Unity ...
 git status
 git add Assets/_Alumnos/Minero
-git commit -m "clase 6: Minero - pulido final"
+git commit -m "clase 6: Minero - correcciones"
 git push -u origin clase-6/11-minero
 ```
 
@@ -387,7 +490,7 @@ git push -u origin clase-6/11-minero
 | Funciona en el juego | 50 | El agente/sistema hace lo pedido en Play, sin errores en consola, con el prefab real. |
 | Estados entregados | 30 | Cumple los estados de ESA clase (ver tabla). Cada estado que falta resta proporcionalmente. |
 | Codigo y rendimiento | 20 | Una clase por estado con prefijo del rol, ASCII, sin new/LINQ en Update, eventos desuscritos, cero basura medido. |
-| Total por clase | 100 | La calificación final es el promedio de las 6 entregas (cada clase pesa igual). |
+| Total por clase | 100 | La calificación final es el promedio de las 5 entregas de las clases 1 a 5 (cada una pesa igual). La clase 6 es colchón y no cuenta. |
 
 ## 6. Esqueleto de código
 
