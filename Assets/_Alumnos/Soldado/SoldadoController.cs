@@ -9,16 +9,13 @@ namespace Alumnos.Soldado
         Maquina maq;
         readonly Contexto ctx = new Contexto();
 
-       // void Awake()
-        //{
-            //ctx.Fijar("agente", GetComponent<Agente>());
-            //ctx.Fijar("ctrl", this);
+        void Awake()
+        {
+            ctx.Fijar("agente", GetComponent<Agente>());
+            ctx.Fijar("ctrl", this);
 
-           // maq = new Maquina(
-                //new List<Estado> { new SoldadoAvanzar() },
-                //ctx
-            //);
-        //}
+           maq = new Maquina(new List<Estado> { new SoldadoAvanzar() },ctx);
+        }
 
         void OnEnable()
         {
