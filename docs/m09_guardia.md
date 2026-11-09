@@ -1,6 +1,6 @@
 # 09 · Guardia de la aldea
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Alta**  **Defensa**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **26.5 pts** · Steering a cargo: **2 pts** (Flee (2 pts)) 
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/09-guardia`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/09-guardia`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde el inicio (nacen en la aldea).*
 3. **Crea estos archivos** en `Assets/_Alumnos/Guardia/`: `GuardiaController.cs`, `GuardiaPatrullar.cs`, `GuardiaMuerto.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -132,14 +134,281 @@ public class ProbeFlee : MonoBehaviour   // nombre unico: Probe + tu steering
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | Patrullar, Muerto | 2/8 · 25% | Esqueleto y patrulla en ciclo por puntos propios. | Flee |
-| **2** | Perseguir | 3/8 · 38% | Deteccion y persecución con límite de distancia a casa. | — |
-| **3** | Combatir | 4/8 · 50% | Combate con daño y cadencia. | — |
-| **4** | Alertar | 5/8 · 62% | Emite la alerta (contrato Alertas) y la alerta se ve en Aldeano de un companero. | — |
-| **5** | Regresar, Descansar, Festejo | 8/8 · 100% | Regreso con Arrive, descanso y festejo. | — |
-| **6** | (pulido) | 8/8 · 100% | Pulido, Pursuit con predicción, cero basura, demo. | — |
+| **1** Lun 9 nov | Patrullar, Muerto | 2/8 · 25% | Esqueleto y patrulla en ciclo por puntos propios. | Flee |
+| **2** Mié 11 nov | Perseguir | 3/8 · 38% | Deteccion y persecución con límite de distancia a casa. | — |
+| **3** Mié 18 nov | Combatir | 4/8 · 50% | Combate con daño y cadencia. | — |
+| **4** Lun 23 nov | Alertar | 5/8 · 62% | Emite la alerta (contrato Alertas) y la alerta se ve en Aldeano de un companero. | — |
+| **5** Mié 25 nov | Regresar, Descansar, Festejo | 8/8 · 100% | Regreso con Arrive, descanso y festejo. | — |
+| **6** Lun 30 nov | (pulido) | 8/8 · 100% | Pulido, Pursuit con predicción, cero basura, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/09-guardia`  ·  **Avance esperado:** 2 de 8 estados (25%)  ·  **Steering:** Flee
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_4.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Nuevo.** `class GuardiaController : MonoBehaviour` dentro de `namespace Alumnos.Guardia`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Patrullar`. |
+| `GuardiaPatrullar.cs` | **Nuevo.** `class GuardiaPatrullar : Estado`. Recorre puntos alrededor de su casa en ciclo. Animación: `Caminar`. |
+| `GuardiaMuerto.cs` | **Nuevo.** `class GuardiaMuerto : Estado`. Global. Animación: `Muerte1`. |
+| `../Steering/SteeringFlee.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Flee(Vector3 pos, Vector3 amenaza, float vMax, float radioPanico)`. Prueba: El agente se aleja de un cursor/enemigo y se detiene al salir del radio de panico. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Esqueleto y patrulla en ciclo por puntos propios.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto` y las del steering de esta clase.
+
+Todavía NO se pide: `GuardiaAlertar`, `GuardiaPerseguir`, `GuardiaCombatir`, `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/09-guardia` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia  Assets/_Alumnos/Steering
+git commit -m "clase 1: Guardia - Patrullar, Muerto"
+git push -u origin clase-1/09-guardia
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/09-guardia`  ·  **Avance esperado:** 3 de 8 estados (38%)
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_5.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new GuardiaPerseguir()`. |
+| `GuardiaPerseguir.cs` | **Nuevo.** `class GuardiaPerseguir : Estado`. Corre tras el enemigo anticipando su movimiento (max 16 m de su casa). Animación: `Correr`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Deteccion y persecución con límite de distancia a casa.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto`, `GuardiaPerseguir`.
+
+Todavía NO se pide: `GuardiaAlertar`, `GuardiaCombatir`, `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/09-guardia` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia
+git commit -m "clase 2: Guardia - Perseguir"
+git push -u origin clase-2/09-guardia
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/09-guardia`  ·  **Avance esperado:** 4 de 8 estados (50%)
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_6.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new GuardiaCombatir()`. |
+| `GuardiaCombatir.cs` | **Nuevo.** `class GuardiaCombatir : Estado`. Ataca (daño 12, cadencia 0.9 s). Animación: `Atacar1 / Atacar2`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Combate con daño y cadencia.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto`, `GuardiaPerseguir`, `GuardiaCombatir`.
+
+Todavía NO se pide: `GuardiaAlertar`, `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/09-guardia` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia
+git commit -m "clase 3: Guardia - Combatir"
+git push -u origin clase-3/09-guardia
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/09-guardia`  ·  **Avance esperado:** 5 de 8 estados (62%)
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_7.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new GuardiaAlertar()`. |
+| `GuardiaAlertar.cs` | **Nuevo.** `class GuardiaAlertar : Estado`. Grito de alarma 1.2 s: Alertas.Emitir(pos, 15). Animación: `Enojado`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Emite la alerta (contrato Alertas) y la alerta se ve en Aldeano de un companero.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto`, `GuardiaPerseguir`, `GuardiaCombatir`, `GuardiaAlertar`.
+
+Todavía NO se pide: `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/09-guardia` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia
+git commit -m "clase 4: Guardia - Alertar"
+git push -u origin clase-4/09-guardia
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/09-guardia`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_8.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new GuardiaRegresar()`, `new GuardiaDescansar()`, `new GuardiaFestejo()`. |
+| `GuardiaRegresar.cs` | **Nuevo.** `class GuardiaRegresar : Estado`. Vuelve a su puesto frenando suave. Animación: `Caminar`. |
+| `GuardiaDescansar.cs` | **Nuevo.** `class GuardiaDescansar : Estado`. Espera 3 s en su puesto. Animación: `Idle`. |
+| `GuardiaFestejo.cs` | **Nuevo.** `class GuardiaFestejo : Estado`. Global: gana si hay Victoria. Animación: `Celebrar1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Regreso con Arrive, descanso y festejo.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto`, `GuardiaPerseguir`, `GuardiaCombatir`, `GuardiaAlertar`, `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/09-guardia` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia
+git commit -m "clase 5: Guardia - Regresar, Descansar, Festejo"
+git push -u origin clase-5/09-guardia
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/09-guardia`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Guardia de la aldea](img/m09_guardia_9.svg)
+
+| Archivo (en `Assets/_Alumnos/Guardia/`) | Qué debe tener |
+| --- | --- |
+| `GuardiaController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pulido, Pursuit con predicción, cero basura, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `GuardiaPatrullar`, `GuardiaMuerto`, `GuardiaPerseguir`, `GuardiaCombatir`, `GuardiaAlertar`, `GuardiaRegresar`, `GuardiaDescansar`, `GuardiaFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Guardia/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Guardia` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/09-guardia` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/09-guardia
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Guardia
+git commit -m "clase 6: Guardia - pulido final"
+git push -u origin clase-6/09-guardia
+```
 
 ### Rúbrica (igual en todas las clases)
 

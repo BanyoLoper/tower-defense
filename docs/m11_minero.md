@@ -1,6 +1,6 @@
 # 11 · Minero
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Muy alta**  **Civil**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **28.5 pts** · Steering a cargo: **0 pts** (ninguno) · To
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/11-minero`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/11-minero`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde el inicio (nacen en la aldea).*
 3. **Crea estos archivos** en `Assets/_Alumnos/Minero/`: `MineroController.cs`, `MineroIrAMina.cs`, `MineroMinar.cs`, `MineroMuerto.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -103,14 +105,280 @@ El archivo `Steering.cs` ya existe como clase parcial vacía: cada responsable a
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | IrAMina, Minar, Muerto | 3/8 · 38% | Esqueleto: va a la mina y pica en ciclo; muerte. | — |
-| **2** | IrAlGranero, Depositar | 5/8 · 62% | Ciclo completo con Economia.Agregar visible en el HUD. | — |
-| **3** | Huir | 6/8 · 75% | Deteccion de peligro y huida con Flee. | — |
-| **4** | Esconderse | 7/8 · 88% | Escondite y retorno al trabajo con la carga. | — |
-| **5** | Festejo | 8/8 · 100% | Festejo + escucha de Alertas. Camino calculado solo al entrar al estado. | — |
-| **6** | (pulido) | 8/8 · 100% | Pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | IrAMina, Minar, Muerto | 3/8 · 38% | Esqueleto: va a la mina y pica en ciclo; muerte. | — |
+| **2** Mié 11 nov | IrAlGranero, Depositar | 5/8 · 62% | Ciclo completo con Economia.Agregar visible en el HUD. | — |
+| **3** Mié 18 nov | Huir | 6/8 · 75% | Deteccion de peligro y huida con Flee. | — |
+| **4** Lun 23 nov | Esconderse | 7/8 · 88% | Escondite y retorno al trabajo con la carga. | — |
+| **5** Mié 25 nov | Festejo | 8/8 · 100% | Festejo + escucha de Alertas. Camino calculado solo al entrar al estado. | — |
+| **6** Lun 30 nov | (pulido) | 8/8 · 100% | Pulido, cero basura, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/11-minero`  ·  **Avance esperado:** 3 de 8 estados (38%)
+
+![Diagrama de estados de Minero](img/m11_minero_4.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Nuevo.** `class MineroController : MonoBehaviour` dentro de `namespace Alumnos.Minero`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `IrAMina`. |
+| `MineroIrAMina.cs` | **Nuevo.** `class MineroIrAMina : Estado`. Camina a su mina (puntosMina) con Camino. Animación: `Caminar`. |
+| `MineroMinar.cs` | **Nuevo.** `class MineroMinar : Estado`. Pica 5 s en su sitio. Animación: `Minar / MinarLoop`. |
+| `MineroMuerto.cs` | **Nuevo.** `class MineroMuerto : Estado`. Global: la carga se pierde. Animación: `Muerte1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Esqueleto: va a la mina y pica en ciclo; muerte.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`.
+
+Todavía NO se pide: `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/11-minero` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 1: Minero - IrAMina, Minar, Muerto"
+git push -u origin clase-1/11-minero
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/11-minero`  ·  **Avance esperado:** 5 de 8 estados (62%)
+
+![Diagrama de estados de Minero](img/m11_minero_5.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroIrAlGranero()`, `new MineroDepositar()`. |
+| `MineroIrAlGranero.cs` | **Nuevo.** `class MineroIrAlGranero : Estado`. Lleva las gemas al granero. Animación: `Caminar`. |
+| `MineroDepositar.cs` | **Nuevo.** `class MineroDepositar : Estado`. Entrega: Economia.Agregar(6). Animación: `Recolectar`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Ciclo completo con Economia.Agregar visible en el HUD.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`.
+
+Todavía NO se pide: `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/11-minero` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 2: Minero - IrAlGranero, Depositar"
+git push -u origin clase-2/11-minero
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/11-minero`  ·  **Avance esperado:** 6 de 8 estados (75%)
+
+![Diagrama de estados de Minero](img/m11_minero_6.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroHuir()`. |
+| `MineroHuir.cs` | **Nuevo.** `class MineroHuir : Estado`. Se aleja del enemigo (conserva la carga). Animación: `Correr`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Deteccion de peligro y huida con Flee.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`.
+
+Todavía NO se pide: `MineroEsconderse`, `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/11-minero` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 3: Minero - Huir"
+git push -u origin clase-3/11-minero
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/11-minero`  ·  **Avance esperado:** 7 de 8 estados (88%)
+
+![Diagrama de estados de Minero](img/m11_minero_7.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroEsconderse()`. |
+| `MineroEsconderse.cs` | **Nuevo.** `class MineroEsconderse : Estado`. Espera escondido 4 s a que pase el peligro. Animación: `Agachado`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Escondite y retorno al trabajo con la carga.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`.
+
+Todavía NO se pide: `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/11-minero` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 4: Minero - Esconderse"
+git push -u origin clase-4/11-minero
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/11-minero`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Minero](img/m11_minero_8.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new MineroFestejo()`. |
+| `MineroFestejo.cs` | **Nuevo.** `class MineroFestejo : Estado`. Global. Animación: `Celebrar1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Festejo + escucha de Alertas. Camino calculado solo al entrar al estado.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/11-minero` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 5: Minero - Festejo"
+git push -u origin clase-5/11-minero
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/11-minero`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Minero](img/m11_minero_9.svg)
+
+| Archivo (en `Assets/_Alumnos/Minero/`) | Qué debe tener |
+| --- | --- |
+| `MineroController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pulido, cero basura, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `MineroIrAMina`, `MineroMinar`, `MineroMuerto`, `MineroIrAlGranero`, `MineroDepositar`, `MineroHuir`, `MineroEsconderse`, `MineroFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Minero/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Minero` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/11-minero` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/11-minero
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Minero
+git commit -m "clase 6: Minero - pulido final"
+git push -u origin clase-6/11-minero
+```
 
 ### Rúbrica (igual en todas las clases)
 

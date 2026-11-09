@@ -1,6 +1,6 @@
 # 07 · Torre lanzadora
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Ligera**  **Defensa**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **19.5 pts** · Steering a cargo: **8 pts** (Hide (8 pts)) 
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/07-torrelanzadora`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/07-torrelanzadora`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: la construyes tu: elige plataforma y pulsa 1.*
 3. **Crea estos archivos** en `Assets/_Alumnos/TorreLanzadora/`: `TorreLanzadoraController.cs`, `TorreLanzadoraVigilando.cs`, `TorreLanzadoraDestruida.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -127,14 +129,278 @@ public class ProbeHide : MonoBehaviour   // nombre unico: Probe + tu steering
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | Vigilando, Destruida | 2/6 · 33% | Controller, Maquina, vigila y se destruye liberando la plataforma. | — |
-| **2** | Apuntando | 3/6 · 50% | Elige objetivo con Sensor y gira hacia el. | — |
-| **3** | Disparando, Recargando | 5/6 · 83% | Dispara proyectiles con cooldown; el daño llega. | — |
-| **4** | Danada | 6/6 · 100% | Estado Danada con efecto y cadencia reducida. | Hide |
-| **5** | (pulido) | 6/6 · 100% | Prediccion de puntería (Pursuit) y ajuste de daño/alcance. | — |
-| **6** | (pulido) | 6/6 · 100% | Pulido, cero basura, pooling de proyectiles, demo. | — |
+| **1** Lun 9 nov | Vigilando, Destruida | 2/6 · 33% | Controller, Maquina, vigila y se destruye liberando la plataforma. | — |
+| **2** Mié 11 nov | Apuntando | 3/6 · 50% | Elige objetivo con Sensor y gira hacia el. | — |
+| **3** Mié 18 nov | Disparando, Recargando | 5/6 · 83% | Dispara proyectiles con cooldown; el daño llega. | — |
+| **4** Lun 23 nov | Danada | 6/6 · 100% | Estado Danada con efecto y cadencia reducida. | Hide |
+| **5** Mié 25 nov | (pulido) | 6/6 · 100% | Prediccion de puntería (Pursuit) y ajuste de daño/alcance. | — |
+| **6** Lun 30 nov | (pulido) | 6/6 · 100% | Pulido, cero basura, pooling de proyectiles, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/07-torrelanzadora`  ·  **Avance esperado:** 2 de 6 estados (33%)
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_4.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Nuevo.** `class TorreLanzadoraController : MonoBehaviour` dentro de `namespace Alumnos.TorreLanzadora`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Vigilando`. |
+| `TorreLanzadoraVigilando.cs` | **Nuevo.** `class TorreLanzadoraVigilando : Estado`. Idle; revisa el Sensor cada 0.2 s (alcance 14 m). Animación: `IdleCombate`. |
+| `TorreLanzadoraDestruida.cs` | **Nuevo.** `class TorreLanzadoraDestruida : Estado`. Global: Fx.Explosion, libera la plataforma (Reserva.Devolver). |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Controller, Maquina, vigila y se destruye liberando la plataforma.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: la construyes tu: elige plataforma y pulsa 1.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`.
+
+Todavía NO se pide: `TorreLanzadoraApuntando`, `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`, `TorreLanzadoraDanada`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/07-torrelanzadora` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora
+git commit -m "clase 1: TorreLanzadora - Vigilando, Destruida"
+git push -u origin clase-1/07-torrelanzadora
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/07-torrelanzadora`  ·  **Avance esperado:** 3 de 6 estados (50%)
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_5.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TorreLanzadoraApuntando()`. |
+| `TorreLanzadoraApuntando.cs` | **Nuevo.** `class TorreLanzadoraApuntando : Estado`. Gira hacia el punto futuro del objetivo. Animación: `IdleCombate`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Elige objetivo con Sensor y gira hacia el.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: la construyes tu: elige plataforma y pulsa 1.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`, `TorreLanzadoraApuntando`.
+
+Todavía NO se pide: `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`, `TorreLanzadoraDanada`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/07-torrelanzadora` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora
+git commit -m "clase 2: TorreLanzadora - Apuntando"
+git push -u origin clase-2/07-torrelanzadora
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/07-torrelanzadora`  ·  **Avance esperado:** 5 de 6 estados (83%)
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_6.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TorreLanzadoraDisparando()`, `new TorreLanzadoraRecargando()`. |
+| `TorreLanzadoraDisparando.cs` | **Nuevo.** `class TorreLanzadoraDisparando : Estado`. Lanza la lanza (ProyectilBase.Lanzar) a mitad de la animación. Animación: `Lanzar1 / Lanzar2`. |
+| `TorreLanzadoraRecargando.cs` | **Nuevo.** `class TorreLanzadoraRecargando : Estado`. Cadencia 1.3 s. Animación: `Idle`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Dispara proyectiles con cooldown; el daño llega.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: la construyes tu: elige plataforma y pulsa 1.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`, `TorreLanzadoraApuntando`, `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`.
+
+Todavía NO se pide: `TorreLanzadoraDanada`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/07-torrelanzadora` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora
+git commit -m "clase 3: TorreLanzadora - Disparando, Recargando"
+git push -u origin clase-3/07-torrelanzadora
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/07-torrelanzadora`  ·  **Avance esperado:** 6 de 6 estados (100%)  ·  **Steering:** Hide
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_7.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TorreLanzadoraDanada()`. |
+| `TorreLanzadoraDanada.cs` | **Nuevo.** `class TorreLanzadoraDanada : Estado`. Vida &lt; 40%: cadencia x2 más lenta + Fx.Fuego como humo. Sale al curarse > 60%. Animación: `Idle`. |
+| `../Steering/SteeringHide.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Hide(Vector3 pos, Vector3 amenaza, Vector3[] escondites, float[] radios, float vMax, out Vector3 mejorPunto)`. Prueba: El aldeano termina siempre con una roca/casa entre el y el enemigo. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Estado Danada con efecto y cadencia reducida.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: la construyes tu: elige plataforma y pulsa 1.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`, `TorreLanzadoraApuntando`, `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`, `TorreLanzadoraDanada` y las del steering de esta clase.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/07-torrelanzadora` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora  Assets/_Alumnos/Steering
+git commit -m "clase 4: TorreLanzadora - Danada"
+git push -u origin clase-4/07-torrelanzadora
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/07-torrelanzadora`  ·  **Avance esperado:** 6 de 6 estados (100%)
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_8.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Prediccion de puntería (Pursuit) y ajuste de daño/alcance.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: la construyes tu: elige plataforma y pulsa 1.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`, `TorreLanzadoraApuntando`, `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`, `TorreLanzadoraDanada`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/07-torrelanzadora` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora
+git commit -m "clase 5: TorreLanzadora - pulido final"
+git push -u origin clase-5/07-torrelanzadora
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/07-torrelanzadora`  ·  **Avance esperado:** 6 de 6 estados (100%)
+
+![Diagrama de estados de Torre lanzadora](img/m07_torrelanzadora_9.svg)
+
+| Archivo (en `Assets/_Alumnos/TorreLanzadora/`) | Qué debe tener |
+| --- | --- |
+| `TorreLanzadoraController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pulido, cero basura, pooling de proyectiles, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TorreLanzadoraVigilando`, `TorreLanzadoraDestruida`, `TorreLanzadoraApuntando`, `TorreLanzadoraDisparando`, `TorreLanzadoraRecargando`, `TorreLanzadoraDanada`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/TorreLanzadora/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.TorreLanzadora` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/07-torrelanzadora` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/07-torrelanzadora
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/TorreLanzadora
+git commit -m "clase 6: TorreLanzadora - pulido final"
+git push -u origin clase-6/07-torrelanzadora
+```
 
 ### Rúbrica (igual en todas las clases)
 

@@ -1,6 +1,6 @@
 # 14 · Tutorial guiado
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Media**  **Sistema**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **22.5 pts** · Steering a cargo: **6 pts** (Pursuit (6 pts
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/14-tutorial`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/14-tutorial`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa el juego tal como funciona hoy con el demo del instructor; tu máquina lo va a reemplazar. *Aparece: arranca solo con la escena (Juego crea TutorialController si existe).*
 3. **Crea estos archivos** en `Assets/_Alumnos/Tutorial/`: `TutorialController.cs`, `TutorialBienvenida.cs`, `TutorialElegirPlataforma.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -115,14 +117,280 @@ public class ProbePursuit : MonoBehaviour   // nombre unico: Probe + tu steering
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | Bienvenida, ElegirPlataforma | 2/7 · 29% | Controller + máquina; primeros dos pasos con TextoCentral. | — |
-| **2** | Construir | 3/7 · 43% | Detecta que el jugador construyo. | — |
-| **3** | Gemas | 4/7 · 57% | Explicacion de gemas y desbloqueo con detección de eventos de Economia. | Pursuit |
-| **4** | LlamarOleada, Observar | 6/7 · 86% | Pasos ligados a las fases del juego. | — |
-| **5** | Fin | 7/7 · 100% | Salto con tecla T, final y limpieza (sin dejar suscripciones). | — |
-| **6** | (pulido) | 7/7 · 100% | Pulido, mensajes bien escritos, cero basura, demo. | — |
+| **1** Lun 9 nov | Bienvenida, ElegirPlataforma | 2/7 · 29% | Controller + máquina; primeros dos pasos con TextoCentral. | — |
+| **2** Mié 11 nov | Construir | 3/7 · 43% | Detecta que el jugador construyo. | — |
+| **3** Mié 18 nov | Gemas | 4/7 · 57% | Explicacion de gemas y desbloqueo con detección de eventos de Economia. | Pursuit |
+| **4** Lun 23 nov | LlamarOleada, Observar | 6/7 · 86% | Pasos ligados a las fases del juego. | — |
+| **5** Mié 25 nov | Fin | 7/7 · 100% | Salto con tecla T, final y limpieza (sin dejar suscripciones). | — |
+| **6** Lun 30 nov | (pulido) | 7/7 · 100% | Pulido, mensajes bien escritos, cero basura, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/14-tutorial`  ·  **Avance esperado:** 2 de 7 estados (29%)
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_4.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Nuevo.** `class TutorialController : MonoBehaviour` dentro de `namespace Alumnos.Tutorial`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Bienvenida`. |
+| `TutorialBienvenida.cs` | **Nuevo.** `class TutorialBienvenida : Estado`. Mensaje de bienvenida 4 s. |
+| `TutorialElegirPlataforma.cs` | **Nuevo.** `class TutorialElegirPlataforma : Estado`. Pide hacer clic en una plataforma; espera ColocadorTorres.Elegido. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Controller + máquina; primeros dos pasos con TextoCentral.
+- Cómo probarlo: abre `Granero.unity` y pulsa Play. arranca solo con la escena (Juego crea TutorialController si existe)
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`.
+
+Todavía NO se pide: `TutorialConstruir`, `TutorialGemas`, `TutorialLlamarOleada`, `TutorialObservar`, `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/14-tutorial` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial
+git commit -m "clase 1: Tutorial - Bienvenida, ElegirPlataforma"
+git push -u origin clase-1/14-tutorial
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/14-tutorial`  ·  **Avance esperado:** 3 de 7 estados (43%)
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_5.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TutorialConstruir()`. |
+| `TutorialConstruir.cs` | **Nuevo.** `class TutorialConstruir : Estado`. Pide construir (1 o 2); espera que aparezca una torre. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Detecta que el jugador construyo.
+- Cómo probarlo: abre `Granero.unity` y pulsa Play. arranca solo con la escena (Juego crea TutorialController si existe)
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`, `TutorialConstruir`.
+
+Todavía NO se pide: `TutorialGemas`, `TutorialLlamarOleada`, `TutorialObservar`, `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/14-tutorial` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial
+git commit -m "clase 2: Tutorial - Construir"
+git push -u origin clase-2/14-tutorial
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/14-tutorial`  ·  **Avance esperado:** 4 de 7 estados (57%)  ·  **Steering:** Pursuit
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_6.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TutorialGemas()`. |
+| `TutorialGemas.cs` | **Nuevo.** `class TutorialGemas : Estado`. Explica gemas y plataformas bloqueadas (tecla U). |
+| `../Steering/SteeringPursuit.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Pursuit(Vector3 pos, Vector3 posObj, Vector3 velObj, float vMax, out Vector3 puntoFuturo)`. Prueba: Intercepta a un agente que camina en línea recta en mucho menos tiempo que Seek. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Explicacion de gemas y desbloqueo con detección de eventos de Economia.
+- Cómo probarlo: abre `Granero.unity` y pulsa Play. arranca solo con la escena (Juego crea TutorialController si existe)
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`, `TutorialConstruir`, `TutorialGemas` y las del steering de esta clase.
+
+Todavía NO se pide: `TutorialLlamarOleada`, `TutorialObservar`, `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/14-tutorial` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial  Assets/_Alumnos/Steering
+git commit -m "clase 3: Tutorial - Gemas"
+git push -u origin clase-3/14-tutorial
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/14-tutorial`  ·  **Avance esperado:** 6 de 7 estados (86%)
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_7.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TutorialLlamarOleada()`, `new TutorialObservar()`. |
+| `TutorialLlamarOleada.cs` | **Nuevo.** `class TutorialLlamarOleada : Estado`. Pide pulsar ESPACIO; espera Juego.Fase == Oleada. |
+| `TutorialObservar.cs` | **Nuevo.** `class TutorialObservar : Estado`. Comenta que las torres atacan; espera el fin de la oleada 1. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pasos ligados a las fases del juego.
+- Cómo probarlo: abre `Granero.unity` y pulsa Play. arranca solo con la escena (Juego crea TutorialController si existe)
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`, `TutorialConstruir`, `TutorialGemas`, `TutorialLlamarOleada`, `TutorialObservar`.
+
+Todavía NO se pide: `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/14-tutorial` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial
+git commit -m "clase 4: Tutorial - LlamarOleada, Observar"
+git push -u origin clase-4/14-tutorial
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/14-tutorial`  ·  **Avance esperado:** 7 de 7 estados (100%)
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_8.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new TutorialFin()`. |
+| `TutorialFin.cs` | **Nuevo.** `class TutorialFin : Estado`. Se despide y se desactiva. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Salto con tecla T, final y limpieza (sin dejar suscripciones).
+- Cómo probarlo: abre `Granero.unity` y pulsa Play. arranca solo con la escena (Juego crea TutorialController si existe)
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`, `TutorialConstruir`, `TutorialGemas`, `TutorialLlamarOleada`, `TutorialObservar`, `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/14-tutorial` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial
+git commit -m "clase 5: Tutorial - Fin"
+git push -u origin clase-5/14-tutorial
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/14-tutorial`  ·  **Avance esperado:** 7 de 7 estados (100%)
+
+![Diagrama de estados de Tutorial guiado](img/m14_tutorial_9.svg)
+
+| Archivo (en `Assets/_Alumnos/Tutorial/`) | Qué debe tener |
+| --- | --- |
+| `TutorialController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pulido, mensajes bien escritos, cero basura, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `TutorialBienvenida`, `TutorialElegirPlataforma`, `TutorialConstruir`, `TutorialGemas`, `TutorialLlamarOleada`, `TutorialObservar`, `TutorialFin`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Tutorial/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Tutorial` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/14-tutorial` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/14-tutorial
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Tutorial
+git commit -m "clase 6: Tutorial - pulido final"
+git push -u origin clase-6/14-tutorial
+```
 
 ### Rúbrica (igual en todas las clases)
 
