@@ -84,7 +84,7 @@
     ag.cuerpo.Mover(v, dt);
     ag.cuerpo.Mirar(v, dt);
     return null;
-}</pre><p>El estado decide <i>cu&aacute;ndo</i>; el steering decide <i>c&oacute;mo</i>. Si el responsable a&uacute;n no entrega su behaviour, calcula la direcci&oacute;n a mano y reempl&aacute;zala despu&eacute;s por la llamada a <code>Steering.X</code>.</p><h2>Anexo B: plantilla de un archivo de steering</h2><pre>// SteeringSeek.cs  (Assets/_Alumnos/Steering/)
+}</pre><p>El estado decide <i>cu&aacute;ndo</i>; el steering decide <i>c&oacute;mo</i>. Si el responsable a&uacute;n no entrega su behaviour, calcula la direcci&oacute;n a mano y reempl&aacute;zala despu&eacute;s por la llamada a <code>Steering.X</code>.</p><h2>Anexo B: plantilla de un archivo de steering</h2><pre>// SteeringSeek.cs  (Assets/_Alumnos/Steering/)  -- SIN namespace: Steering es una clase global
 using UnityEngine;
 
 public static partial class Steering

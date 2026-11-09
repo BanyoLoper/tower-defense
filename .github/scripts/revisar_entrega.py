@@ -42,6 +42,18 @@ def cambiados(base, ref):
     return sorted(set(res))
 
 
+TIPO_RE = re.compile(r"\b(?:class|struct|enum|interface)\s+([A-Za-z_]\w*)")
+
+
+def tipos_instructor(base):
+    out = git("ls-tree", "-r", "--name-only", base, "--", "Assets/_Granero").decode("utf-8", "replace")
+    nombres = set()
+    for p in out.splitlines():
+        if p.endswith(".cs"):
+            nombres.update(TIPO_RE.findall(leer(base, p).decode("utf-8", "replace")))
+    return nombres
+
+
 def cuerpo(src, metodo):
     m = re.search(r"\b" + metodo + r"\s*\([^)]*\)\s*\{", src)
     if not m:
@@ -169,16 +181,39 @@ def revisar(ref, rama, creado=None, base="origin/main"):
         t = leer(ref, p).decode("utf-8", "replace")
         if any(b > 127 for b in leer(ref, p)):
             add("aviso", "`%s` tiene caracteres no ASCII." % p)
+        if re.search(r"\bnamespace\b", t):
+            add("falta", "`%s` NO debe tener namespace: la clase `Steering` es global (partial)." % p)
+            continue
         if not re.search(r"partial\s+class\s+Steering\b", t) or not re.search(r"static\s+Vector3\s+%s\s*\(" % s["nombre"], t):
             add("falta", "`%s` debe ser `public static partial class Steering` con `public static Vector3 %s(...)`." % (p, s["nombre"]))
             continue
         res["st_ok"] += 1
         add("ok", "Steering `%s` presente." % s["nombre"])
 
+    # ---- namespace y nombres de clases
+    ns = "Alumnos." + c["clave"]
+    sin_ns = [f for f, t in sorted(src.items()) if not re.search(r"namespace\s+%s\b" % re.escape(ns), t)]
+    if sin_ns:
+        add("falta", "Estos archivos deben estar dentro de `namespace %s { ... }`: %s." % (ns, ", ".join("`%s`" % f for f in sin_ns[:8])))
+    elif src:
+        add("ok", "Todo tu codigo esta en `namespace %s`." % ns)
+    try:
+        reservados = tipos_instructor(base)
+    except Exception:
+        reservados = set()
+    propios_tipos = {}
+    for f, t in sorted(src.items()):
+        for n in TIPO_RE.findall(t):
+            propios_tipos.setdefault(n, f)
+    choques = sorted(n for n in propios_tipos if n in reservados)
+    if choques:
+        add("falta", "Nombres de clase que ya existen en el juego base (tapan a la del instructor): %s. Renombralas con el prefijo `%s`." % (", ".join("`%s`" % n for n in choques), c["clave"]))
+    sin_prefijo = sorted(n for n in propios_tipos if not (n.startswith(c["clave"]) or n.startswith("Probe")) and n not in reservados)
+    if sin_prefijo:
+        add("aviso", "Clases sin el prefijo `%s`: %s." % (c["clave"], ", ".join("`%s`" % n for n in sin_prefijo[:8])))
+
     # ---- calidad (avisos, no bloquean)
     for f, t in sorted(src.items()):
-        if re.search(r"\bnamespace\b", t):
-            add("aviso", "`%s` usa namespace: el proyecto no usa namespaces." % f)
         if "System.Linq" in t:
             add("aviso", "`%s` usa LINQ (genera basura)." % f)
         act = cuerpo(t, "Actualizar") + cuerpo(t, "Update")

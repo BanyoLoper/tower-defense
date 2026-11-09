@@ -1,7 +1,7 @@
 # Granero de Cristales - Directrices del proyecto
 
 ## Reglas de codigo (para los alumnos)
-- C# sin namespace, solo ASCII (sin acentos ni enie en el codigo; si en comentarios).
+- C# solo ASCII (sin acentos ni enie en el codigo; si en comentarios). El codigo del instructor (`_Granero`) no usa namespace; el de los alumnos va en `namespace Alumnos.<Maquina>` (los `Steering*.cs` sin namespace). `BuscadorTipos` encuentra los controllers por nombre corto.
 - Un estado = una clase que hereda de `Estado`. Un controller = un MonoBehaviour llamado `<Rol>Controller`.
 - La animacion la pide el estado: `agente.Animar(Anim.Correr)`. El Animator no tiene transiciones.
 - Movimiento solo con `Cuerpo.Mover(velocidadDeseada, dt)`. No hay NavMeshAgent.
@@ -38,3 +38,39 @@ Si la ruta es larga, Unity puede dar `DirectoryNotFoundException` en `Library\Pa
 - Estados (`EstadoSlot`): Bloqueado (rojo + candado), Comprable (naranja, alcanzan las gemas), Libre (azul), Elegido (amarillo), Ocupado (gris).
 - 4 plataformas abiertas al inicio; cada oleada superada abre 2 mas (`nivelRequerido`). Con la plataforma elegida, `U` la abre pagando `precioDesbloqueo`.
 - Los colores se actualizan por eventos (gemas / cambio de juego), nunca por frame.
+
+## Maquinas de estados que YA trae la base (ejemplos de referencia)
+Todas usan `Estado` / `Contexto` / `Maquina` del proyecto. Son pequenas a proposito: leelas antes de escribir las tuyas.
+| Maquina | Archivo | Estados | Quien la dispara |
+|---|---|---|---|
+| Aspecto del granero | `Scripts/Estados/GraneroEstados.cs` | GraneroSano, GraneroDanado, GraneroCritico, GraneroDestello, GraneroDestruido | eventos de `Salud` del granero. Usa el efecto Hit de AllIn13D y rompe cristales |
+| Texto central | `Scripts/Estados/TextoCentral.cs` | TextoOculto, TextoEntrando, TextoMantener, TextoSaliendo | `Juego.AlAcercarse / AlComenzar / AlCambiarFase`; tambien `TextoCentral.I.Mostrar(...)` |
+| Camara | `Scripts/Base/CamaraRTS.cs` | CamLibre, CamSacudida, CamVictoria, CamDerrota | `CamaraRTS.I.Sacudir(fuerza)` y `Juego.AlCambiarFase` |
+| Plataforma (visual) | `Scripts/Base/SlotTorre.cs` | SlotReposo, SlotHover, SlotDesbloqueo | `ColocadorTorres` (mouse encima) y el desbloqueo |
+
+Eventos de `Juego` para tus maquinas: `AlAcercarse(nivel)`, `AlComenzar(nivel)`, `AlCambiarFase(fase)`.
+Festejo: en `FaseJuego.Victoria` celebran los defensores/aldeanos; en `Derrota` celebran los enemigos y los aliados lloran
+(ver `CerebroDemo.Fin()`; tu maquina solo necesita un estado "Festejo" y un trigger "victoria"/"derrota").
+
+### Ideas para ampliar o crear maquinas (candidatas para los alumnos)
+- Director de oleadas (GameManager): Preparacion -> Aviso -> Oleada -> Pausa -> Jefe -> Victoria/Derrota. Reemplaza al `Juego` demo.
+- Torre: Vigilando -> Apuntando -> Disparando -> Recargando -> Danada -> Destruida (+ mejora de nivel).
+- Plataforma (logica): Bloqueada -> Comprable -> Libre -> Construyendo -> Ocupada -> Vendiendo.
+- Tienda/Economia: Normal -> Ahorrando -> Gastando -> Quiebra (cambia el color del contador de gemas).
+- Musica/ambiente: Calma -> Tension -> Combate -> Jefe -> Fin (cuando exista audio).
+- Tutorial: pasos guiados con `TextoCentral` (clic en plataforma, construir, llamar oleada).
+- Ladron: Acechar -> Robar -> Huir -> Derrotado (ya esta en el demo sin maquina).
+
+## Catalogo de efectos (`Efectos.Reproducir`)
+Una linea, sin crear particulas: `Efectos.Reproducir(Fx.Explosion, posicion, escala);`
+| Fx | Que es | Uso sugerido |
+|---|---|---|
+| Impacto | onda de choque corta | golpe, romper cristal |
+| Explosion | bola de fuego grande | muerte del jefe, bomba |
+| Curacion | destello de curacion | reparador, curar |
+| Desbloqueo | aura brillante | desbloquear plataforma, subir de nivel |
+| Rayo | rayo desde el cielo | ataque especial |
+| Escudo | escudo magico | bloqueo, proteccion |
+| Fuego / Hielo | aura de fuego / hielo | estados alterados, torre maga |
+| OndaSuelo / Aura | onda en el suelo | aparicion de jefe, aviso |
+Usan la `Reserva` (pool): no hay basura. Escalas y prefabs se ajustan en el objeto `Efectos` de la escena.

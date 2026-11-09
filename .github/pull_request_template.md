@@ -12,7 +12,8 @@
 - [ ] Solo cambie archivos de mi carpeta `Assets/_Alumnos/<Maquina>/` (y mis `Steering*.cs`)
 - [ ] Subi tambien los `.meta` de mis archivos
 - [ ] Probe mi maquina en Play con el prefab real y no hay errores en la consola
-- [ ] Codigo en ASCII, una clase por estado con el prefijo del rol
+- [ ] Codigo en ASCII y dentro de `namespace Alumnos.<MiMaquina>` (los `Steering*.cs` van sin namespace)
+- [ ] Una clase por estado con el prefijo del rol y sin repetir nombres de clases del juego base
 - [ ] Sin `new`, LINQ ni `GetComponent`/`Find` dentro de `Actualizar`
 
 > Al crear el PR se ejecuta la revision automatica: lee el comentario que deja en el PR para ver que falta.

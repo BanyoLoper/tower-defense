@@ -30,8 +30,9 @@ Assets/_Alumnos/<TuMaquina>/        <- tus estados y tu controller (ej. MagoEnem
 Assets/_Alumnos/Steering/           <- solo tus archivos Steering<Nombre>.cs
 ```
 
-- Una clase por estado, en su propio archivo, con el prefijo del rol: `MagoEnemigoLanzar.cs` -> `class MagoEnemigoLanzar : Estado`.
-- Tu controller se llama `<Maquina>Controller` (ej. `MagoEnemigoController`) y registra todos tus estados.
+- **Todo tu codigo va dentro de `namespace Alumnos.<TuMaquina>`** (ej. `namespace Alumnos.MagoEnemigo { ... }`). Excepcion: los archivos `Steering*.cs` **no** llevan namespace (`Steering` es una clase global parcial).
+- Una clase por estado, en su propio archivo, con el prefijo del rol: `MagoEnemigoLanzar.cs` -> `class MagoEnemigoLanzar : Estado`. Ninguna clase puede llamarse igual que una del juego base (`Sensor`, `Agente`, `Juego`...): taparia la del instructor.
+- Tu controller se llama `<Maquina>Controller` (ej. `MagoEnemigoController`), hereda de `MonoBehaviour` y registra todos tus estados. El juego lo encuentra solo por su nombre, aunque este dentro de tu namespace.
 - **Solo puedes modificar archivos de tu carpeta.** Si Unity cambia otros archivos (escenas, ProjectSettings...), NO los subas (ver "Problemas comunes").
 - Codigo en ASCII (sin acentos ni enes), sin LINQ y sin `new`/`GetComponent`/`Find` dentro de `Actualizar`.
 

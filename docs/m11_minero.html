@@ -65,6 +65,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Alumnos.Minero
+{
 public class MineroController : MonoBehaviour
 {
     Maquina maq;
@@ -94,8 +96,13 @@ public class MineroController : MonoBehaviour
 
     void Update() { maq.Actualizar(Time.deltaTime); }
 }
+}
 
-// MineroIrAMina.cs  (un archivo por estado; el nombre de la clase lleva el prefijo del rol)
+// MineroIrAMina.cs  (un archivo por estado; mismo namespace y prefijo del rol)
+using UnityEngine;
+
+namespace Alumnos.Minero
+{
 public class MineroIrAMina : Estado
 {
     float t;
@@ -112,7 +119,8 @@ public class MineroIrAMina : Estado
         return null;
     }
     public override string AlRecibir(string trigger, int valor) { return null; }
+}
 }</pre>
-<h2>7. Reglas que se califican siempre</h2><ul><li>Una clase por estado, hereda de <code>Estado</code>, nombre con prefijo del rol.</li><li>Nada de <code>new</code>, LINQ, <code>GetComponent</code> ni <code>Find</code> dentro de <code>Actualizar</code>: guarda referencias en <code>Entrar</code> o en el Contexto.</li><li>El Sensor se consulta cada 0.2 s, no cada frame.</li><li>Suscripciones a eventos en <code>OnEnable</code>, baja en <code>OnDisable</code> (los agentes se reutilizan).</li><li>Todo el c&oacute;digo en ASCII (sin acentos ni &ntilde;).</li></ul>
+<h2>7. Reglas que se califican siempre</h2><ul><li>Todo tu c&oacute;digo va dentro de <code>namespace Alumnos.&lt;TuMaquina&gt;</code> (ej. <code>Alumnos.MagoEnemigo</code>). Los archivos <code>Steering*.cs</code> NO llevan namespace.</li><li>Una clase por estado, hereda de <code>Estado</code>, nombre con prefijo del rol. Ninguna clase puede llamarse igual que una del juego base.</li><li>Nada de <code>new</code>, LINQ, <code>GetComponent</code> ni <code>Find</code> dentro de <code>Actualizar</code>: guarda referencias en <code>Entrar</code> o en el Contexto.</li><li>El Sensor se consulta cada 0.2 s, no cada frame.</li><li>Suscripciones a eventos en <code>OnEnable</code>, baja en <code>OnDisable</code> (los agentes se reutilizan).</li><li>Todo el c&oacute;digo en ASCII (sin acentos ni &ntilde;).</li></ul>
 <div class="foot">Defender el Granero de Cristales &middot; Cuarto parcial &middot; Documento de trabajo. Todo el c&oacute;digo del alumno va en ASCII (sin acentos ni e&ntilde;es).</div>
 </div></body></html>
