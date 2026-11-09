@@ -28,7 +28,13 @@ Edita `.github/entregas/calendario.json` (las fechas que trae son de ejemplo). L
 
 `clase-<N>/<cupo 01-14>-<maquina en minusculas>`, por ejemplo `clase-2/05-magoenemigo`. El cupo y la maquina deben corresponder a la tabla de `criterios.json`.
 
-## 5. Estructura de carpetas
+## 5. Namespaces y nombres de clases
+
+- Cada alumno trabaja en `namespace Alumnos.<Maquina>`; `Steering*.cs` va sin namespace. `BuscadorTipos` (en `Scripts/Base`) encuentra `<Rol>Controller`, `DirectorController` y `TutorialController` por nombre corto, sin importar el namespace.
+- La Action marca como falta: archivos fuera del namespace, nombres de clase que ya existen en `Assets/_Granero` (tapan la del instructor) y steering con namespace. Avisa si una clase no lleva el prefijo del rol.
+- Si dos controllers tienen el mismo nombre en distintos namespaces, `BuscadorTipos` deja un aviso en consola.
+
+## 6. Estructura de carpetas
 
 - `Assets/_Granero/` base del juego (instructor). Los alumnos no la tocan.
 - `Assets/_Alumnos/<Maquina>/` y `Assets/_Alumnos/Steering/` codigo de los alumnos (con sus `.meta` ya creados, para evitar conflictos de GUID).

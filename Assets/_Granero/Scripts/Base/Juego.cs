@@ -79,9 +79,9 @@ public class Juego : MonoBehaviour
 
     void Start()
     {
-        Type td = Type.GetType("DirectorController");
+        Type td = BuscadorTipos.Buscar("DirectorController");
         if (td != null && typeof(MonoBehaviour).IsAssignableFrom(td)) { ControlExterno = true; gameObject.AddComponent(td); }
-        Type tt = Type.GetType("TutorialController");
+        Type tt = BuscadorTipos.Buscar("TutorialController");
         if (tt != null && typeof(MonoBehaviour).IsAssignableFrom(tt)) gameObject.AddComponent(tt);
         Economia.Reiniciar(gemasIniciales);
         Fase = FaseJuego.Preparacion;

@@ -63,8 +63,10 @@ public class DemoEspera : Estado
     }
 }</pre>
 <h2>4. Convenciones (se califican)</h2><div class='tw'><table><tr><th>Regla</th><th>Por qu&eacute;</th></tr>
-<tr><td>Nombre de clase = <code>&lt;Rol&gt;&lt;Estado&gt;</code> (<code>SoldadoAtacar</code>)</td><td>El proyecto no usa namespaces: dos alumnos con una clase <code>Atacar</code> chocan y Unity no compila.</td></tr>
+<tr><td>Todo dentro de <code>namespace Alumnos.&lt;TuMaquina&gt;</code></td><td>Aisla tu c&oacute;digo del de los dem&aacute;s: dos alumnos pueden tener una clase con el mismo nombre sin chocar. El <code>ControladorAuto</code> encuentra tu controller aunque est&eacute; en un namespace.</td></tr>
+<tr><td>Nombre de clase = <code>&lt;Rol&gt;&lt;Estado&gt;</code> (<code>SoldadoAtacar</code>)</td><td>Evita chocar con las clases del juego base (<code>Sensor</code>, <code>Agente</code>...): una clase tuya con ese nombre tapar&iacute;a la del instructor dentro de tu namespace.</td></tr>
 <tr><td>Un archivo por estado</td><td>Facilita el trabajo en equipo y el control de versiones.</td></tr>
+<tr><td>Los archivos <code>Steering*.cs</code> van SIN namespace</td><td><code>Steering</code> es una clase parcial global; todos los behaviours deben ser parte de ella.</td></tr>
 <tr><td>Los estados no se referencian entre s&iacute;; solo devuelven nombres</td><td>As&amp;iacute; se puede quitar o agregar un estado sin romper los dem&amp;aacute;s.</td></tr>
 <tr><td>Datos compartidos en el Contexto</td><td>El estado no guarda referencias a otros estados.</td></tr>
 <tr><td>Nada de <code>new</code>, LINQ, <code>Find</code>, <code>GetComponent</code> en <code>Actualizar</code></td><td>Rendimiento: el juego debe mantener 60 fps con 100+ agentes.</td></tr>
