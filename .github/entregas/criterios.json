@@ -1,0 +1,575 @@
+{
+ "cupos": {
+  "01": {
+   "clave": "Soldado",
+   "titulo": "Soldado enemigo",
+   "controller": "SoldadoController",
+   "carpeta": "Soldado",
+   "estados": [
+    {
+     "nombre": "Avanzar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Perseguir",
+     "clase": 2
+    },
+    {
+     "nombre": "Atacar",
+     "clase": 3
+    },
+    {
+     "nombre": "Aturdido",
+     "clase": 4
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "PathFollowing",
+     "clase": 2
+    }
+   ]
+  },
+  "02": {
+   "clave": "Bruto",
+   "titulo": "Bruto (enemigo pesado)",
+   "controller": "BrutoController",
+   "carpeta": "Bruto",
+   "estados": [
+    {
+     "nombre": "Avanzar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Perseguir",
+     "clase": 2
+    },
+    {
+     "nombre": "CargarGolpe",
+     "clase": 3
+    },
+    {
+     "nombre": "GolpePesado",
+     "clase": 3
+    },
+    {
+     "nombre": "Recuperar",
+     "clase": 4
+    },
+    {
+     "nombre": "Furia",
+     "clase": 5
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Arrive",
+     "clase": 2
+    }
+   ]
+  },
+  "03": {
+   "clave": "Jefe",
+   "titulo": "Jefe (final de la oleada 5)",
+   "controller": "JefeController",
+   "carpeta": "Jefe",
+   "estados": [
+    {
+     "nombre": "Aparicion",
+     "clase": 1
+    },
+    {
+     "nombre": "Avanzar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Atacar",
+     "clase": 2
+    },
+    {
+     "nombre": "Invocar",
+     "clase": 3
+    },
+    {
+     "nombre": "OndaChoque",
+     "clase": 4
+    },
+    {
+     "nombre": "Furia",
+     "clase": 5
+    }
+   ],
+   "steering": []
+  },
+  "04": {
+   "clave": "Lancero",
+   "titulo": "Lancero enemigo",
+   "controller": "LanceroController",
+   "carpeta": "Lancero",
+   "estados": [
+    {
+     "nombre": "Avanzar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Acercarse",
+     "clase": 2
+    },
+    {
+     "nombre": "Estocada",
+     "clase": 3
+    },
+    {
+     "nombre": "Retroceder",
+     "clase": 4
+    },
+    {
+     "nombre": "Aturdido",
+     "clase": 5
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Seek",
+     "clase": 1
+    }
+   ]
+  },
+  "05": {
+   "clave": "MagoEnemigo",
+   "titulo": "Mago enemigo",
+   "controller": "MagoEnemigoController",
+   "carpeta": "MagoEnemigo",
+   "estados": [
+    {
+     "nombre": "Avanzar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Posicionarse",
+     "clase": 2
+    },
+    {
+     "nombre": "Lanzar",
+     "clase": 3
+    },
+    {
+     "nombre": "Recargar",
+     "clase": 3
+    },
+    {
+     "nombre": "Huir",
+     "clase": 4
+    },
+    {
+     "nombre": "Aturdido",
+     "clase": 5
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": []
+  },
+  "06": {
+   "clave": "Ladron",
+   "titulo": "Ladron",
+   "controller": "LadronController",
+   "carpeta": "Ladron",
+   "estados": [
+    {
+     "nombre": "Merodear",
+     "clase": 1
+    },
+    {
+     "nombre": "Acercarse",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Robar",
+     "clase": 2
+    },
+    {
+     "nombre": "Huir",
+     "clase": 3
+    },
+    {
+     "nombre": "Escapar",
+     "clase": 4
+    },
+    {
+     "nombre": "Aturdido",
+     "clase": 5
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": []
+  },
+  "07": {
+   "clave": "TorreLanzadora",
+   "titulo": "Torre lanzadora",
+   "controller": "TorreLanzadoraController",
+   "carpeta": "TorreLanzadora",
+   "estados": [
+    {
+     "nombre": "Vigilando",
+     "clase": 1
+    },
+    {
+     "nombre": "Destruida",
+     "clase": 1
+    },
+    {
+     "nombre": "Apuntando",
+     "clase": 2
+    },
+    {
+     "nombre": "Disparando",
+     "clase": 3
+    },
+    {
+     "nombre": "Recargando",
+     "clase": 3
+    },
+    {
+     "nombre": "Danada",
+     "clase": 4
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Hide",
+     "clase": 4
+    }
+   ]
+  },
+  "08": {
+   "clave": "TorreMaga",
+   "titulo": "Torre maga",
+   "controller": "TorreMagaController",
+   "carpeta": "TorreMaga",
+   "estados": [
+    {
+     "nombre": "Vigilando",
+     "clase": 1
+    },
+    {
+     "nombre": "Destruida",
+     "clase": 1
+    },
+    {
+     "nombre": "Cargando",
+     "clase": 2
+    },
+    {
+     "nombre": "Lanzando",
+     "clase": 3
+    },
+    {
+     "nombre": "Enfriando",
+     "clase": 3
+    },
+    {
+     "nombre": "Sobrecarga",
+     "clase": 4
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "ObstacleAvoidance",
+     "clase": 4
+    }
+   ]
+  },
+  "09": {
+   "clave": "Guardia",
+   "titulo": "Guardia de la aldea",
+   "controller": "GuardiaController",
+   "carpeta": "Guardia",
+   "estados": [
+    {
+     "nombre": "Patrullar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Perseguir",
+     "clase": 2
+    },
+    {
+     "nombre": "Combatir",
+     "clase": 3
+    },
+    {
+     "nombre": "Alertar",
+     "clase": 4
+    },
+    {
+     "nombre": "Regresar",
+     "clase": 5
+    },
+    {
+     "nombre": "Descansar",
+     "clase": 5
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Flee",
+     "clase": 1
+    }
+   ]
+  },
+  "10": {
+   "clave": "Aldeano",
+   "titulo": "Aldeano",
+   "controller": "AldeanoController",
+   "carpeta": "Aldeano",
+   "estados": [
+    {
+     "nombre": "Vagar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "Asustarse",
+     "clase": 2
+    },
+    {
+     "nombre": "Huir",
+     "clase": 2
+    },
+    {
+     "nombre": "Esconderse",
+     "clase": 3
+    },
+    {
+     "nombre": "Charlar",
+     "clase": 4
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Wander",
+     "clase": 3
+    }
+   ]
+  },
+  "11": {
+   "clave": "Minero",
+   "titulo": "Minero",
+   "controller": "MineroController",
+   "carpeta": "Minero",
+   "estados": [
+    {
+     "nombre": "IrAMina",
+     "clase": 1
+    },
+    {
+     "nombre": "Minar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "IrAlGranero",
+     "clase": 2
+    },
+    {
+     "nombre": "Depositar",
+     "clase": 2
+    },
+    {
+     "nombre": "Huir",
+     "clase": 3
+    },
+    {
+     "nombre": "Esconderse",
+     "clase": 4
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": []
+  },
+  "12": {
+   "clave": "Reparador",
+   "titulo": "Reparador",
+   "controller": "ReparadorController",
+   "carpeta": "Reparador",
+   "estados": [
+    {
+     "nombre": "Esperar",
+     "clase": 1
+    },
+    {
+     "nombre": "Muerto",
+     "clase": 1
+    },
+    {
+     "nombre": "IrAReparar",
+     "clase": 2
+    },
+    {
+     "nombre": "Martillar",
+     "clase": 3
+    },
+    {
+     "nombre": "Huir",
+     "clase": 4
+    },
+    {
+     "nombre": "Festejo",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Evade",
+     "clase": 3
+    }
+   ]
+  },
+  "13": {
+   "clave": "Director",
+   "titulo": "Director de oleadas (GameManager)",
+   "controller": "DirectorController",
+   "carpeta": "Director",
+   "estados": [
+    {
+     "nombre": "Preparacion",
+     "clase": 1
+    },
+    {
+     "nombre": "Aviso",
+     "clase": 1
+    },
+    {
+     "nombre": "Oleada",
+     "clase": 2
+    },
+    {
+     "nombre": "Limpieza",
+     "clase": 3
+    },
+    {
+     "nombre": "Bono",
+     "clase": 3
+    },
+    {
+     "nombre": "Jefe",
+     "clase": 4
+    },
+    {
+     "nombre": "Victoria",
+     "clase": 4
+    },
+    {
+     "nombre": "Derrota",
+     "clase": 4
+    }
+   ],
+   "steering": []
+  },
+  "14": {
+   "clave": "Tutorial",
+   "titulo": "Tutorial guiado",
+   "controller": "TutorialController",
+   "carpeta": "Tutorial",
+   "estados": [
+    {
+     "nombre": "Bienvenida",
+     "clase": 1
+    },
+    {
+     "nombre": "ElegirPlataforma",
+     "clase": 1
+    },
+    {
+     "nombre": "Construir",
+     "clase": 2
+    },
+    {
+     "nombre": "Gemas",
+     "clase": 3
+    },
+    {
+     "nombre": "LlamarOleada",
+     "clase": 4
+    },
+    {
+     "nombre": "Observar",
+     "clase": 4
+    },
+    {
+     "nombre": "Fin",
+     "clase": 5
+    }
+   ],
+   "steering": [
+    {
+     "nombre": "Pursuit",
+     "clase": 3
+    }
+   ]
+  }
+ }
+}

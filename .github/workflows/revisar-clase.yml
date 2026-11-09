@@ -1,0 +1,35 @@
+name: Revisar entregas de una clase (manual)
+
+# Ejecutar a mano despues de la fecha limite: Actions > Revisar entregas de una clase > Run workflow.
+# Revisa el primer PR de cada cupo con rama clase-N/*, marca los que llegaron tarde y los cupos sin entrega.
+on:
+  workflow_dispatch:
+    inputs:
+      clase:
+        description: "Numero de clase"
+        required: true
+        type: choice
+        options: ["1", "2", "3", "4", "5", "6"]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Revisar todas las entregas de la clase
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/revisar_clase.py --clase "${{ inputs.clase }}"
+      - name: Guardar reporte
+        uses: actions/upload-artifact@v4
+        with:
+          name: entregas-clase-${{ inputs.clase }}
+          path: |
+            reporte_clase.md
+            entregas_clase${{ inputs.clase }}.csv

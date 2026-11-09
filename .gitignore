@@ -1,0 +1,74 @@
+# ===== Unity: carpetas generadas (se regeneran al abrir el proyecto) =====
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Herramientas del instructor (puente de automatizacion local)
+/BridgeCmd/
+
+# Carpetas de Asset Store descargadas
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Proyectos generados por el IDE (los regenera Unity)
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
+.vscode/
+.idea/
+.gradle/
+ExportedObj/
+.consulo/
+
+# Compilados / paquetes de salida
+*.apk
+*.aab
+*.unitypackage
+*.app
+crashlytics-build.properties
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Basura de Unity
+sysinfo.txt
+*.log
+
+# ===== IMPORTANTE: NO ignorar los textos ni los .meta =====
+# Los .meta guardan los GUID: sin ellos se rompen las referencias entre archivos.
+!*.meta
+!/[Aa]ssets/**/*.txt
+!/[Aa]ssets/**/*.md
+!/[Aa]ssets/**/*.json
+!/[Aa]ssets/**/*.xml
+!/[Aa]ssets/**/*.csv
+!/[Aa]ssets/TextMesh Pro/**
+!/[Pp]ackages/manifest.json
+!/[Pp]ackages/packages-lock.json
+!/[Pp]rojectSettings/**
+
+# Salidas temporales del puente del instructor (se generan solas)
+/Assets/_Granero/Editor/*.log
+/Assets/_Granero/Editor/alive.txt
+/Assets/_Granero/Editor/*.png
+/Assets/_Granero/Editor/*.png.meta

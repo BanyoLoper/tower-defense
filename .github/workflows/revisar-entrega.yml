@@ -1,0 +1,73 @@
+name: Revisar entrega (PR)
+
+# Se ejecuta solo en cada PR hacia main y tambien a mano (rama = nombre de la rama a revisar).
+# Usa pull_request_target: el script se toma SIEMPRE de main (el alumno no puede modificarlo)
+# y solo LEE el contenido de la rama del alumno; nunca ejecuta su codigo.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      rama:
+        description: "Rama a revisar (ej. clase-2/05-magoenemigo)"
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: revisar-${{ github.event.pull_request.number || inputs.rama }}
+  cancel-in-progress: true
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Traer repo (base)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Traer la rama del alumno (solo lectura)
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          RAMA: ${{ github.event.pull_request.head.ref || inputs.rama }}
+        run: |
+          if [ -n "$PR" ]; then
+            git fetch -q origin "+refs/pull/$PR/head:refs/remotes/origin/entrega"
+          else
+            git fetch -q origin "+refs/heads/$RAMA:refs/remotes/origin/entrega"
+          fi
+
+      - name: Revisar entrega
+        id: rev
+        env:
+          RAMA: ${{ github.event.pull_request.head.ref || inputs.rama }}
+          CREADO: ${{ github.event.pull_request.created_at }}
+        run: |
+          set +e
+          python3 .github/scripts/revisar_entrega.py --ref origin/entrega --rama "$RAMA" --creado "$CREADO" --salida reporte.md
+          echo "codigo=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Publicar o actualizar comentario en el PR
+        if: github.event.pull_request.number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          ID=$(gh api "repos/${{ github.repository }}/issues/$PR/comments" --paginate \
+               --jq '[.[] | select(.body | contains("<!-- revision-entrega -->"))] | last | .id // empty')
+          if [ -n "$ID" ]; then
+            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$ID" -F body=@reporte.md >/dev/null
+          else
+            gh api -X POST "repos/${{ github.repository }}/issues/$PR/comments" -F body=@reporte.md >/dev/null
+          fi
+
+      - name: Resultado
+        if: steps.rev.outputs.codigo != '0'
+        run: |
+          echo "La entrega esta INCOMPLETA (ver el reporte). Este check no bloquea el merge: lo decide el instructor."
+          exit 1
