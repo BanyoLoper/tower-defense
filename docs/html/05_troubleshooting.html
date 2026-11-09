@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Troubleshooting - Defender el Granero</title>
+<style>
+.gr{--bg:#fff;--fg:#1d2433;--mut:#5d6679;--bd:#d9deea;--soft:#f4f6fb;--ac:#1f5fd6;--ac2:#e8f0ff;--ok:#1e8e4e;--warn:#b86e00;--bad:#c0392b;
+ font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--fg);background:var(--bg);max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+.gr *{box-sizing:border-box}
+.gr h1{font-size:26px;line-height:1.2;margin:.2em 0 .3em}.gr h2{font-size:19px;margin:1.8em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--ac2)}.gr h3{font-size:16px;margin:1.2em 0 .4em}
+.gr p{margin:.5em 0}.gr a{color:var(--ac)}.gr small,.gr .mut{color:var(--mut)}
+.gr nav.top{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;font-size:13px}
+.gr nav.top a{padding:4px 10px;border:1px solid var(--bd);border-radius:999px;text-decoration:none;background:var(--soft)}
+.gr nav.top a.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.gr .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.gr .chip{border:1px solid var(--bd);background:var(--soft);border-radius:8px;padding:6px 10px;font-size:13px}
+.gr .chip b{display:block;font-size:17px}
+.gr .badge{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid transparent}
+.gr .t1{background:#e6f6ec;color:#17693a;border-color:#bfe5cd}.gr .t2{background:#fff5da;color:#8a5a00;border-color:#f0dc9b}.gr .t3{background:#ffe9d6;color:#9a4a00;border-color:#f3c39b}.gr .t4{background:#fde3e1;color:#a02a1f;border-color:#f1b4ae}
+.gr .tw{overflow-x:auto;margin:8px 0}
+.gr table{border-collapse:collapse;width:100%;font-size:13.5px}
+.gr th,.gr td{border:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}
+.gr th{background:var(--soft);font-weight:600;white-space:nowrap}
+.gr td.n,.gr th.n{text-align:right;white-space:nowrap}
+.gr tr.tot td{font-weight:700;background:var(--soft)}
+.gr code,.gr pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.gr code{background:var(--soft);padding:1px 4px;border-radius:4px}
+.gr pre{background:#0f1729;color:#e6ecff;padding:12px 14px;border-radius:8px;overflow-x:auto;line-height:1.45}
+.gr .box{border:1px solid var(--bd);border-left:4px solid var(--ac);background:var(--soft);padding:8px 12px;border-radius:6px;margin:10px 0}
+.gr .box.w{border-left-color:var(--warn)}.gr .box.g{border-left-color:var(--ok)}
+.gr .diag{border:1px solid var(--bd);border-radius:8px;padding:6px;overflow-x:auto;background:#fff}
+.gr .diag svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.gr .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.gr .card{border:1px solid var(--bd);border-radius:8px;padding:10px 12px;background:#fff}
+.gr .bar{height:8px;background:var(--ac2);border-radius:4px;min-width:60px}.gr .bar i{display:block;height:8px;background:var(--ac);border-radius:4px}
+.gr .foot{margin-top:36px;font-size:12px;color:var(--mut);border-top:1px solid var(--bd);padding-top:8px}
+@media print{.gr nav.top{display:none}.gr pre{white-space:pre-wrap}.gr h2{break-after:avoid}.gr .diag,.gr table{break-inside:avoid}}
+</style></head>
+<body style="margin:0">
+<div class="gr">
+<h1>Troubleshooting: el pipeline fall&oacute; o Git se queja</h1>
+<p>Todo se resuelve desde la consola. Busca el mensaje <b>tal como aparece</b> en el comentario del Action o en tu terminal. Usa <b>Git Bash</b> (viene con Git para Windows): todos los comandos funcionan ah&iacute;. En PowerShell los de <code>grep</code>, <code>ls</code> y <code>sed</code> tienen equivalente indicado o usa <code>Select-String</code>/<code>dir</code>. Los ejemplos usan MagoEnemigo (cupo 05, clase 2): cambia los nombres por los tuyos.</p>
+<h2>0. Antes de nada: lee el reporte desde la consola</h2>
+<pre>gh pr view --comments       # el comentario del Action con lo que falta (X) y los avisos
+gh pr checks                # estado del check (verde / rojo)
+gh run list --limit 5       # ejecuciones recientes del Action
+gh run view --log-failed    # el log si el Action mismo se rompio</pre>
+<div class='tw'><table><tr><th>Icono</th><th>Significa</th><th>&iquest;Bloquea?</th></tr><tr><td>&#9989;</td><td>Cumple</td><td>-</td></tr><tr><td>&#10060;</td><td>Falta algo obligatorio: el instructor no aprobar&aacute; el PR as&iacute;</td><td>S&iacute; (para aprobar)</td></tr><tr><td>&#9888;&#65039;</td><td>Aviso de calidad: baja puntos en &ldquo;C&oacute;digo y rendimiento&rdquo; pero no impide el merge</td><td>No</td></tr></table></div>
+<p>El check sale en rojo mientras haya al menos un &#10060;. Cuando corriges y haces push, se ejecuta otra vez solo.</p>
+<h2>1. Mensajes del pipeline (&#10060; obligatorios)</h2>
+<h3>Nombre de rama invalido: ...</h3><p><b>Por qu&eacute;:</b> la rama no sigue <code>clase-&lt;1..6&gt;/&lt;cupo 01..14&gt;-&lt;maquina en min&uacute;sculas&gt;</code>. El Action usa el nombre para saber qui&eacute;n eres y qu&eacute; revisar.</p><pre>git branch --show-current                     # ve el nombre actual
+git branch -m clase-2/05-magoenemigo          # renombra la rama local
+git push -u origin clase-2/05-magoenemigo     # sube la rama con el nombre bueno
+git push origin --delete nombre-viejo         # borra la rama mala del remoto (cierra el PR viejo)
+gh pr create --base main --title &quot;Clase 2 - MagoEnemigo (cupo 05)&quot; --fill</pre><p>Un PR no puede cambiar de rama: se crea uno nuevo. Si ya pas&oacute; el l&iacute;mite avisa al instructor; el PR original muestra cu&aacute;ndo entregaste.</p>
+<h3>El cupo NN es X: la rama debe terminar en -x</h3><p><b>Por qu&eacute;:</b> el n&uacute;mero de cupo y el nombre de la m&aacute;quina no coinciden (por ejemplo <code>clase-2/05-ladron</code>: el cupo 05 es MagoEnemigo).</p><pre># mismo procedimiento que &#x27;Nombre de rama invalido&#x27;
+git branch -m clase-2/05-magoenemigo
+git push -u origin clase-2/05-magoenemigo
+git push origin --delete clase-2/05-ladron</pre>
+<h3>Entrega TARDIA</h3><p><b>Por qu&eacute;:</b> el PR se cre&oacute; despu&eacute;s de la fecha l&iacute;mite de esa clase (23:59 hora CDMX). Se mide al <b>crear</b> el PR, no al &uacute;ltimo commit.</p><pre>gh pr view --json createdAt,headRefName     # cuando se creo tu PR
+# no hay arreglo tecnico: habla con el instructor. Para la siguiente clase crea el PR el mismo dia.</pre>
+<h3>Modificaste N archivo(s) que no son tuyos</h3><p><b>Por qu&eacute;:</b> tu rama cambia archivos fuera de tu carpeta (casi siempre Unity toca <code>ProjectSettings</code>, <code>Packages</code> o escenas al abrir el proyecto).</p><pre># 1) mira cuales son
+git fetch origin
+git diff --name-only origin/main...HEAD
+
+# 2) los que ya existen en main: vuelve a dejarlos como estan en main
+git checkout origin/main -- ProjectSettings Packages Assets/_Granero
+
+# 3) los que NO existen en main (archivos nuevos ajenos): quitalos
+git rm -r -f --ignore-unmatch ruta/del/archivo/nuevo
+
+# 4) guarda y sube
+git commit -m &quot;quitar archivos ajenos&quot;
+git push</pre><p>Para listar solo lo ajeno de una vez (Git Bash): <code>git diff --name-only origin/main...HEAD | grep -v '^Assets/_Alumnos/MagoEnemigo/'</code>. En PowerShell: <code>git diff --name-only origin/main...HEAD | Select-String -NotMatch '^Assets/_Alumnos/MagoEnemigo/'</code>. Para que no vuelva a pasar, antes de cada commit usa <code>git add Assets/_Alumnos/MagoEnemigo</code> (nunca <code>git add .</code>).</p>
+<h3>Falta el controller ...</h3><p><b>Por qu&eacute;:</b> no existe <code>Assets/_Alumnos/&lt;Maquina&gt;/&lt;Maquina&gt;Controller.cs</code> en tu rama.</p><pre>ls Assets/_Alumnos/MagoEnemigo/                      # comprueba el nombre exacto (mayusculas incluidas)
+git add Assets/_Alumnos/MagoEnemigo/MagoEnemigoController.cs Assets/_Alumnos/MagoEnemigo/MagoEnemigoController.cs.meta
+git commit -m &quot;agregar controller&quot;
+git push</pre><p>Si el archivo existe pero el Action no lo ve, el nombre est&aacute; mal escrito (<code>MagoEnemigoControler.cs</code>) o est&aacute; en otra carpeta.</p>
+<h3>... debe declarar class XController : MonoBehaviour</h3><p><b>Por qu&eacute;:</b> la clase no se llama exactamente <code>&lt;Maquina&gt;Controller</code> o no hereda de <code>MonoBehaviour</code>.</p><pre>grep -n &quot;class&quot; Assets/_Alumnos/MagoEnemigo/MagoEnemigoController.cs     # PowerShell: Select-String -Path ... -Pattern &quot;class&quot;</pre><p>Debe leerse as&iacute;: <code>public class MagoEnemigoController : MonoBehaviour</code>.</p>
+<h3>El controller debe crear la maquina (new Maquina(...)) e iniciarla (Iniciar(...))</h3><p><b>Por qu&eacute;:</b> falta alguna de las dos llamadas en tu controller.</p><pre>grep -n &quot;new Maquina\|Iniciar(&quot; Assets/_Alumnos/MagoEnemigo/MagoEnemigoController.cs</pre><p>Debes ver una l&iacute;nea con <code>new Maquina(</code> y otra con <code>.Iniciar(</code>.</p>
+<h3>Falta el estado X: debe ser class X : Estado en XY.cs</h3><p><b>Por qu&eacute;:</b> el archivo del estado no existe, se llama distinto o la clase no hereda de <code>Estado</code>.</p><pre>ls Assets/_Alumnos/MagoEnemigo/
+grep -rn &quot;: Estado&quot; Assets/_Alumnos/MagoEnemigo/
+# si hay que renombrar un archivo, hazlo con git para no perder el historial y renombra tambien su .meta:
+git mv Assets/_Alumnos/MagoEnemigo/MagoPosicion.cs Assets/_Alumnos/MagoEnemigo/MagoEnemigoPosicionarse.cs
+git mv Assets/_Alumnos/MagoEnemigo/MagoPosicion.cs.meta Assets/_Alumnos/MagoEnemigo/MagoEnemigoPosicionarse.cs.meta</pre><p>El nombre de la clase y del archivo es <code>&lt;Maquina&gt;&lt;Estado&gt;</code> (ej. <code>MagoEnemigoPosicionarse</code>). Cambia tambi&eacute;n el nombre de la clase dentro del archivo.</p>
+<h3>X existe pero no esta registrado en la lista de estados del controller</h3><p><b>Por qu&eacute;:</b> escribiste la clase pero falta <code>new X()</code> en la lista de <code>new Maquina(...)</code>.</p><pre>grep -n &quot;new MagoEnemigo&quot; Assets/_Alumnos/MagoEnemigo/MagoEnemigoController.cs</pre><p>Agrega una l&iacute;nea <code>new MagoEnemigoPosicionarse(),</code> a la lista.</p>
+<h3>Falta el steering X / NO debe tener namespace / debe ser public static partial class Steering</h3><p><b>Por qu&eacute;:</b> el archivo <code>Assets/_Alumnos/Steering/SteeringX.cs</code> no existe, tiene namespace o no tiene la firma de <code>Steering</code>.</p><pre>head -20 Assets/_Alumnos/Steering/SteeringSeek.cs     # PowerShell: Get-Content ... -TotalCount 20</pre><p>Debe empezar con <code>public static partial class Steering</code> directamente (sin <code>namespace</code>) y contener <code>public static Vector3 Seek(...)</code> con la firma del documento de steering.</p>
+<h3>Estos archivos deben estar dentro de namespace Alumnos.X</h3><p><b>Por qu&eacute;:</b> tus <code>.cs</code> (menos los <code>Steering*.cs</code>) no est&aacute;n dentro de <code>namespace Alumnos.&lt;Maquina&gt;</code>.</p><pre>grep -L &quot;namespace Alumnos.MagoEnemigo&quot; Assets/_Alumnos/MagoEnemigo/*.cs     # lista los archivos SIN namespace</pre><p>Envuelve el contenido: <code>namespace Alumnos.MagoEnemigo { ...clases... }</code>.</p>
+<h3>Nombres de clase que ya existen en el juego base</h3><p><b>Por qu&eacute;:</b> una de tus clases se llama igual que una del instructor (<code>Sensor</code>, <code>Agente</code>, <code>Juego</code>...) y la tapa.</p><pre>grep -rn &quot;class Sensor\b&quot; Assets/_Alumnos/MagoEnemigo/
+# renombra la clase (y el archivo) con el prefijo de tu maquina
+git mv Assets/_Alumnos/MagoEnemigo/Sensor.cs Assets/_Alumnos/MagoEnemigo/MagoEnemigoSensor.cs
+git mv Assets/_Alumnos/MagoEnemigo/Sensor.cs.meta Assets/_Alumnos/MagoEnemigo/MagoEnemigoSensor.cs.meta</pre>
+<h2>2. Avisos (&#9888;&#65039;) y c&oacute;mo quitarlos</h2>
+<h3>... tiene caracteres no ASCII</h3><p><b>Por qu&eacute;:</b> hay acentos, &ntilde;, s&iacute;mbolos o un BOM (marca invisible que algunos editores ponen al inicio del archivo).</p><pre># Git Bash: encuentra la linea
+grep -nP &quot;[^\x00-\x7F]&quot; Assets/_Alumnos/MagoEnemigo/*.cs
+# PowerShell:
+Select-String -Path Assets\_Alumnos\MagoEnemigo\*.cs -Pattern &quot;[^\x00-\x7F]&quot;
+
+# quitar un BOM sin tocar el resto (Git Bash)
+sed -i &#x27;1s/^\xEF\xBB\xBF//&#x27; Assets/_Alumnos/MagoEnemigo/MagoEnemigoLanzar.cs</pre><p>Cambia "ca&ntilde;&oacute;n" por "canon" en comentarios y textos. En Visual Studio: <i>Guardar con codificaci&oacute;n</i> &rarr; UTF-8 sin firma.</p>
+<h3>usa LINQ / GetComponent o Find dentro de Actualizar / crea objetos (new) dentro de Actualizar</h3><p><b>Por qu&eacute;:</b> generan basura de memoria (GC) cada frame.</p><pre>grep -n &quot;using System.Linq\|\.Select(\|\.Where(\|GetComponent\|FindObject\|Find(&quot; Assets/_Alumnos/MagoEnemigo/*.cs</pre><p>Guarda la referencia una vez en <code>Entrar</code> o en el <code>Contexto</code>; reutiliza listas y arreglos en lugar de crearlos.</p>
+<h3>se suscribe a eventos (.AlAlgo +=) pero no se desuscribe (-=)</h3><p><b>Por qu&eacute;:</b> el agente vuelve a la Reserva y sigue escuchando el evento; el siguiente agente reaccionar&aacute; dos veces.</p><pre>grep -n &quot;+=\|-=&quot; Assets/_Alumnos/MagoEnemigo/*.cs</pre><p>Cada <code>+=</code> en <code>Entrar</code> necesita su <code>-=</code> en <code>Salir</code> (o en <code>OnDisable</code>).</p>
+<h3>Falta X.meta</h3><p><b>Por qu&eacute;:</b> subiste el <code>.cs</code> sin su <code>.meta</code>. Unity lo genera al abrir el proyecto; sin &eacute;l, los enlaces se rompen.</p><pre>git status --short Assets/_Alumnos/MagoEnemigo/     # los .meta aparecen con ??
+git add Assets/_Alumnos/MagoEnemigo
+git commit -m &quot;agregar .meta&quot;
+git push</pre>
+<h3>Clases sin el prefijo <Maquina></h3><p><b>Por qu&eacute;:</b> los nombres de tus clases deben empezar con <code>MagoEnemigo...</code> para no chocar con las de otros.</p><pre>grep -rn &quot;^\s*\(public \)\?class &quot; Assets/_Alumnos/MagoEnemigo/*.cs</pre>
+<h2>3. El Action no aparece, no corre o parece pegado</h2>
+<h3>No hay comentario en mi PR</h3><p><b>Por qu&eacute;:</b> el Action solo revisa PR cuya rama empieza con <code>clase-</code> y cuyo destino es <code>main</code>.</p><pre>gh pr view --json headRefName,baseRefName     # head debe empezar con clase-, base debe ser main
+gh run list --limit 5</pre>
+<h3>Quiero volver a ejecutar la revisi&oacute;n sin cambiar c&oacute;digo</h3><p><b>Por qu&eacute;:</b> a veces basta un empujoncito.</p><pre>git commit --allow-empty -m &quot;volver a ejecutar la revision&quot;
+git push
+# o edita el titulo del PR (tambien dispara la revision)
+gh pr edit --title &quot;Clase 2 - MagoEnemigo (cupo 05) - revisado&quot;</pre>
+<h3>El check sigue en rojo pero ya correg&iacute;</h3><p><b>Por qu&eacute;:</b> mira la fecha del &uacute;ltimo comentario: el reporte se actualiza al hacer push, no al guardar en tu disco.</p><pre>git status
+git log --oneline -3
+git push           # si dice &#x27;Everything up-to-date&#x27; ya estaba subido; espera 1-2 minutos y revisa gh pr view --comments</pre>
+<h2>4. Errores de Git</h2>
+<h3>! [rejected] ... (non-fast-forward) / Updates were rejected</h3><p><b>Por qu&eacute;:</b> la rama remota tiene commits que tu copia local no tiene.</p><pre>git pull origin clase-2/05-magoenemigo     # trae e integra lo remoto
+git push</pre><p>Si aparece un editor de mensaje de merge, guarda y cierra (en vim: <code>:wq</code> + Enter). No uses <code>--force</code> salvo que el instructor te lo pida.</p>
+<h3>remote: error: GH006: Protected branch update failed for refs/heads/main</h3><p><b>Por qu&eacute;:</b> intentaste subir a <code>main</code>. Est&aacute; protegida: solo se entra por PR.</p><pre># mueve tus commits a una rama nueva y deja main como estaba
+git branch clase-2/05-magoenemigo        # crea la rama en el commit actual (con tus commits)
+git reset --hard origin/main             # main local vuelve a ser igual que el remoto
+git checkout clase-2/05-magoenemigo
+git push -u origin clase-2/05-magoenemigo</pre><p><code>git reset --hard</code> borra cambios sin commit: haz primero <code>git status</code> y confirma que todo qued&oacute; en commits.</p>
+<h3>remote: Permission denied / fatal: unable to access ... 403</h3><p><b>Por qu&eacute;:</b> no eres colaborador (falta aceptar la invitaci&oacute;n) o est&aacute;s con otra cuenta.</p><pre>gh auth status
+git remote -v                  # debe apuntar a BanyoLoper/tower-defense
+gh repo view BanyoLoper/tower-defense --json viewerPermission</pre><p>Si <code>viewerPermission</code> no es <code>WRITE</code>, acepta la invitaci&oacute;n en <code>github.com/BanyoLoper/tower-defense/invitations</code> o pide al instructor que te agregue.</p>
+<h3>fatal: You are not currently on a branch / HEAD detached</h3><p><b>Por qu&eacute;:</b> hiciste <code>checkout</code> de un commit en lugar de una rama.</p><pre>git switch -c clase-2/05-magoenemigo     # crea la rama aqui mismo y conserva tus commits</pre>
+<h3>error: Your local changes would be overwritten by checkout / pull</h3><p><b>Por qu&eacute;:</b> tienes cambios sin guardar que chocan con lo que traes.</p><pre>git stash                      # guarda tus cambios en un cajon
+git checkout main
+git pull
+git checkout clase-2/05-magoenemigo
+git stash pop                  # los recupera</pre>
+<h3>CONFLICT (content): Merge conflict in ...</h3><p><b>Por qu&eacute;:</b> tu rama y <code>main</code> cambiaron el mismo archivo (suele pasar si tocaste algo ajeno).</p><pre>git status                       # lista los archivos en conflicto
+# abre cada archivo, busca &lt;&lt;&lt;&lt;&lt;&lt;&lt; ======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; y deja la version correcta
+git add ruta/del/archivo
+git commit -m &quot;resolver conflicto&quot;
+git push</pre><p>Si el archivo en conflicto no es tuyo, qu&eacute;date con la versi&oacute;n de <code>main</code>: <code>git checkout origin/main -- ruta/del/archivo</code>.</p>
+<h3>error: open("..."): Filename too long / fatal: unable to create file</h3><p><b>Por qu&eacute;:</b> l&iacute;mite de 260 caracteres de Windows (el proyecto trae FBX con nombres muy largos).</p><pre>git config --global core.longpaths true
+# si sigue fallando, clona en una ruta corta
+cd C:\
+git clone https://github.com/BanyoLoper/tower-defense.git td</pre><p>Windows tambi&eacute;n tiene el ajuste <code>LongPathsEnabled</code> en el registro (requiere administrador).</p>
+<h3>fatal: Unable to create '.git/index.lock': File exists</h3><p><b>Por qu&eacute;:</b> otro Git (o un cuelgue anterior) dej&oacute; el candado.</p><pre># 1) cierra GitHub Desktop, VS Code y cualquier terminal con git
+# 2) borra el candado
+rm .git/index.lock                    # PowerShell: Remove-Item .git\index.lock</pre>
+<h3>nothing to commit, working tree clean (y tu codigo no sube)</h3><p><b>Por qu&eacute;:</b> los archivos est&aacute;n ignorados o los guardaste en otra carpeta.</p><pre>git status --ignored | head -20
+git check-ignore -v Assets/_Alumnos/MagoEnemigo/MagoEnemigoLanzar.cs     # dice que regla los ignora, si alguna
+pwd                                                                       # estas en la carpeta del repo?</pre>
+<h3>Hice commit en main por error</h3><p><b>Por qu&eacute;:</b> los commits est&aacute;n en <code>main</code> local y no se pueden subir.</p><pre>git branch clase-2/05-magoenemigo      # nueva rama con tus commits
+git reset --hard origin/main            # main local vuelve a igualar el remoto
+git checkout clase-2/05-magoenemigo
+git push -u origin clase-2/05-magoenemigo</pre>
+<h3>Me equivoque en el ultimo commit (mensaje o archivo)</h3><p><b>Por qu&eacute;:</b> a&uacute;n no lo subiste: se puede rehacer sin dejar rastro.</p><pre>git commit --amend -m &quot;mensaje correcto&quot;          # solo el mensaje
+git reset --soft HEAD~1                            # deshace el commit y deja los cambios listos para recomitear</pre><p>Si ya hiciste <code>push</code>, no reescribas el historial: haz un commit nuevo que corrija y sube normal.</p>
+<h3>warning: LF will be replaced by CRLF</h3><p><b>Por qu&eacute;:</b> solo es un aviso de finales de l&iacute;nea de Windows. No es un error; ign&oacute;ralo.</p>
+<h3>Se subieron Library/ o Temp/ o archivos enormes</h3><p><b>Por qu&eacute;:</b> alguien quit&oacute; el <code>.gitignore</code> o forz&oacute; el add.</p><pre>git rm -r --cached Library Temp Logs obj
+git commit -m &quot;quitar carpetas generadas&quot;
+git push</pre>
+<h2>5. Estoy perdido: reiniciar limpio sin perder tu codigo</h2>
+<p>Si nada de lo anterior funciona, guarda tus archivos fuera del repo, vuelve a clonar y vuelve a poner tu carpeta:</p><pre>cd C:\
+move td td_viejo                                  # PowerShell: Rename-Item td td_viejo
+git clone https://github.com/BanyoLoper/tower-defense.git td
+cd td
+git checkout -b clase-2/05-magoenemigo
+# copia SOLO tu carpeta desde el repo viejo
+robocopy td_viejo\Assets\_Alumnos\MagoEnemigo td\Assets\_Alumnos\MagoEnemigo /E
+git status</pre><p>Despu&eacute;s sigue los pasos 5&ndash;8 de <a href="04_como_subir_cambios.html">C&oacute;mo subir tus cambios</a>. Si a&uacute;n as&iacute; no avanzas, copia el mensaje de error completo y p&aacute;salo al instructor.</p>
+<div class="foot">Defender el Granero de Cristales &middot; Cuarto parcial &middot; Documento de trabajo. Todo el c&oacute;digo del alumno va en ASCII (sin acentos ni e&ntilde;es).</div>
+</div></body></html>

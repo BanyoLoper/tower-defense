@@ -1,6 +1,6 @@
 # Defender el Granero de Cristales · Plan del cuarto parcial
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 Juego de torres con 14 máquinas de estados y 9 steering behaviours, uno o varios por alumno. El instructor entrega el juego base (modelos, mapa, economía, torres, HUD, cámara, efectos); los alumnos escriben **solo código**. 6 clases de 2 horas, una entrega calificada por clase.
 
@@ -75,9 +75,22 @@ Cada alumno (cupo) lleva **una máquina** y, si le toca, uno o más steering. Lo
 
 ## 3. Calendario: qué se entrega en cada clase
 
+### Calendario de clases
+
+| Clase | Día | Límite para crear el PR | Rama |
+| --- | --- | --- | --- |
+| **1** | Lun 9 nov | Lun 9 nov, 23:59 (CDMX) | `clase-1/<cupo>-<maquina>` |
+| **2** | Mié 11 nov | Mié 11 nov, 23:59 (CDMX) | `clase-2/<cupo>-<maquina>` |
+| **3** | Mié 18 nov | Mié 18 nov, 23:59 (CDMX) | `clase-3/<cupo>-<maquina>` |
+| **4** | Lun 23 nov | Lun 23 nov, 23:59 (CDMX) | `clase-4/<cupo>-<maquina>` |
+| **5** | Mié 25 nov | Mié 25 nov, 23:59 (CDMX) | `clase-5/<cupo>-<maquina>` |
+| **6** | Lun 30 nov | Lun 30 nov, 23:59 (CDMX) | `clase-6/<cupo>-<maquina>` |
+
+> **Puente:** el lunes 16 de noviembre no hay clase. Entre la clase 2 (mié 11) y la clase 3 (mié 18) pasa una semana completa: es el momento para adelantar o ponerse al corriente. Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
 Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado entre paréntesis). La clase 6 es la entrega final con pulido: todos los estados, rendimiento y demo en vivo.
 
-| Cupo | Máquina | Clase 1 | Clase 2 | Clase 3 | Clase 4 | Clase 5 | Clase 6 |
+| Cupo | Máquina | Clase 1 Lun 9 nov | Clase 2 Mié 11 nov | Clase 3 Mié 18 nov | Clase 4 Lun 23 nov | Clase 5 Mié 25 nov | Clase 6 Lun 30 nov |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **01** | [Soldado](m01_soldado.md) | Avanzar, Muerto (2/6) | Perseguir (3/6) **Steering:** PathFollowing | Atacar (4/6) | Aturdido (5/6) | Festejo (6/6) | pulido final (6/6) |
 | **02** | [Bruto](m02_bruto.md) | Avanzar, Muerto (2/8) | Perseguir (3/8) **Steering:** Arrive | CargarGolpe, GolpePesado (5/8) | Recuperar (6/8) | Furia, Festejo (8/8) | pulido final (8/8) |
@@ -111,7 +124,7 @@ Cada celda dice los estados que deben funcionar al terminar esa clase (acumulado
 
 ### Avance porcentual (estados) por clase
 
-| Clase | 1 | 2 | 3 | 4 | 5 | 6 |
+| Clase | 1 Lun 9 nov | 2 Mie 11 nov | 3 Mie 18 nov | 4 Lun 23 nov | 5 Mie 25 nov | 6 Lun 30 nov |
 | --- | --- | --- | --- | --- | --- | --- |
 | 01 Soldado | 33% | 50% | 67% | 83% | 100% | 100% |
 | 02 Bruto | 25% | 38% | 62% | 75% | 100% | 100% |

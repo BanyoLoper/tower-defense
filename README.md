@@ -10,6 +10,8 @@ Todo se lee directamente en GitHub (carpeta [`docs/`](docs/)). Hay una version H
 | Documento | Para que sirve |
 |---|---|
 | [Guia de inicio](docs/03_como_empezar.md) | **Leela primero**: como encajan las piezas, tu primera hora, flujo de Git y ejemplo completo |
+| [Como subir tus cambios](docs/04_como_subir_cambios.md) | Paso a paso (consola y GitHub Desktop): rama, commit, push, PR y leer el reporte |
+| [Troubleshooting](docs/05_troubleshooting.md) | **Si el pipeline falla**: cada mensaje del Action y el error de Git mas comun, con la solucion en consola |
 | [Plan general](docs/00_indice_y_plan.md) | Pesos, reparto, calendario de las 6 clases, dependencias y rubrica |
 | [Estado general](docs/01_estado_general.md) | `Estado`, `Contexto` y `Maquina` (la base de todas las maquinas) |
 | [Steering behaviours](docs/02_steering_behaviors.md) | Los 9 behaviours con diagrama, firma y prueba de aceptacion |
@@ -18,24 +20,39 @@ Todo se lee directamente en GitHub (carpeta [`docs/`](docs/)). Hay una version H
 
 Cada alumno tiene su ficha con diagrama de estados, tablas, dependencias, entregas por clase y esqueleto de codigo. Cambia "Alumno NN" por tu nombre.
 
-| Cupo | Alumno | Tu maquina (ficha) | Steering a cargo | Tu rama |
-|---|---|---|---|---|
-| 01 | Alumno 01 | [Soldado enemigo](docs/m01_soldado.md) | [PathFollowing](docs/02_steering_behaviors.md#path-following-seguir-camino-7-pts) | `clase-N/01-soldado` |
-| 02 | Alumno 02 | [Bruto (enemigo pesado)](docs/m02_bruto.md) | [Arrive](docs/02_steering_behaviors.md#arrive-llegar-4-pts) | `clase-N/02-bruto` |
-| 03 | Alumno 03 | [Jefe (final de la oleada 5)](docs/m03_jefe.md) | - | `clase-N/03-jefe` |
-| 04 | Alumno 04 | [Lancero enemigo](docs/m04_lancero.md) | [Seek](docs/02_steering_behaviors.md#seek-buscar-2-pts) | `clase-N/04-lancero` |
-| 05 | Alumno 05 | [Mago enemigo](docs/m05_magoenemigo.md) | - | `clase-N/05-magoenemigo` |
-| 06 | Alumno 06 | [Ladron](docs/m06_ladron.md) | - | `clase-N/06-ladron` |
-| 07 | Alumno 07 | [Torre lanzadora](docs/m07_torrelanzadora.md) | [Hide](docs/02_steering_behaviors.md#hide-esconderse-8-pts) | `clase-N/07-torrelanzadora` |
-| 08 | Alumno 08 | [Torre maga](docs/m08_torremaga.md) | [ObstacleAvoidance](docs/02_steering_behaviors.md#obstacle-avoidance-evitar-obstaculos-10-pts) | `clase-N/08-torremaga` |
-| 09 | Alumno 09 | [Guardia de la aldea](docs/m09_guardia.md) | [Flee](docs/02_steering_behaviors.md#flee-huir-2-pts) | `clase-N/09-guardia` |
-| 10 | Alumno 10 | [Aldeano](docs/m10_aldeano.md) | [Wander](docs/02_steering_behaviors.md#wander-vagar-6-pts) | `clase-N/10-aldeano` |
-| 11 | Alumno 11 | [Minero](docs/m11_minero.md) | - | `clase-N/11-minero` |
-| 12 | Alumno 12 | [Reparador](docs/m12_reparador.md) | [Evade](docs/02_steering_behaviors.md#evade-escapar-con-prediccion-6-pts) | `clase-N/12-reparador` |
-| 13 | Alumno 13 | [Director de oleadas (GameManager)](docs/m13_director.md) | - | `clase-N/13-director` |
-| 14 | Alumno 14 | [Tutorial guiado](docs/m14_tutorial.md) | [Pursuit](docs/02_steering_behaviors.md#pursuit-perseguir-con-prediccion-6-pts) | `clase-N/14-tutorial` |
+| Cupo | Alumno | Tu maquina (ficha) | Steering a cargo | Tu rama | Que entregar cada clase |
+|---|---|---|---|---|---|
+| 01 | Alumno 01 | [Soldado enemigo](docs/m01_soldado.md) | [PathFollowing](docs/02_steering_behaviors.md#path-following-seguir-camino-7-pts) | `clase-N/01-soldado` | [Entregas, archivos y comandos](docs/m01_soldado.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 02 | Alumno 02 | [Bruto (enemigo pesado)](docs/m02_bruto.md) | [Arrive](docs/02_steering_behaviors.md#arrive-llegar-4-pts) | `clase-N/02-bruto` | [Entregas, archivos y comandos](docs/m02_bruto.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 03 | Alumno 03 | [Jefe (final de la oleada 5)](docs/m03_jefe.md) | - | `clase-N/03-jefe` | [Entregas, archivos y comandos](docs/m03_jefe.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 04 | Alumno 04 | [Lancero enemigo](docs/m04_lancero.md) | [Seek](docs/02_steering_behaviors.md#seek-buscar-2-pts) | `clase-N/04-lancero` | [Entregas, archivos y comandos](docs/m04_lancero.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 05 | Alumno 05 | [Mago enemigo](docs/m05_magoenemigo.md) | - | `clase-N/05-magoenemigo` | [Entregas, archivos y comandos](docs/m05_magoenemigo.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 06 | Alumno 06 | [Ladron](docs/m06_ladron.md) | - | `clase-N/06-ladron` | [Entregas, archivos y comandos](docs/m06_ladron.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 07 | Alumno 07 | [Torre lanzadora](docs/m07_torrelanzadora.md) | [Hide](docs/02_steering_behaviors.md#hide-esconderse-8-pts) | `clase-N/07-torrelanzadora` | [Entregas, archivos y comandos](docs/m07_torrelanzadora.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 08 | Alumno 08 | [Torre maga](docs/m08_torremaga.md) | [ObstacleAvoidance](docs/02_steering_behaviors.md#obstacle-avoidance-evitar-obstaculos-10-pts) | `clase-N/08-torremaga` | [Entregas, archivos y comandos](docs/m08_torremaga.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 09 | Alumno 09 | [Guardia de la aldea](docs/m09_guardia.md) | [Flee](docs/02_steering_behaviors.md#flee-huir-2-pts) | `clase-N/09-guardia` | [Entregas, archivos y comandos](docs/m09_guardia.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 10 | Alumno 10 | [Aldeano](docs/m10_aldeano.md) | [Wander](docs/02_steering_behaviors.md#wander-vagar-6-pts) | `clase-N/10-aldeano` | [Entregas, archivos y comandos](docs/m10_aldeano.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 11 | Alumno 11 | [Minero](docs/m11_minero.md) | - | `clase-N/11-minero` | [Entregas, archivos y comandos](docs/m11_minero.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 12 | Alumno 12 | [Reparador](docs/m12_reparador.md) | [Evade](docs/02_steering_behaviors.md#evade-escapar-con-prediccion-6-pts) | `clase-N/12-reparador` | [Entregas, archivos y comandos](docs/m12_reparador.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 13 | Alumno 13 | [Director de oleadas (GameManager)](docs/m13_director.md) | - | `clase-N/13-director` | [Entregas, archivos y comandos](docs/m13_director.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
+| 14 | Alumno 14 | [Tutorial guiado](docs/m14_tutorial.md) | [Pursuit](docs/02_steering_behaviors.md#pursuit-perseguir-con-prediccion-6-pts) | `clase-N/14-tutorial` | [Entregas, archivos y comandos](docs/m14_tutorial.md#detalle-de-cada-entrega-qué-entregar-cómo-comprobarlo-y-qué-comandos-usar) |
 
 > En la columna "Tu rama", `N` es el numero de clase (1 a 6): por ejemplo `clase-2/05-magoenemigo`.
+
+## Calendario de entregas
+
+Una entrega por clase. El PR se crea **ese mismo dia** (limite 23:59, hora CDMX). El lunes 16 de noviembre es puente: no hay clase.
+
+| Clase | Dia | Rama | Que entregas | Como subirlo |
+|---|---|---|---|---|
+| 1 | Lun 9 nov | `clase-1/<cupo>-<maquina>` | Controller + primeros estados (ver tu ficha) | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 2 | Mie 11 nov | `clase-2/<cupo>-<maquina>` | Estados de la clase 2 + steering de la clase 2 si te toca | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 3 | Mie 18 nov | `clase-3/<cupo>-<maquina>` | Estados de la clase 3 + steering de la clase 3 si te toca | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 4 | Lun 23 nov | `clase-4/<cupo>-<maquina>` | Estados de la clase 4 | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 5 | Mie 25 nov | `clase-5/<cupo>-<maquina>` | Estados de la clase 5 (maquina completa) | [Como subir cambios](docs/04_como_subir_cambios.md) |
+| 6 | Lun 30 nov | `clase-6/<cupo>-<maquina>` | Pulido final, cero basura y demo en vivo | [Como subir cambios](docs/04_como_subir_cambios.md) |
+
+Si algo falla en el pipeline: [Troubleshooting](docs/05_troubleshooting.md). Las fechas oficiales que usa el Action estan en [`.github/entregas/calendario.json`](.github/entregas/calendario.json).
 
 ## Donde va tu codigo
 
@@ -79,6 +96,8 @@ Al crear (o actualizar) tu PR, GitHub Actions deja un comentario con:
 - ⚠️ avisos de calidad (ASCII, LINQ, basura en `Actualizar`, eventos sin desuscribir, falta de `.meta`).
 
 Corrige y vuelve a hacer `push` a la misma rama: el comentario se actualiza solo. La nota de "funciona en el juego" la pone el instructor al probar en Unity.
+
+> Guia completa con todos los comandos: [Como subir tus cambios](docs/04_como_subir_cambios.md). Si el Action marca un error: [Troubleshooting](docs/05_troubleshooting.md).
 
 ## Primera vez: clonar el repo
 
@@ -137,6 +156,8 @@ Util para corregir algo pequeno: abre el archivo en tu rama > icono de lapiz > *
 - Cuando se aprueba, el instructor hace el merge. Para la siguiente clase: `git checkout main`, `git pull` y crea la nueva rama desde ahi (otro nombre `clase-3/...`).
 
 ## Problemas comunes
+
+> Para cualquier mensaje del Action (ramas, archivos ajenos, estados que faltan, namespace...) y errores de Git, ve a [**Troubleshooting**](docs/05_troubleshooting.md): esta ordenado por el mensaje exacto y todo se resuelve por consola.
 
 | Problema | Solucion |
 |---|---|

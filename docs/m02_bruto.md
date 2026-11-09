@@ -1,6 +1,6 @@
 # 02 · Bruto (enemigo pesado)
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Media**  **Enemigo**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **25.0 pts** · Steering a cargo: **4 pts** (Arrive (4 pts)
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/02-bruto`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/02-bruto`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: oleadas 4 y 5.*
 3. **Crea estos archivos** en `Assets/_Alumnos/Bruto/`: `BrutoController.cs`, `BrutoAvanzar.cs`, `BrutoMuerto.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -130,14 +132,281 @@ public class ProbeArrive : MonoBehaviour   // nombre unico: Probe + tu steering
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | Avanzar, Muerto | 2/8 · 25% | Esqueleto y camino por la ruta; muerte con Reserva. | — |
-| **2** | Perseguir | 3/8 · 38% | Deteccion y persecución lenta con Seek. | Arrive |
-| **3** | CargarGolpe, GolpePesado | 5/8 · 62% | Ciclo de golpe pesado con tiempos (windup 0.7 s) y daño 28. | — |
-| **4** | Recuperar | 6/8 · 75% | Ventana de vulnerabilidad; el ciclo completo ataca-descansa-ataca funciona. | — |
-| **5** | Furia, Festejo | 8/8 · 100% | Furia una sola vez (flag en Ctx) y festejo de fin de partida. | — |
-| **6** | (pulido) | 8/8 · 100% | Pulido: ObstacleAvoidance integrado, cero basura, demo. | — |
+| **1** Lun 9 nov | Avanzar, Muerto | 2/8 · 25% | Esqueleto y camino por la ruta; muerte con Reserva. | — |
+| **2** Mié 11 nov | Perseguir | 3/8 · 38% | Deteccion y persecución lenta con Seek. | Arrive |
+| **3** Mié 18 nov | CargarGolpe, GolpePesado | 5/8 · 62% | Ciclo de golpe pesado con tiempos (windup 0.7 s) y daño 28. | — |
+| **4** Lun 23 nov | Recuperar | 6/8 · 75% | Ventana de vulnerabilidad; el ciclo completo ataca-descansa-ataca funciona. | — |
+| **5** Mié 25 nov | Furia, Festejo | 8/8 · 100% | Furia una sola vez (flag en Ctx) y festejo de fin de partida. | — |
+| **6** Lun 30 nov | (pulido) | 8/8 · 100% | Pulido: ObstacleAvoidance integrado, cero basura, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/02-bruto`  ·  **Avance esperado:** 2 de 8 estados (25%)
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_4.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Nuevo.** `class BrutoController : MonoBehaviour` dentro de `namespace Alumnos.Bruto`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Avanzar`. |
+| `BrutoAvanzar.cs` | **Nuevo.** `class BrutoAvanzar : Estado`. Camina la ruta hacia el granero. Animación: `Caminar`. |
+| `BrutoMuerto.cs` | **Nuevo.** `class BrutoMuerto : Estado`. Global: muerte + Reserva. Animación: `Muerte1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Esqueleto y camino por la ruta; muerte con Reserva.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleadas 4 y 5.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`.
+
+Todavía NO se pide: `BrutoPerseguir`, `BrutoCargarGolpe`, `BrutoGolpePesado`, `BrutoRecuperar`, `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/02-bruto` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto
+git commit -m "clase 1: Bruto - Avanzar, Muerto"
+git push -u origin clase-1/02-bruto
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/02-bruto`  ·  **Avance esperado:** 3 de 8 estados (38%)  ·  **Steering:** Arrive
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_5.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new BrutoPerseguir()`. |
+| `BrutoPerseguir.cs` | **Nuevo.** `class BrutoPerseguir : Estado`. Va hacia el hostil (lento, 1.4 m/s). Animación: `Caminar`. |
+| `../Steering/SteeringArrive.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Arrive(Vector3 pos, Vector3 destino, float vMax, float radioFrenado)`. Prueba: El agente se detiene en el punto sin vibrar (a menos de 0.1 m) y sin oscilar. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Deteccion y persecución lenta con Seek.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleadas 4 y 5.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`, `BrutoPerseguir` y las del steering de esta clase.
+
+Todavía NO se pide: `BrutoCargarGolpe`, `BrutoGolpePesado`, `BrutoRecuperar`, `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/02-bruto` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto  Assets/_Alumnos/Steering
+git commit -m "clase 2: Bruto - Perseguir"
+git push -u origin clase-2/02-bruto
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/02-bruto`  ·  **Avance esperado:** 5 de 8 estados (62%)
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_6.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new BrutoCargarGolpe()`, `new BrutoGolpePesado()`. |
+| `BrutoCargarGolpe.cs` | **Nuevo.** `class BrutoCargarGolpe : Estado`. Se detiene y levanta el arma 0.7 s (aviso visual al jugador). Animación: `Atacar1 (inicio)`. |
+| `BrutoGolpePesado.cs` | **Nuevo.** `class BrutoGolpePesado : Estado`. Aplica 28 de daño en área chica frente a el. Animación: `Atacar2`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Ciclo de golpe pesado con tiempos (windup 0.7 s) y daño 28.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleadas 4 y 5.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`, `BrutoPerseguir`, `BrutoCargarGolpe`, `BrutoGolpePesado`.
+
+Todavía NO se pide: `BrutoRecuperar`, `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/02-bruto` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto
+git commit -m "clase 3: Bruto - CargarGolpe, GolpePesado"
+git push -u origin clase-3/02-bruto
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/02-bruto`  ·  **Avance esperado:** 6 de 8 estados (75%)
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_7.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new BrutoRecuperar()`. |
+| `BrutoRecuperar.cs` | **Nuevo.** `class BrutoRecuperar : Estado`. Queda vulnerable 1 s tras el golpe. Animación: `IdleCombate`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Ventana de vulnerabilidad; el ciclo completo ataca-descansa-ataca funciona.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleadas 4 y 5.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`, `BrutoPerseguir`, `BrutoCargarGolpe`, `BrutoGolpePesado`, `BrutoRecuperar`.
+
+Todavía NO se pide: `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/02-bruto` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto
+git commit -m "clase 4: Bruto - Recuperar"
+git push -u origin clase-4/02-bruto
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/02-bruto`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_8.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new BrutoFuria()`, `new BrutoFestejo()`. |
+| `BrutoFuria.cs` | **Nuevo.** `class BrutoFuria : Estado`. Grito (Enojado) y velocidad x1.5 de ahí en adelante. Solo se entra una vez (flag en Ctx). Animación: `Enojado`. |
+| `BrutoFestejo.cs` | **Nuevo.** `class BrutoFestejo : Estado`. Global: fin de partida. Animación: `Celebrar1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Furia una sola vez (flag en Ctx) y festejo de fin de partida.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y espera la oleada con ESPACIO. Tu agente aparece: oleadas 4 y 5.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`, `BrutoPerseguir`, `BrutoCargarGolpe`, `BrutoGolpePesado`, `BrutoRecuperar`, `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/02-bruto` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto
+git commit -m "clase 5: Bruto - Furia, Festejo"
+git push -u origin clase-5/02-bruto
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/02-bruto`  ·  **Avance esperado:** 8 de 8 estados (100%)
+
+![Diagrama de estados de Bruto (enemigo pesado)](img/m02_bruto_9.svg)
+
+| Archivo (en `Assets/_Alumnos/Bruto/`) | Qué debe tener |
+| --- | --- |
+| `BrutoController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Pulido: ObstacleAvoidance integrado, cero basura, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `BrutoAvanzar`, `BrutoMuerto`, `BrutoPerseguir`, `BrutoCargarGolpe`, `BrutoGolpePesado`, `BrutoRecuperar`, `BrutoFuria`, `BrutoFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Bruto/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Bruto` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/02-bruto` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/02-bruto
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Bruto
+git commit -m "clase 6: Bruto - pulido final"
+git push -u origin clase-6/02-bruto
+```
 
 ### Rúbrica (igual en todas las clases)
 

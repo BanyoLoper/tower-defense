@@ -1,6 +1,6 @@
 # 12 · Reparador
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 **Media**  **Civil**
 
@@ -14,9 +14,11 @@ Peso de la máquina: **23.0 pts** · Steering a cargo: **6 pts** (Evade (6 pts))
 
 Las flechas se leen "desde → hasta" con la condición que dispara el cambio. El estado inicial es el de borde grueso. Cada estado devuelve el nombre del siguiente estado en `Actualizar` o `AlRecibir` (o `null` para quedarse).
 
+> Documentos de apoyo: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md) · [Guía de inicio](03_como_empezar.md).
+
 ## Cómo empezar (primeros 30 minutos)
 
-1. **Rama:** `git checkout main && git pull && git checkout -b clase-1/12-reparador`
+1. **Rama:** `git checkout main; git pull; git checkout -b clase-1/12-reparador`
 2. **Mira tu agente en el juego:** abre `Assets/_Granero/Escenas/Granero.unity` y pulsa Play. Observa cómo se mueve con el cerebro demo; tu máquina lo va a reemplazar. *Aparece: desde el inicio (nacen en la aldea).*
 3. **Crea estos archivos** en `Assets/_Alumnos/Reparador/`: `ReparadorController.cs`, `ReparadorEsperar.cs`, `ReparadorMuerto.cs`.
 4. **Copia el esqueleto** de la sección de código más abajo (controller + primer estado) y registra tus estados en `new Maquina(new List<Estado> {...})`.
@@ -128,14 +130,279 @@ public class ProbeEvade : MonoBehaviour   // nombre unico: Probe + tu steering
 
 Azul: se entrega ese día. Celeste: se mantiene funcionando en las clases siguientes (se vuelve a revisar).
 
-| Clase | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
+| Clase y día | Estados nuevos | Acumulado | Qué debe funcionar | Steering |
 | --- | --- | --- | --- | --- |
-| **1** | Esperar, Muerto | 2/6 · 33% | Esqueleto y espera; muerte. | — |
-| **2** | IrAReparar | 3/6 · 50% | Se suscribe a Salud del granero y camina al punto de reparacion. | — |
-| **3** | Martillar | 4/6 · 67% | Cura al granero con Salud.Curar; se ve en el HUD y en los cristales. | Evade |
-| **4** | Huir | 5/6 · 83% | Huye de enemigos y regresa a trabajar. | — |
-| **5** | Festejo | 6/6 · 100% | Festejo + integración completa. | — |
-| **6** | (pulido) | 6/6 · 100% | Extension (curar torres), pulido, cero basura, demo. | — |
+| **1** Lun 9 nov | Esperar, Muerto | 2/6 · 33% | Esqueleto y espera; muerte. | — |
+| **2** Mié 11 nov | IrAReparar | 3/6 · 50% | Se suscribe a Salud del granero y camina al punto de reparacion. | — |
+| **3** Mié 18 nov | Martillar | 4/6 · 67% | Cura al granero con Salud.Curar; se ve en el HUD y en los cristales. | Evade |
+| **4** Lun 23 nov | Huir | 5/6 · 83% | Huye de enemigos y regresa a trabajar. | — |
+| **5** Mié 25 nov | Festejo | 6/6 · 100% | Festejo + integración completa. | — |
+| **6** Lun 30 nov | (pulido) | 6/6 · 100% | Extension (curar torres), pulido, cero basura, demo. | — |
+
+Guías: [Cómo subir tus cambios](04_como_subir_cambios.md) · [Troubleshooting (si el pipeline falla)](05_troubleshooting.md).
+
+### Detalle de cada entrega (qué entregar, cómo comprobarlo y qué comandos usar)
+
+> Antes de tu primera entrega lee **[Cómo subir tus cambios](04_como_subir_cambios.md)**. Si el pipeline marca algo en rojo: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**. Todas las fechas son el día de clase; el lunes 16 de noviembre es puente (no hay clase).
+
+### Clase 1 · Lun 9 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-1/12-reparador`  ·  **Avance esperado:** 2 de 6 estados (33%)
+
+![Diagrama de estados de Reparador](img/m12_reparador_4.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Nuevo.** `class ReparadorController : MonoBehaviour` dentro de `namespace Alumnos.Reparador`. Crea el `Contexto`, la `Maquina` con tus estados e inicia en `Esperar`. |
+| `ReparadorEsperar.cs` | **Nuevo.** `class ReparadorEsperar : Estado`. Descansa cerca del punto de reparacion. Animación: `Idle`. |
+| `ReparadorMuerto.cs` | **Nuevo.** `class ReparadorMuerto : Estado`. Global. Animación: `Muerte1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Esqueleto y espera; muerte.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`.
+
+Todavía NO se pide: `ReparadorIrAReparar`, `ReparadorMartillar`, `ReparadorHuir`, `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-1/12-reparador` y el PR se crea hoy (máximo el Lun 9 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-1/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador
+git commit -m "clase 1: Reparador - Esperar, Muerto"
+git push -u origin clase-1/12-reparador
+```
+
+### Clase 2 · Mié 11 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-2/12-reparador`  ·  **Avance esperado:** 3 de 6 estados (50%)
+
+![Diagrama de estados de Reparador](img/m12_reparador_5.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new ReparadorIrAReparar()`. |
+| `ReparadorIrAReparar.cs` | **Nuevo.** `class ReparadorIrAReparar : Estado`. Se acerca al punto de reparacion frenando suave. Animación: `Caminar`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Se suscribe a Salud del granero y camina al punto de reparacion.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`, `ReparadorIrAReparar`.
+
+Todavía NO se pide: `ReparadorMartillar`, `ReparadorHuir`, `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-2/12-reparador` y el PR se crea hoy (máximo el Mié 11 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-2/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador
+git commit -m "clase 2: Reparador - IrAReparar"
+git push -u origin clase-2/12-reparador
+```
+
+### Clase 3 · Mié 18 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-3/12-reparador`  ·  **Avance esperado:** 4 de 6 estados (67%)  ·  **Steering:** Evade
+
+![Diagrama de estados de Reparador](img/m12_reparador_6.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new ReparadorMartillar()`. |
+| `ReparadorMartillar.cs` | **Nuevo.** `class ReparadorMartillar : Estado`. Martilla: Salud.Curar(4*dt) al granero + Fx.Curacion cada 2 s. Animación: `MartillarLoop`. |
+| `../Steering/SteeringEvade.cs` | **Nuevo.** `public static partial class Steering` (SIN namespace) con `public static Vector3 Evade(Vector3 pos, Vector3 posPer, Vector3 velPer, float vMax)`. Prueba: Dura más tiempo sin ser alcanzado por un perseguidor con Pursuit que con Flee simple. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Cura al granero con Salud.Curar; se ve en el HUD y en los cristales.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`, `ReparadorIrAReparar`, `ReparadorMartillar` y las del steering de esta clase.
+
+Todavía NO se pide: `ReparadorHuir`, `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-3/12-reparador` y el PR se crea hoy (máximo el Mié 18 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-3/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador  Assets/_Alumnos/Steering
+git commit -m "clase 3: Reparador - Martillar"
+git push -u origin clase-3/12-reparador
+```
+
+### Clase 4 · Lun 23 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-4/12-reparador`  ·  **Avance esperado:** 5 de 6 estados (83%)
+
+![Diagrama de estados de Reparador](img/m12_reparador_7.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new ReparadorHuir()`. |
+| `ReparadorHuir.cs` | **Nuevo.** `class ReparadorHuir : Estado`. Se aleja del enemigo. Animación: `Correr`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Huye de enemigos y regresa a trabajar.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`, `ReparadorIrAReparar`, `ReparadorMartillar`, `ReparadorHuir`.
+
+Todavía NO se pide: `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-4/12-reparador` y el PR se crea hoy (máximo el Lun 23 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-4/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador
+git commit -m "clase 4: Reparador - Huir"
+git push -u origin clase-4/12-reparador
+```
+
+### Clase 5 · Mié 25 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-5/12-reparador`  ·  **Avance esperado:** 6 de 6 estados (100%)
+
+![Diagrama de estados de Reparador](img/m12_reparador_8.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: `new ReparadorFestejo()`. |
+| `ReparadorFestejo.cs` | **Nuevo.** `class ReparadorFestejo : Estado`. Global. Animación: `Celebrar1`. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Festejo + integración completa.
+- Cómo probarlo: abre `Granero.unity`, pulsa Play y mira a tus agentes desde el inicio. Tu agente aparece: desde el inicio (nacen en la aldea).
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`, `ReparadorIrAReparar`, `ReparadorMartillar`, `ReparadorHuir`, `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-5/12-reparador` y el PR se crea hoy (máximo el Mié 25 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-5/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador
+git commit -m "clase 5: Reparador - Festejo"
+git push -u origin clase-5/12-reparador
+```
+
+### Clase 6 · Lun 30 nov · PR a más tardar ese día, 23:59 (CDMX)
+
+**Rama:** `clase-6/12-reparador`  ·  **Avance esperado:** 6 de 6 estados (100%)
+
+![Diagrama de estados de Reparador](img/m12_reparador_9.svg)
+
+| Archivo (en `Assets/_Alumnos/Reparador/`) | Qué debe tener |
+| --- | --- |
+| `ReparadorController.cs` | **Lo modificas.** Registra en la lista de la máquina los estados nuevos: ninguno nuevo (solo ajustes). |
+| (todos tus archivos) | Pulido final: ver la lista de comprobación de abajo. No hay estados nuevos. |
+| `*.meta` | Cada archivo nuevo trae su `.meta` (Unity lo crea al abrir el proyecto). Sube los dos. |
+
+**Qué debe verse en Play al terminar esta clase**
+
+- Extension (curar torres), pulido, cero basura, demo.
+- Una oleada completa de principio a fin sin errores ni avisos en la consola.
+- Profiler: `GC Alloc` en 0 B dentro de tus `Actualizar` (medido en Play).
+- Pooling correcto: el segundo agente que reaparece se comporta igual que el primero (todo se reinicia en `OnEnable`/`Entrar`).
+- Demo en vivo de 3 minutos mostrando cada estado y cada transición de tu diagrama.
+
+**Lo que revisa el Action en esta clase** (debe existir cada clase, hereda de `Estado` y estar registrada en el controller): `ReparadorEsperar`, `ReparadorMuerto`, `ReparadorIrAReparar`, `ReparadorMartillar`, `ReparadorHuir`, `ReparadorFestejo`.
+
+**Lista de comprobación antes del PR**
+
+- [ ] Unity compila: la consola está vacía (sin errores rojos).
+- [ ] Probado en Play (lo de arriba funciona).
+- [ ] `git status` solo muestra archivos de `Assets/_Alumnos/Reparador/` y de `Assets/_Alumnos/Steering/` (y sus `.meta`).
+- [ ] Todo tu código está dentro de `namespace Alumnos.Reparador` (los `Steering*.cs` no llevan namespace) y es ASCII (sin acentos ni ñ).
+- [ ] La rama se llama exactamente `clase-6/12-reparador` y el PR se crea hoy (máximo el Lun 30 nov).
+- [ ] Leíste el comentario del Action en tu PR y corregiste cada ❌.
+
+**Comandos de esta entrega** (copiar y pegar; si algo falla ve a [Troubleshooting (si el pipeline falla)](05_troubleshooting.md)):
+
+```bash
+git checkout main
+git pull
+git checkout -b clase-6/12-reparador
+# ... programas y pruebas en Unity ...
+git status
+git add Assets/_Alumnos/Reparador
+git commit -m "clase 6: Reparador - pulido final"
+git push -u origin clase-6/12-reparador
+```
 
 ### Rúbrica (igual en todas las clases)
 

@@ -1,6 +1,6 @@
 # Steering behaviours
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 Son funciones de movimiento: reciben posiciones y devuelven la **velocidad deseada**. La máquina de estados decide *cuándo* usar cada una; el steering decide *cómo* moverse.
 

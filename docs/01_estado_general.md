@@ -1,6 +1,6 @@
 # Estado, Contexto y Máquina (máquina de estados base)
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 Es la base común de las 14 máquinas. Ya está programada: tu trabajo es escribir **estados** (clases que heredan de `Estado`) y un **controller** que arma la `Maquina`.
 

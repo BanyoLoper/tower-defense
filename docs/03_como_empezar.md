@@ -1,6 +1,6 @@
 # Guía de inicio: de cero a tu primer estado
 
-[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
+[Plan general](00_indice_y_plan.md) · [Guia de inicio](03_como_empezar.md) · [Como subir cambios](04_como_subir_cambios.md) · [Troubleshooting](05_troubleshooting.md) · [Estado general](01_estado_general.md) · [Steering](02_steering_behaviors.md) · [README](../README.md)
 
 Si es tu primera vez con máquinas de estados o con este proyecto, lee esta página en orden. Son 10 pasos y 6 diagramas; al final sabes qué hacer en la primera hora.
 
@@ -46,6 +46,8 @@ Más detalle en [Estado general](01_estado_general.md).
 10. **Commit y PR** el mismo día (ver el flujo de abajo).
 
 ## 7. El flujo de trabajo con Git
+
+> Los comandos paso a paso están en **[Cómo subir tus cambios](04_como_subir_cambios.md)**; si algo falla: **[Troubleshooting (si el pipeline falla)](05_troubleshooting.md)**.
 
 ![Flujo de trabajo con Git](img/03_como_empezar_5.svg)
 
