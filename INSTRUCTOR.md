@@ -38,4 +38,4 @@ Edita `.github/entregas/calendario.json` (las fechas que trae son de ejemplo). L
 
 - `Assets/_Granero/` base del juego (instructor). Los alumnos no la tocan.
 - `Assets/_Alumnos/<Maquina>/` y `Assets/_Alumnos/Steering/` codigo de los alumnos (con sus `.meta` ya creados, para evitar conflictos de GUID).
-- `docs/` paquete HTML con el plan, las 14 maquinas y los steering.
+- `docs/` documentacion en Markdown (se lee en GitHub) con diagramas en `docs/img/`. `docs/html/` es la misma documentacion en HTML para incrustar en la plataforma de la escuela.
