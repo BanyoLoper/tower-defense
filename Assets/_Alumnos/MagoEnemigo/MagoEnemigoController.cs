@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Alumnos.MagoEnemigo;
 
 public class MagoEnemigoController : MonoBehaviour
 {
