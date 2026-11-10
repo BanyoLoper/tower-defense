@@ -1,30 +1,21 @@
+// Assets/_Alumnos/Director/DirectorController.cs
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectorController : MonoBehaviour
+namespace Alumnos.Director
 {
-    public Maquina maquina;
-    public Contexto ctx;
-    private string ultimo;
-
-    void Start()
+    public class DirectorController : MonoBehaviour
     {
-        ctx = new Contexto();
-        List<Estado> lista = new List<Estado>();
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
 
-        lista.Add(new DirectorPreparacion());
+        void Awake()
+        {
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new DirectorPreparacion() }, ctx);   // por ahora solo este estado
+        }
 
-
-        maquina = new Maquina(lista, ctx);
-<<<<<<< HEAD
-        maquina.Iniciar("Preparacion");
-=======
->>>>>>> parent of bc952d9 (Revert "Cambios v.1")
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void OnEnable() { maq.Iniciar("DirectorPreparacion"); }
+        void Update() { maq.Actualizar(Time.deltaTime); }
     }
 }
