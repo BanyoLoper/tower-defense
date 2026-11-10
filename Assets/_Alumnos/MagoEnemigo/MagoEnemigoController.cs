@@ -1,28 +1,35 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Alumnos.MagoEnemigo;
 
-public class MagoEnemigoController : MonoBehaviour
+
+
+
+namespace Alumnos.MagoEnemigo
 {
-    Maquina maq;
-    readonly Contexto ctx = new Contexto();
-    Agente ag;
-    void Awake()
-    {
-        ag = GetComponent<Agente>();
-        ctx.Fijar("agente", ag);
-        ctx.Fijar("ctrl", this);
-        maq = new Maquina(new List<Estado> { new MagoEnemigoAvanzar() }, ctx);
-    }
 
 
-    void OnEnable()
+    public class MagoEnemigoController : MonoBehaviour
     {
-        maq.Iniciar("MagoEnemigoAvanzar");
-    }
+        Maquina maq;
+        readonly Contexto ctx = new Contexto();
+        Agente ag;
+        void Awake()
+        {
+            ag = GetComponent<Agente>();
+            ctx.Fijar("agente", ag);
+            ctx.Fijar("ctrl", this);
+            maq = new Maquina(new List<Estado> { new MagoEnemigoAvanzar() }, ctx);
+        }
 
-    void Update()
-    {
-        maq.Actualizar(Time.deltaTime);
+
+        void OnEnable()
+        {
+            maq.Iniciar("MagoEnemigoAvanzar");
+        }
+
+        void Update()
+        {
+            maq.Actualizar(Time.deltaTime);
+        }
     }
 }
