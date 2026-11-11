@@ -1,17 +1,42 @@
-// Assets/_Alumnos/Director/DirectorPreparacion.cs
+
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Alumnos.Director
 {
     public class DirectorPreparacion : Estado
     {
+        float tiempo;
+        int nivel;
+
         public override void Entrar(string anterior)
         {
-            Debug.Log("Director: entre a Preparacion");   // prueba de vida: debe salir en la consola al hacer Play
+            tiempo = 0f;
+
+            nivel = Juego.I.Nivel;
+
+            Juego.I.Preparar(nivel);
+
+            Debug.Log("Director: entre a Preparacion");
         }
 
-        public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
+        public override string Actualizar(float dt)
+        {
+            tiempo += dt;
 
-        public override string AlRecibir(string trigger, int valor) { return null; }
+            Keyboard teclado = Keyboard.current;
+
+            if (teclado != null && teclado.spaceKey.wasPressedThisFrame)
+            {
+                return "DirectorAviso";
+            }
+
+            if (tiempo >= 20f)
+            {
+                return "DirectorAviso";
+            }
+
+            return null;
+        }
     }
 }
