@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Alumnos.Soldado
@@ -6,11 +5,13 @@ namespace Alumnos.Soldado
     public class SoldadoMuerto : Estado
     {
         float tiempo;
+        bool devuelto;
         Agente agente;
 
         public override void Entrar(string anterior)
         {
             tiempo = 0f;
+            devuelto = false;
             agente = Ctx.Obtener<Agente>("agente");
             agente.cuerpo.Detener();
             agente.Animar(Anim.Muerte1);
@@ -20,8 +21,9 @@ namespace Alumnos.Soldado
         {
             tiempo += dt;
 
-            if (tiempo >= 3f)
+            if (tiempo >= 3f && !devuelto)
             {
+                devuelto = true;
                 Reserva.Devolver(agente.gameObject);
             }
 
