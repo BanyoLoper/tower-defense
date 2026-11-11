@@ -8,18 +8,32 @@ namespace Alumnos.Soldado
     {
         Maquina maq;
         readonly Contexto ctx = new Contexto();
+        Agente agente;
 
         void Awake()
         {
-            ctx.Fijar("agente", GetComponent<Agente>());
+            agente = GetComponent<Agente>();
+
+            ctx.Fijar("agente", agente);
             ctx.Fijar("ctrl", this);
 
-           maq = new Maquina(new List<Estado> { new SoldadoAvanzar() },ctx);
+            maq = new Maquina(new List<Estado> {new SoldadoAvanzar(),new SoldadoMuerto()},ctx);
         }
 
         void OnEnable()
         {
             maq.Iniciar("SoldadoAvanzar");
+            agente.salud.AlMorir += AlMorir;
+        }
+
+        void OnDisable()
+        {
+            agente.salud.AlMorir -= AlMorir;
+        }
+
+        void AlMorir(GameObject origen)
+        {
+            maq.CambiarA("SoldadoMuerto");
         }
 
         void Update()
@@ -28,3 +42,4 @@ namespace Alumnos.Soldado
         }
     }
 }
+
