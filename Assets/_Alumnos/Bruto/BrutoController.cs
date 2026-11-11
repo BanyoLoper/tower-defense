@@ -12,7 +12,7 @@ namespace Alumnos.Bruto
         {
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new BrutoAvanzar() }, ctx);   // por ahora solo este estado
+            maq = new Maquina(new List<Estado> { new BrutoAvanzar() }, ctx);   // por ahora solo este estado..
         }
 
         void OnEnable() { maq.Iniciar("BrutoAvanzar"); }
