@@ -22,8 +22,28 @@ namespace Alumnos.MagoEnemigo
 
         public override string Actualizar(float dt)
         {
+
+            if (ag == null)
+                return null;
+
+
             t += dt;
-            if (ag != null && Ruta.Puntos != null && Ruta.Puntos.Length > 0)
+            if(t >= 0.2f)
+
+            {
+                t = 0f;
+                Agente hostil = Sensor.HostilMasCercano(ag, 11f);
+                if (hostil != null)
+                {
+                    float dist = Vector3.Distance(ag.transform.position, hostil.transform.position);
+                    if (dist <= 11f)
+                    {
+                        return "MagoEnemigoPosicionarse";
+                    }
+                }
+
+            }
+            if ( Ruta.Puntos != null && Ruta.Puntos.Length > 0)
             {
                 Vector3 destino = Ruta.Puntos[Ruta.Puntos.Length - 1];
                 Vector3 dir = destino - ag.transform.position;
