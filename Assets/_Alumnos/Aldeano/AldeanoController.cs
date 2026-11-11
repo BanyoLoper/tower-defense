@@ -1,9 +1,10 @@
+// Assets/_Alumnos/Aldeano/AldeanoController.cs
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Alumnos.Bruto
+namespace Alumnos.Aldeano
 {
-    public class BrutoController : MonoBehaviour
+    public class AldeanoController : MonoBehaviour
     {
         Maquina maq;
         readonly Contexto ctx = new Contexto();
@@ -12,10 +13,11 @@ namespace Alumnos.Bruto
         {
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new BrutoAvanzar() }, ctx);   // por ahora solo este estado..
+            maq = new Maquina(new List<Estado> { new AldeanoVagar() }, ctx);   // por ahora solo este estado
         }
 
-        void OnEnable() { maq.Iniciar("BrutoAvanzar"); }
+        void OnEnable() { maq.Iniciar("AldeanoVagar"); }
         void Update() { maq.Actualizar(Time.deltaTime); }
     }
 }
+

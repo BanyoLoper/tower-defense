@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Alumnos.Bruto
+namespace Alumnos.Tutorial
 {
-    public class BrutoAvanzar : Estado
+    public class TutorialBienvenida : Estado
     {
         public override void Entrar(string anterior)
         {
-            Debug.Log("Bruto: entre a Avanzar");   // prueba de vida: debe salir en la consola al hacer Play
+            Debug.Log("Tutorial: entre a Bienvenida");   // prueba de vida: debe salir en la consola al hacer Play
         }
 
         public override string Actualizar(float dt) { return null; }   // null = quedarse en este estado
