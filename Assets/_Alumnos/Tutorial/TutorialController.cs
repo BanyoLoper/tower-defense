@@ -11,7 +11,7 @@ namespace Alumnos.Tutorial
         void Awake()
         {
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new TutorialBienvenida() }, ctx);   // por ahora solo este estado
+            maq = new Maquina(new List<Estado> { new TutorialBienvenida(), new TutorialElegirPlataforma(), new TutorialConstruir() }, ctx);
         }
 
         void OnEnable() { maq.Iniciar("TutorialBienvenida"); }
