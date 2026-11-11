@@ -12,10 +12,26 @@ namespace Alumnos.TorreMaga
         {
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new TorreMagaVigilando() }, ctx);   // por ahora solo este estado
+
+            maq = new Maquina(
+                new List<Estado>
+                {
+                    new TorreMagaVigilando(),
+                    new TorreMagaCargando(),
+                    new TorreMagaDestruida()
+                },
+                ctx
+            );
         }
 
-        void OnEnable() { maq.Iniciar("TorreMagaVigilando"); }
-        void Update() { maq.Actualizar(Time.deltaTime); }
+        void OnEnable()
+        {
+            maq.Iniciar("TorreMagaVigilando");
+        }
+
+        void Update()
+        {
+            maq.Actualizar(Time.deltaTime);
+        }
     }
 }
