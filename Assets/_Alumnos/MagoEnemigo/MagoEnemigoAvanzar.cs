@@ -19,7 +19,6 @@ namespace Alumnos.MagoEnemigo
             Debug.Log("MagoEnemigo: entra a Avnazar");
         }
 
-
         public override string Actualizar(float dt)
         {
 
@@ -62,13 +61,8 @@ namespace Alumnos.MagoEnemigo
             return null;
         }
 
-
-
     }
-        
 
-        
-    
 }
 
 

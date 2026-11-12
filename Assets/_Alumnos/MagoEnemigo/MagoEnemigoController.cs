@@ -24,8 +24,6 @@ namespace Alumnos.MagoEnemigo
             new MagoEnemigoMuerto()
             }, ctx);
         }
-
-
         void OnEnable()
         {
             maq.Iniciar("MagoEnemigoAvanzar");
@@ -38,10 +36,6 @@ namespace Alumnos.MagoEnemigo
             ag.salud.AlMorir -= AlMorir;
             
         }
-
-
-
-
         void AlMorir(GameObject origen)
         {
             maq.CambiarA("MagoEnemigoMuerto");

@@ -15,12 +15,10 @@ namespace Alumnos.MagoEnemigo
             Debug.Log(" MagoEnemigo entra a: Muerto");
         }
 
-
         public override string Actualizar(float dt)
         {
             return null;
         }
-
         public override string AlRecibir(string trigger, int valor)
         {
             return null;
