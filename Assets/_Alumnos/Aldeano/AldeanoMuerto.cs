@@ -10,6 +10,7 @@ namespace Alumnos.Aldeano
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
+            Debug.Log("[" + ag.name + "] Aldeano: entre a Muerto desde " + anterior, ag);
             ag.cuerpo.Detener();
             ag.Animar(Anim.Muerte1, 0.1f, true);
             restante = Mathf.Max(3f, ag.Duracion(Anim.Muerte1));

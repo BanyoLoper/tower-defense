@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Alumnos.Aldeano
 {
     public class AldeanoAsustarse : Estado
@@ -8,6 +10,7 @@ namespace Alumnos.Aldeano
         {
             restante = 0.8f;
             Agente ag = Ctx.Obtener<Agente>("agente");
+            Debug.Log("[" + ag.name + "] Aldeano: entre a Asustarse desde " + anterior, ag);
             ag.cuerpo.Detener();
             ag.Animar(Anim.Miedo, 0.1f, true);
         }
