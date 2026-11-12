@@ -16,16 +16,11 @@ namespace Alumnos.Tutorial
 
         public override string Actualizar(float dt)
         {
-            if (construida)
+            if (construida == false && colocador != null && colocador.Elegido != null && colocador.Elegido.Ocupado)
             {
-                return null;
+                construida = true;
+                Juego.I.Mensaje("Torre construida.");
             }
-
-            if (colocador != null && colocador.Elegido != null)
-            {
-                construida = colocador.Elegido.Ocupado;
-            }
-
             return null;
         }
     }
