@@ -11,7 +11,7 @@ namespace Alumnos.Tutorial
         {
             colocador = Object.FindFirstObjectByType<ColocadorTorres>();
             construida = false;
-            Juego.I.Mensaje("Pulsa 1 o 2 para construir una torre.");
+            TextoCentral.I.Mostrar("TUTORIAL", "Pulsa 1 o 2 para construir una torre.", Color.white, 4f);
         }
 
         public override string Actualizar(float dt)

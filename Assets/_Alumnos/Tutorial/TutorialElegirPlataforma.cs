@@ -9,7 +9,7 @@ namespace Alumnos.Tutorial
         public override void Entrar(string anterior)
         {
             colocador = Object.FindFirstObjectByType<ColocadorTorres>();
-            Juego.I.Mensaje("Haz clic en una plataforma.");
+            TextoCentral.I.Mostrar("TUTORIAL", "Haz clic en una plataforma.", Color.white, 4f);
         }
 
         public override string Actualizar(float dt)
