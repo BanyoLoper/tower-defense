@@ -35,15 +35,11 @@ namespace Alumnos.Soldado
         {
             maq.CambiarA("SoldadoMuerto");
         }
-
-
-
+        
         void Update()
         {
             maq.Actualizar(Time.deltaTime);
         }
-
-
     }
 }
 
