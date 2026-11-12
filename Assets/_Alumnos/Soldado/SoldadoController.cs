@@ -13,10 +13,8 @@ namespace Alumnos.Soldado
         void Awake()
         {
             agente = GetComponent<Agente>();
-
             ctx.Fijar("agente", agente);
             ctx.Fijar("ctrl", this);
-
             maq = new Maquina(new List<Estado> {new SoldadoAvanzar(),new SoldadoMuerto()},ctx);
         }
 

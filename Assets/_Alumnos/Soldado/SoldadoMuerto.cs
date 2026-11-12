@@ -20,7 +20,6 @@ namespace Alumnos.Soldado
         public override string Actualizar(float dt)
         {
             tiempo += dt;
-
             if (tiempo >= 3f && !devuelto)
             {
                 devuelto = true;
