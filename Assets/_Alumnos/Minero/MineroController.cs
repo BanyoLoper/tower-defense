@@ -26,7 +26,7 @@ namespace Alumnos.Minero
 
         void OnEnable()
         {
-            ctx.Fijar("carga", 0);
+            ctx.Fijar("carga",0);
             maq.Iniciar("MineroIrAMina");
             ag.salud.AlMorir += AlMorir;
         }

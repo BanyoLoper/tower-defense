@@ -16,7 +16,7 @@ namespace Alumnos.Minero
             if (ag == null) return;
 
             ag.cuerpo.Detener();
-            ag.Animar(Anim.Muerte1, 0.1f, true);
+            ag.Animar(Anim.Muerte1,0.1f,true);
             Debug.Log("Minero: ha muerto y perdio su carga");
         }
 
