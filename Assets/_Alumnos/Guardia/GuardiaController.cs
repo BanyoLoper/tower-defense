@@ -12,7 +12,7 @@ namespace Alumnos.Guardia
         {
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new GuardiaPatrullar() }, ctx);   // por ahora solo este estado
+            maq = new Maquina(new List<Estado> { new GuardiaPatrullar(), new GuardiaMuerto() }, ctx);   // por ahora solo este estado
         }
 
         void OnEnable() { maq.Iniciar("GuardiaPatrullar"); }
