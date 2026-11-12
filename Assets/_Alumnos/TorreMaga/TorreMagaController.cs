@@ -7,7 +7,6 @@ namespace Alumnos.TorreMaga
     {
         Maquina maq;
         readonly Contexto ctx = new Contexto();
-
         void Awake()
         {
             ctx.Fijar("agente", GetComponent<Agente>());
@@ -23,12 +22,10 @@ namespace Alumnos.TorreMaga
                 ctx
             );
         }
-
         void OnEnable()
         {
             maq.Iniciar("TorreMagaVigilando");
         }
-
         void Update()
         {
             maq.Actualizar(Time.deltaTime);
