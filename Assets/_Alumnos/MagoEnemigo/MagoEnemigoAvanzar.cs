@@ -11,7 +11,7 @@ namespace Alumnos.MagoEnemigo
     public override void Entrar(string anterior)
         {
             t = 0f;
-            ag = Ctx.Obtener<Agente>("agente");
+             Agente ag = Ctx.Obtener<Agente>("agente");
             if ( ag != null)
             {
                 ag.Animar(Anim.Caminar);
@@ -50,7 +50,8 @@ namespace Alumnos.MagoEnemigo
                 dir.y = 0f;
                 if (dir.sqrMagnitude > 0.01f)
                 {
-                    ag.cuerpo.Mover(dir.normalized , dt);
+                    
+                    ag.cuerpo.Mover(dir.normalized * ag.cuerpo.velocidadMax, dt);
                 }
                
             }

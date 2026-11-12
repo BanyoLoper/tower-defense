@@ -1,6 +1,11 @@
 using UnityEngine;
 
-public class MagoEnemigoPosicionarse : Estado
+namespace Alumnos.MagoEnemigo
 {
-    
+    public class MagoEnemigoPosicionarse : Estado
+    {
+
+
+    }
+
 }
