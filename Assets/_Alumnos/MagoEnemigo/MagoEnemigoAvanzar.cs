@@ -22,9 +22,7 @@ namespace Alumnos.MagoEnemigo
         public override string Actualizar(float dt)
         {
 
-            if (ag == null)
-                return null;
-
+            if (ag == null) return null;
 
             t += dt;
             if(t >= 0.2f)
@@ -40,7 +38,6 @@ namespace Alumnos.MagoEnemigo
                         return "MagoEnemigoPosicionarse";
                     }
                 }
-
             }
             if ( Ruta.Puntos != null && Ruta.Puntos.Length > 0)
             {
@@ -49,11 +46,9 @@ namespace Alumnos.MagoEnemigo
                 dir.y = 0f;
                 if (dir.sqrMagnitude > 0.01f)
                 {
-                    
                     ag.cuerpo.Mover(dir.normalized * ag.cuerpo.velocidadMax, dt);
                 }
-               
-            }
+           }
             return null;
         }
            public override string AlRecibir(string trigger , int valor)

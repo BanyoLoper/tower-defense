@@ -8,8 +8,6 @@ namespace Alumnos.MagoEnemigo
         Agente ag;
         Agente objetivo;
         float t;
-
-
         public override void Entrar(string anterior)
         {
             t = 0.2f;
@@ -54,9 +52,7 @@ namespace Alumnos.MagoEnemigo
         {
             return null;
         }
-
     }
-
 }
 
 
