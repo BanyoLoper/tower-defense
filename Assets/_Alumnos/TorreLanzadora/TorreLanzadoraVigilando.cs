@@ -12,6 +12,7 @@ namespace Alumnos.TorreLanzadora
             tiempo = 0f;
             agent = Ctx.Obtener<Agente>("agente");
             agent.Animar(Anim.IdleCombate);
+            Debug.Log("TorreLanzadora: entre a Vigilando");
         }
 
         public override string Actualizar(float dt)
