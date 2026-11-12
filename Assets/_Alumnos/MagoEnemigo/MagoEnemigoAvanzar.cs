@@ -11,7 +11,7 @@ namespace Alumnos.MagoEnemigo
     public override void Entrar(string anterior)
         {
             t = 0f;
-             Agente ag = Ctx.Obtener<Agente>("agente");
+            ag = Ctx.Obtener<Agente>("agente");
             if ( ag != null)
             {
                 ag.Animar(Anim.Caminar);
