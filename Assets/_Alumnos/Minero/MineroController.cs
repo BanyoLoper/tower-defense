@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,27 +12,22 @@ namespace Alumnos.Minero
         void Awake()
         {
             ag = GetComponent<Agente>();
-
             ctx.Fijar("agente", ag);
             ctx.Fijar("ctrl", this);
 
-            maq = new Maquina(
-                new List<Estado>
+            maq = new Maquina(new List<Estado>
                 {
                     new MineroIrAMina(),
                     new MineroMinar(),
                     new MineroMuerto()
                 },
-                ctx
-            );
+                 ctx);
         }
 
         void OnEnable()
         {
             ctx.Fijar("carga", 0);
-
             maq.Iniciar("MineroIrAMina");
-
             ag.salud.AlMorir += AlMorir;
         }
 
@@ -56,5 +50,3 @@ namespace Alumnos.Minero
         }
     }
 }
-
-

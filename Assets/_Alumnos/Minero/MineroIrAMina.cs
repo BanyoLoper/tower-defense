@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Alumnos.Minero
@@ -12,28 +11,22 @@ namespace Alumnos.Minero
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
-
             mina = null;
             camino = null;
 
-            if (ag == null || Juego.I == null)
-                return;
+            if (ag == null || Juego.I == null) return;
 
             Transform[] minas = Juego.I.puntosMina;
-
-            if (minas == null || minas.Length == 0)
-                return;
+            if (minas == null || minas.Length == 0) return;
 
             float mejorDistancia = float.MaxValue;
 
             foreach (Transform punto in minas)
             {
-                if (punto == null)
-                    continue;
+                if (punto == null) continue;
 
                 Vector3 diferencia = punto.position - ag.Pos;
                 diferencia.y = 0f;
-
                 float distancia = diferencia.sqrMagnitude;
 
                 if (distancia < mejorDistancia)
@@ -43,28 +36,22 @@ namespace Alumnos.Minero
                 }
             }
 
-            if (mina == null)
-                return;
+            if (mina == null) return;
 
             camino = new Camino();
             camino.Calcular(ag.Pos, mina.position);
-
             ag.Animar(Anim.Caminar);
-
             Debug.Log("Minero: caminando hacia la mina");
         }
 
         public override string Actualizar(float dt)
         {
-            if (ag == null || mina == null)
-                return null;
+            if (ag == null || mina == null) return null;
 
             if (Sensor.DistanciaPlana(ag.Pos, mina.position) <= 1f)
             {
                 ag.cuerpo.Detener();
-
                 Debug.Log("Minero: llego a la mina");
-
                 return "MineroMinar";
             }
 
@@ -91,5 +78,3 @@ namespace Alumnos.Minero
         }
     }
 }
-
-
