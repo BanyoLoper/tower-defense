@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Alumnos.Minero
@@ -12,22 +11,18 @@ namespace Alumnos.Minero
         {
             ag = Ctx.Obtener<Agente>("agente");
             tiempo = 0f;
-
             Ctx.Fijar("carga", 0);
 
-            if (ag == null)
-                return;
+            if (ag == null) return;
 
             ag.cuerpo.Detener();
             ag.Animar(Anim.Muerte1, 0.1f, true);
-
             Debug.Log("Minero: ha muerto y perdio su carga");
         }
 
         public override string Actualizar(float dt)
         {
-            if (ag == null)
-                return null;
+            if (ag == null) return null;
 
             tiempo += dt;
 
@@ -40,4 +35,3 @@ namespace Alumnos.Minero
         }
     }
 }
-
