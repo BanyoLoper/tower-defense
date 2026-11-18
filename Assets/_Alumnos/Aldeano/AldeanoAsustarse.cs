@@ -18,8 +18,7 @@ namespace Alumnos.Aldeano
         public override string Actualizar(float dt)
         {
             restante -= dt;
-            // Clase 2: volver a Vagar hasta implementar Huir en la clase 3.
-            return restante <= 0f ? "AldeanoVagar" : null;
+            return restante <= 0f ? "AldeanoHuir" : null;
         }
     }
 }
