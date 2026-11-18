@@ -14,10 +14,7 @@ namespace Alumnos.Guardia
                 agente.Animar("Muerte1");
             }
         }
-
         public override string Actualizar(float dt) { return null; }
-
         public override string AlRecibir(string trigger, int valor) {  return null; }
-        
     }
 }
