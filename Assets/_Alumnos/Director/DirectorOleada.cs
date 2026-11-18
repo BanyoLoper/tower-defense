@@ -6,28 +6,22 @@ namespace Alumnos.Director
     public class DirectorOleada : Estado
     {
         List<Rol> cola = new List<Rol>();
-
         int indice;
         int nivel;
         float tiempo;
         float intervalo;
-
         public override void Entrar(string anterior)
         {
             indice = 0;
             tiempo = 1f;
-
             nivel = Juego.I.Nivel;
-
             cola.Clear();
-
             // Oleada 1
             if (nivel == 0)
             {
                 AgregarEnemigos(Rol.Soldado, 6);
                 intervalo = 1.6f;
             }
-
             // Oleada 2
             else if (nivel == 1)
             {
@@ -35,7 +29,6 @@ namespace Alumnos.Director
                 AgregarEnemigos(Rol.Lancero, 4);
                 intervalo = 1.3f;
             }
-
             // Oleada 3
             else if (nivel == 2)
             {
@@ -44,7 +37,6 @@ namespace Alumnos.Director
                 AgregarEnemigos(Rol.MagoEnemigo, 2);
                 intervalo = 1.1f;
             }
-
             // Oleada 4
             else if (nivel == 3)
             {
@@ -54,7 +46,6 @@ namespace Alumnos.Director
                 AgregarEnemigos(Rol.Bruto, 3);
                 intervalo = 1f;
             }
-
             // Oleada 5
             else if (nivel == 4)
             {
@@ -63,9 +54,7 @@ namespace Alumnos.Director
                 AgregarEnemigos(Rol.Bruto, 4);
                 intervalo = 0.8f;
             }
-
             Debug.Log("Director: comienza la oleada " + (nivel + 1));
-
             Juego.I.Lanzar(nivel);
         }
 
@@ -85,30 +74,15 @@ namespace Alumnos.Director
             {
                 return "DirectorLimpieza";
             }
-
             tiempo -= dt;
-
             if (tiempo <= 0f)
             {
                 tiempo = intervalo;
-
                 Vector3 posicion = Ruta.Inicio;
-
-                posicion += new Vector3(
-                    Random.Range(-0.8f, 0.8f),
-                    0f,
-                    Random.Range(-0.8f, 0.8f)
-                );
-
-                Juego.I.Aparecer(
-                    cola[indice],
-                    posicion,
-                    Quaternion.LookRotation(Vector3.right)
-                );
-
+                posicion += new Vector3(Random.Range(-0.8f, 0.8f),0f,Random.Range(-0.8f, 0.8f));
+                Juego.I.Aparecer(cola[indice],posicion,Quaternion.LookRotation(Vector3.right));
                 indice++;
             }
-
             return null;
         }
     }

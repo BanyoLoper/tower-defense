@@ -27,7 +27,6 @@ namespace Alumnos.Director
         {
             maq.Iniciar("DirectorPreparacion");
         }
-
         void Update()
         {
             maq.Actualizar(Time.deltaTime);

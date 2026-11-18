@@ -8,15 +8,11 @@ namespace Alumnos.Director
         {
             // Entregar las gemas al jugador.
             Economia.Agregar(Juego.I.bonoPorOleada);
-
             Debug.Log("Director: bono entregado");
             Debug.Log("Gemas actuales: " + Economia.Gemas);
-
             // Preparar el siguiente nivel.
             int nuevoNivel = Juego.I.Nivel + 1;
-
             Juego.I.Preparar(nuevoNivel);
-
             Debug.Log("Director: siguiente nivel " + (nuevoNivel + 1));
         }
 
@@ -26,7 +22,6 @@ namespace Alumnos.Director
             {
                 return "DirectorPreparacion";
             }
-
             return null;
         }
     }
