@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Alumnos.MagoEnemigo
@@ -29,7 +28,9 @@ namespace Alumnos.MagoEnemigo
                 t = 0f;
                 objetivo = Sensor.HostilMasCercano(ag, 15f);
                 if (objetivo == null)
-                { return "MagoEnemigoAvanzar"; }
+                { 
+                    return "MagoEnemigoAvanzar";
+                }
             }
 
             if (objetivo == null) return "MagoEnemigoAvanzar";
@@ -43,9 +44,8 @@ namespace Alumnos.MagoEnemigo
             else
             {
                 ag.cuerpo.Detener();
-                ag.cuerpo.MirarA(hacia, dt);
+                ag.cuerpo.Mirar(hacia, dt);
                 return "MagoEnemigoLanzar";
-
             }
                 return null;
             }

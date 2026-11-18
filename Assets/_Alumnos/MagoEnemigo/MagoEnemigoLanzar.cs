@@ -44,6 +44,5 @@ namespace Alumnos.MagoEnemigo
         {
             return null;
         }
-
     }
 }
