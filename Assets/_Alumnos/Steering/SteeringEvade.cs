@@ -6,9 +6,9 @@ public static partial class Steering
     {
         Vector3 distancia = posPer - pos;
         float tiempoPrediccion = (vMax > 0f) ? (distancia.magnitude / vMax) : 0f;
-        Vector3 posicionFutura = posPer + velPer * tiempoPrediccion;
+        Vector3 puntoFuturo = posPer + velPer * tiempoPrediccion;
 
-        Vector3 deseado = pos - posicionFutura;
+        Vector3 deseado = pos - puntoFuturo;
         if (deseado.sqrMagnitude > 0.0001f)
         {
             return deseado.normalized * vMax;
