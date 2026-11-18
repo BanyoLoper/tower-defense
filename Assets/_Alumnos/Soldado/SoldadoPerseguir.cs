@@ -21,6 +21,13 @@ namespace Alumnos.Soldado
                 return "SoldadoAvanzar";
             }
 
+            float distancia = Sensor.DistanciaPlana(agente.Pos,objetivo.Pos);
+
+            if (distancia > 6f)
+            {
+                return "SoldadoAvanzar";
+            }
+
             Vector3 direccion = objetivo.Pos - agente.Pos;
             direccion.y = 0f;
             Vector3 velocidad = direccion.normalized *agente.cuerpo.velocidadMax;
