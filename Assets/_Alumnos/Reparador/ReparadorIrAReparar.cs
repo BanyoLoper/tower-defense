@@ -18,22 +18,13 @@ namespace Alumnos.Reparador
         public override string Actualizar(float dt)
         {
             Agente agente = Ctx.Obtener<Agente>("agente");
-            if (agente == null) return null;
+            if (agente == null || agente.cuerpo == null) return null;
 
-            // Ajusta el destino o llamadas segun los metodos de tu clase Agente / Steering
-            Vector3 destino = agente.Objetivo;
-            Vector3 haciaDestino = destino - agente.transform.position;
-            float distancia = haciaDestino.magnitude;
-            float radioFrenado = 2.0f;
-
-            if (distancia > 0.05f)
+            Agente granero = BuscarGranero();
+            if (granero != null)
             {
-                float velocidad = agente.VelocidadMax;
-                if (distancia < radioFrenado)
-                {
-                    velocidad *= (distancia / radioFrenado);
-                }
-                agente.Mover(haciaDestino.normalized * velocidad, dt);
+                Vector3 direccion = (granero.Pos - agente.Pos).normalized;
+                agente.cuerpo.Mover(direccion, dt);
             }
 
             return null;
@@ -41,6 +32,18 @@ namespace Alumnos.Reparador
 
         public override string AlRecibir(string trigger, int valor)
         {
+            return null;
+        }
+
+        Agente BuscarGranero()
+        {
+            for (int i = 0; i < Agente.Todos.Count; i++)
+            {
+                if (Agente.Todos[i] != null && Agente.Todos[i].rol == Rol.Granero)
+                {
+                    return Agente.Todos[i];
+                }
+            }
             return null;
         }
     }
