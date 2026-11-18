@@ -7,16 +7,49 @@ namespace Alumnos.Bruto
     {
         Maquina maq;
         readonly Contexto ctx = new Contexto();
+        Agente ag;
 
         void Awake()
         {
-            ctx.Fijar("agente", GetComponent<Agente>());
+            ag = GetComponent<Agente>();
+            ctx.Fijar("agente", ag);
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new BrutoAvanzar(), new BrutoMuerto() }, ctx);
+            ctx.Fijar("cuerpo", GetComponent<Cuerpo>());
+
+            maq = new Maquina(new List<Estado>
+            {
+                new BrutoAvanzar(),
+                new BrutoMuerto(),
+                new BrutoPerseguir(),
+                new BrutoCargarGolpe()
+            }, ctx);
         }
 
-        void OnEnable() { maq.Iniciar("BrutoAvanzar"); }
-        void Update() { maq.Actualizar(Time.deltaTime); }
+        void OnEnable()
+        {
+            maq.Iniciar("BrutoAvanzar");
+            if (ag != null && ag.salud != null)
+            {
+                ag.salud.AlMorir += AlMorir;
+            }
+        }
+
+        void OnDisable()
+        {
+            if (ag != null && ag.salud != null)
+            {
+                ag.salud.AlMorir -= AlMorir;
+            }
+        }
+
+        void AlMorir(GameObject origen)
+        {
+            maq.CambiarA("BrutoMuerto");
+        }
+
+        void Update()
+        {
+            maq.Actualizar(Time.deltaTime);
+        }
     }
 }
-

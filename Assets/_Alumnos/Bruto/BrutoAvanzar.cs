@@ -32,7 +32,7 @@ namespace Alumnos.Bruto
             if (tSensor >= 0.2f)
             {
                 tSensor = 0f;
-                Agente hostil = Sensor.HostilMasCercano(ag.transform.position, RANGO_DETECCION, ag.Hostiles);
+                Agente hostil = Sensor.HostilMasCercano(ag, RANGO_DETECCION);
                 if (hostil != null)
                 {
                     Ctx.Fijar("objetivo", hostil);
