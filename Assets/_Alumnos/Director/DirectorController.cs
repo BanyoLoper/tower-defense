@@ -13,13 +13,14 @@ namespace Alumnos.Director
             ctx.Fijar("ctrl", this);
 
             maq = new Maquina(new List<Estado>
-                {
-                    new DirectorPreparacion(),
-                    new DirectorAviso(),
-                    new DirectorOleada()
-                },
-                ctx
-            );
+            {
+                new DirectorPreparacion(),
+                new DirectorAviso(),
+                new DirectorOleada(),
+                new DirectorLimpieza(),
+                new DirectorBono()
+            },
+            ctx);
         }
 
         void OnEnable()

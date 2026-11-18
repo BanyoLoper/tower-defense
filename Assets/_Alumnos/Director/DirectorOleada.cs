@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,8 +55,7 @@ namespace Alumnos.Director
                 intervalo = 1f;
             }
 
-            // Oleada 5: escoltas.
-            // El jefe se incorporara en DirectorJefe.
+            // Oleada 5
             else if (nivel == 4)
             {
                 AgregarEnemigos(Rol.Soldado, 12);
@@ -81,9 +79,11 @@ namespace Alumnos.Director
 
         public override string Actualizar(float dt)
         {
+            // Cuando termina de aparecer la cola,
+            // pasa al estado de limpieza.
             if (indice >= cola.Count)
             {
-                return null;
+                return "DirectorLimpieza";
             }
 
             tiempo -= dt;
