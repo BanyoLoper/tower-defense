@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Alumnos.MagoEnemigo
@@ -11,7 +10,7 @@ namespace Alumnos.MagoEnemigo
         public override void Entrar(string anterior)
         {
             t = 0.2f;
-            Agente ag = Ctx.Obtener<Agente>("agente");
+            ag = Ctx.Obtener<Agente>("agente");
             if (ag != null)
             {
                 ag.Animar(Anim.Caminar);
@@ -29,7 +28,9 @@ namespace Alumnos.MagoEnemigo
                 t = 0f;
                 objetivo = Sensor.HostilMasCercano(ag, 15f);
                 if (objetivo == null)
-                { return "MagoEnemigoAvanzar"; }
+                { 
+                    return "MagoEnemigoAvanzar";
+                }
             }
 
             if (objetivo == null) return "MagoEnemigoAvanzar";
@@ -39,12 +40,6 @@ namespace Alumnos.MagoEnemigo
             if (dist > 9)
             {
                 ag.cuerpo.Mover(hacia.normalized * ag.cuerpo.velocidadMax, dt);
-            }
-            else
-            {
-                ag.cuerpo.Detener();
-                ag.cuerpo.MirarA(hacia, dt);
-
             }
                 return null;
             }
