@@ -5,7 +5,6 @@ namespace Alumnos.Lancero
 {
     public class LanceroAcercarse : Estado
     {
-
         Agente agente;
 
         public override void Entrar(string anterior)
@@ -26,12 +25,15 @@ namespace Alumnos.Lancero
             if (hostilTransform == null)
             {
                 GameObject go = hostilObj as GameObject;
-                if (go != null) hostilTransform = go.transform;
-            }
+                if (go != null)
+                {
+                    hostilTransform = go.transform;
+                }
 
-            if (hostilTransform == null)
-            {
-                return "LanceroAvanzar";
+                if (hostilTransform == null)
+                {
+                    return "LanceroAvanzar";
+                }
             }
 
             float distancia = Vector3.Distance(agente.transform.position, hostilTransform.position);
@@ -41,11 +43,6 @@ namespace Alumnos.Lancero
                 return "LanceroEstocada";
             }
 
-            float velocidadMax = 5f;
-            Vector3 steering = Steering.Seek(agente.transform.position, hostilTransform.position, velocidadMax);
-
-            agente.cuerpo.Mover(steering, dt);
-
             return null;
         }
 
@@ -53,6 +50,5 @@ namespace Alumnos.Lancero
         {
             return null;
         }
-
     }
 }
