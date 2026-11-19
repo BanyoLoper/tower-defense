@@ -10,8 +10,12 @@ namespace Alumnos.Minero
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
-            tiempo = 0f;
             if (ag == null) return;
+
+            tiempo = 0f;
+            ag.cuerpo.Detener();
+            ag.Animar(Anim.Recolectar);
+
             ag.cuerpo.Detener();
             ag.Animar(Anim.Recolectar);
             if (Ctx.Obtener<int>("carga") == 6)

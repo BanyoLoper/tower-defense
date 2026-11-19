@@ -11,9 +11,13 @@ namespace Alumnos.Minero
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
+            if (ag == null || Juego.I == null) return;
+
             granero = null;
             camino = null;
-            if (ag == null || Juego.I == null) return;
+            granero = Juego.I.puntoGranero;
+            if (granero == null) return;
+
             granero = Juego.I.puntoGranero;
             if (granero == null) return;
             camino = new Camino();
@@ -32,7 +36,6 @@ namespace Alumnos.Minero
                 Debug.Log("Minero: llego al granero");
                 return "MineroDepositar";
             }
-
 
             Vector3 destino = granero.position;
             if (camino != null && camino.Valido)
