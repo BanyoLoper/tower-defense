@@ -17,9 +17,7 @@ namespace Alumnos.TorreMaga
                 {
                     new TorreMagaVigilando(),
                     new TorreMagaCargando(),
-                    new TorreMagaDestruida(),
-                    new TorreMagaLanzando(),
-                    new TorreMagaEnfriando()
+                    new TorreMagaDestruida()
                 },
                 ctx
             );
