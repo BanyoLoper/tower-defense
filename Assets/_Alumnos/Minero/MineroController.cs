@@ -19,6 +19,8 @@ namespace Alumnos.Minero
                 {
                     new MineroIrAMina(),
                     new MineroMinar(),
+                    new MineroIrAlGranero(),
+                    new MineroDepositar(),
                     new MineroMuerto()
                 },
                  ctx);

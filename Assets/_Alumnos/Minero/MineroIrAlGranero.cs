@@ -26,12 +26,13 @@ namespace Alumnos.Minero
         {
             if (ag == null || granero == null) return null;
 
-            if ((camino != null && camino.Valido && camino.Llego(ag.Pos)) || Sensor.DistanciaPlana(ag.Pos, granero.position) <= 0.8f)
+            if ((Juego.I.granero != null && Juego.I.granero.DistanciaBorde(ag.Pos) <= 1f) || (camino != null && camino.Valido && camino.Llego(ag.Pos)))
             {
                 ag.cuerpo.Detener();
                 Debug.Log("Minero: llego al granero");
                 return "MineroDepositar";
             }
+
 
             Vector3 destino = granero.position;
             if (camino != null && camino.Valido)
