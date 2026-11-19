@@ -41,7 +41,7 @@ namespace Alumnos.Aldeano
             alGranero.y = 0f;
             // La huida domina: el sesgo al granero no puede invertirla.
             Vector3 direccion = lejos.normalized + alGranero.normalized * 0.35f;
-            ctrl.MoverSeguro(direccion.normalized * ag.cuerpo.velocidadMax, dt);
+            ag.cuerpo.Mover(direccion.normalized * ag.cuerpo.velocidadMax, dt);
             return null;
         }
     }

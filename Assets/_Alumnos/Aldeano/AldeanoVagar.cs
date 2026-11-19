@@ -41,7 +41,7 @@ namespace Alumnos.Aldeano
             aCasa.y = 0f;
             if (aCasa.sqrMagnitude > 100f)
                 velocidad = (velocidad + aCasa.normalized * 3f).normalized * ag.cuerpo.velocidadMax;
-            ctrl.MoverSeguro(velocidad, dt);
+            ag.cuerpo.Mover(velocidad, dt);
             return null;
         }
 
