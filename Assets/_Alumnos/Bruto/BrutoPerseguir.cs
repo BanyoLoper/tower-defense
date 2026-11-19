@@ -11,6 +11,7 @@ namespace Alumnos.Bruto
         const float VELOCIDAD = 1.4f;
         const float RANGO_CARGAR = 2.2f;
         const float RANGO_PERDER = 8.0f;
+
         public override void Entrar(string anterior)
         {
             tSensor = 0f;
@@ -23,6 +24,7 @@ namespace Alumnos.Bruto
                 ag.Animar(Anim.Caminar);
             }
         }
+
         public override string Actualizar(float dt)
         {
             if (ag == null || cuerpo == null)
@@ -72,6 +74,7 @@ namespace Alumnos.Bruto
             }
             return null;
         }
+
         public override string AlRecibir(string trigger, int valor)
         {
             return null;

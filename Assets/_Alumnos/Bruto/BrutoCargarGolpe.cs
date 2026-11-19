@@ -9,6 +9,7 @@ namespace Alumnos.Bruto
         Agente objetivo;
         float t;
         const float TIEMPO_CARGA = 0.7f;
+
         public override void Entrar(string anterior)
         {
             t = 0f;
@@ -26,6 +27,7 @@ namespace Alumnos.Bruto
                 ag.Animar(Anim.Atacar1);
             }
         }
+
         public override string Actualizar(float dt)
         {
             t += dt;
@@ -51,6 +53,7 @@ namespace Alumnos.Bruto
             }
             return null;
         }
+
         public override string AlRecibir(string trigger, int valor)
         {
             return null;
