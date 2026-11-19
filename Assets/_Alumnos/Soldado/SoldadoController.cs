@@ -15,7 +15,8 @@ namespace Alumnos.Soldado
             agente = GetComponent<Agente>();
             ctx.Fijar("agente", agente);
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> {new SoldadoAvanzar(),new SoldadoMuerto()},ctx);
+            maq = new Maquina(new List<Estado>{new SoldadoAvanzar(),new SoldadoMuerto(),new SoldadoPerseguir()},ctx);
+
         }
 
         void OnEnable()
