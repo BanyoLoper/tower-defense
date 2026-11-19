@@ -10,11 +10,8 @@ namespace Alumnos.TorreMaga
         public override void Entrar(string anterior)
         {
             agente = Ctx.Obtener<Agente>("agente");
-
             tiempo = 0f;
-
             agente.Animar(Anim.HechizoIdle);
-
             Debug.Log("TorreMaga: entre a Enfriando");
         }
         public override string Actualizar(float dt)
