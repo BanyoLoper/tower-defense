@@ -41,12 +41,6 @@ namespace Alumnos.MagoEnemigo
             {
                 ag.cuerpo.Mover(hacia.normalized * ag.cuerpo.velocidadMax, dt);
             }
-            else
-            {
-                ag.cuerpo.Detener();
-                ag.cuerpo.Mirar(hacia, dt);
-                return "MagoEnemigoLanzar";
-            }
                 return null;
             }
         public override string AlRecibir(string trigger, int valor)

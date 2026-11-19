@@ -6,6 +6,7 @@ namespace Alumnos.MagoEnemigo
         Agente ag;
         Agente objetivo;
         float t;
+
         public override void Entrar(string anterior)
         {
             t = 0f;
@@ -18,6 +19,7 @@ namespace Alumnos.MagoEnemigo
             }
             Debug.Log("MagoEnemigo: entra a Recargar");
         }
+
         public override string Actualizar(float dt)
         {
             if (ag == null) return null;
@@ -45,6 +47,7 @@ namespace Alumnos.MagoEnemigo
             }
             return null;
         }
+
         public override string AlRecibir(string trigger, int valor)
         {
             return null;
