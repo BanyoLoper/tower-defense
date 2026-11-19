@@ -17,42 +17,40 @@ namespace Alumnos.Director
             nivel = Juego.I.Nivel;
             cola.Clear();
             // Oleada 1
-            if (nivel == 0)
+            switch (nivel)
             {
-                AgregarEnemigos(Rol.Soldado, 6);
-                intervalo = 1.6f;
-            }
-            // Oleada 2
-            else if (nivel == 1)
-            {
-                AgregarEnemigos(Rol.Soldado, 8);
-                AgregarEnemigos(Rol.Lancero, 4);
-                intervalo = 1.3f;
-            }
-            // Oleada 3
-            else if (nivel == 2)
-            {
-                AgregarEnemigos(Rol.Soldado, 8);
-                AgregarEnemigos(Rol.Ladron, 5);
-                AgregarEnemigos(Rol.MagoEnemigo, 2);
-                intervalo = 1.1f;
-            }
-            // Oleada 4
-            else if (nivel == 3)
-            {
-                AgregarEnemigos(Rol.Soldado, 8);
-                AgregarEnemigos(Rol.Lancero, 6);
-                AgregarEnemigos(Rol.MagoEnemigo, 3);
-                AgregarEnemigos(Rol.Bruto, 3);
-                intervalo = 1f;
-            }
-            // Oleada 5
-            else if (nivel == 4)
-            {
-                AgregarEnemigos(Rol.Soldado, 12);
-                AgregarEnemigos(Rol.Ladron, 4);
-                AgregarEnemigos(Rol.Bruto, 4);
-                intervalo = 0.8f;
+                case 0: // Oleada 1
+                    AgregarEnemigos(Rol.Soldado, 6);
+                    intervalo = 1.6f;
+                    break;
+
+                case 1: // Oleada 2
+                    AgregarEnemigos(Rol.Soldado, 8);
+                    AgregarEnemigos(Rol.Lancero, 4);
+                    intervalo = 1.3f;
+                    break;
+
+                case 2: // Oleada 3
+                    AgregarEnemigos(Rol.Soldado, 8);
+                    AgregarEnemigos(Rol.Ladron, 5);
+                    AgregarEnemigos(Rol.MagoEnemigo, 2);
+                    intervalo = 1.1f;
+                    break;
+
+                case 3: // Oleada 4
+                    AgregarEnemigos(Rol.Soldado, 8);
+                    AgregarEnemigos(Rol.Lancero, 6);
+                    AgregarEnemigos(Rol.MagoEnemigo, 3);
+                    AgregarEnemigos(Rol.Bruto, 3);
+                    intervalo = 1f;
+                    break;
+
+                case 4: // Oleada 5
+                    AgregarEnemigos(Rol.Soldado, 12);
+                    AgregarEnemigos(Rol.Ladron, 4);
+                    AgregarEnemigos(Rol.MagoEnemigo, 4);
+                    intervalo = 0.8f;
+                    break;     
             }
             Debug.Log("Director: comienza la oleada " + (nivel + 1));
             Juego.I.Lanzar(nivel);
