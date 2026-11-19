@@ -25,6 +25,12 @@ namespace Alumnos.TorreLanzadora
             Vector3 puntoFuturo = objetivo.Pos + objetivo.cuerpo.Velocidad * anticipacion;
 
             agent.cuerpo.MirarA(puntoFuturo, dt);
+
+            Vector3 direccion = puntoFuturo - agent.Pos;
+            direccion.y = 0f;
+
+            if (Vector3.Angle(agent.transform.forward, direccion) < 10f) return "TorreLanzadoraDisparando";
+
             return null;
         }
     }
