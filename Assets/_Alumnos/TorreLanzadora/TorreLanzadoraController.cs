@@ -12,6 +12,7 @@ namespace Alumnos.TorreLanzadora
 
         void Awake()
         {
+            salud = GetComponent<Salud>();
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
             maq = new Maquina(new List<Estado> { new TorreLanzadoraVigilando(), new TorreLanzadoraDestruida(), new TorreLanzadoraApuntando(), new TorreLanzadoraDisparando(), new TorreLanzadoraRecargando()}, ctx);   // por ahora solo este estado

@@ -23,6 +23,8 @@ namespace Alumnos.TorreLanzadora
             alternar = !alternar;
 
             torre.Animar(animacion);
+            duracion = torre.Duracion(animacion);
+            if (duracion <= 0f) duracion = 0.8f;
             disparo = false;
 
         }

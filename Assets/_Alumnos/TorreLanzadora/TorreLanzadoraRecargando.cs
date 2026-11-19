@@ -4,13 +4,11 @@ namespace Alumnos.TorreLanzadora
 {
     public class TorreLanzadoraRecargando : Estado
     {
-        private Agente agent, objetivo;
+        private Agente agent;
         private float tiempo;
         public override void Entrar(string anterior)
         {
             agent = Ctx.Obtener<Agente>("agente");
-            objetivo = Ctx.Obtener<Agente>("objetivo");
-
             tiempo = 0f;
             agent.Animar(Anim.Idle);
         }
