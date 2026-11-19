@@ -14,7 +14,6 @@ namespace Alumnos.TorreLanzadora
             agent.Animar(Anim.IdleCombate);
         }
 
-
         public override string Actualizar(float dt)
         {
             if (objetivo == null || !objetivo.Vivo || Sensor.DistanciaPlana(agent.Pos, objetivo.Pos) > 14f)
