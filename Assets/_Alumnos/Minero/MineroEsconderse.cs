@@ -48,6 +48,12 @@ namespace Alumnos.Minero
 
             if (tiempoSeguro >= 4f)
             {
+                if (Ctx.Obtener<int>("carga") == 6)
+                {
+                    Debug.Log("Minero: vuelve al granero con gemas");
+                    return "MineroIrAlGranero";
+                }
+
                 Debug.Log("Minero: vuelve a trabajar");
                 return "MineroIrAMina";
             }
