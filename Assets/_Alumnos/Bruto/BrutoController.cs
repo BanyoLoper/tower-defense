@@ -20,7 +20,8 @@ namespace Alumnos.Bruto
                 new BrutoMuerto(),
                 new BrutoPerseguir(),
                 new BrutoCargarGolpe(),
-                new BrutoGolpePesado()
+                new BrutoGolpePesado(),
+                new BrutoRecuperar()
             }, ctx);
         }
 
