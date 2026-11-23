@@ -6,12 +6,14 @@ namespace Alumnos.Aldeano
     {
         Agente ag;
         AldeanoController ctrl;
+        Agente granero;
         float consultaEn;
 
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
             ctrl = Ctx.Obtener<AldeanoController>("ctrl");
+            granero = Juego.I != null ? Juego.I.granero : null;
             consultaEn = 0f;
             ag.cuerpo.velocidadMax = 3.2f;
             ag.Animar(Anim.Correr);
@@ -28,10 +30,15 @@ namespace Alumnos.Aldeano
                 if (hostil != null) ctrl.RecordarAmenaza(hostil.Pos);
                 else if (Sensor.DistanciaPlana(ag.Pos, ctrl.Amenaza) > 10f)
                 {
-                    // Clase 3: Esconderse se agrega en la siguiente entrega.
                     ag.cuerpo.Detener();
-                    return "AldeanoVagar";
+                    return "AldeanoEsconderse";
                 }
+            }
+
+            if (granero != null && granero.DistanciaBorde(ag.Pos) <= 1f)
+            {
+                ag.cuerpo.Detener();
+                return "AldeanoEsconderse";
             }
 
             Vector3 lejos = ag.Pos - ctrl.Amenaza;
