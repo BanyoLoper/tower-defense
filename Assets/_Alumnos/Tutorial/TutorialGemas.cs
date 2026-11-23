@@ -9,7 +9,7 @@ namespace Alumnos.Tutorial
         public override void Entrar(string anterior)
         {
             tiempo = 0f;
-            TextoCentral.I.Mostrar("GEMAS", "Usa gemas para construir torres. Selecciona una plataforma bloqueada y pulsa U para desbloquearla pagando su costo.", Color.white, 6f);
+            TextoCentral.I.Mostrar("GEMAS", "Usa gemas para construir torres.\nSelecciona una plataforma bloqueada.\nPulsa U para pagar su desbloqueo.", Color.white, 6f);
         }
 
         public override string Actualizar(float dt)
