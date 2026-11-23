@@ -7,11 +7,13 @@ namespace Alumnos.Minero
         Agente ag;
         Transform granero;
         Camino camino;
+        float tiempoSensor;
 
         public override void Entrar(string anterior)
         {
             ag = Ctx.Obtener<Agente>("agente");
             if (ag == null || Juego.I == null) return;
+            tiempoSensor = 0f;
 
             granero = null;
             camino = null;
@@ -29,6 +31,22 @@ namespace Alumnos.Minero
         public override string Actualizar(float dt)
         {
             if (ag == null || granero == null) return null;
+
+            tiempoSensor -= dt;
+
+            if (tiempoSensor <= 0f)
+            {
+                tiempoSensor = 0.2f;
+
+                Agente enemigo = Sensor.HostilMasCercano(ag, 12f);
+
+                if (enemigo != null)
+                {
+                    ag.cuerpo.Detener();
+                    Debug.Log("Minero: enemigo detectado regresando al granero");
+                    return "MineroHuir";
+                }
+            }
 
             if ((Juego.I.granero != null && Juego.I.granero.DistanciaBorde(ag.Pos) <= 1f) || (camino != null && camino.Valido && camino.Llego(ag.Pos)))
             {
