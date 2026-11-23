@@ -12,7 +12,7 @@ namespace Alumnos.Soldado
         public override void Entrar(string anterior)
         {
             agente = Ctx.Obtener<Agente>("agente");
-            objetivo = Sensor.HostilMasCercano(agente, 2f);
+            objetivo = Ctx.Obtener<Agente>("objetivo");
             tiempo = 0f;
             golpeo = false;
             agente.cuerpo.Detener();
