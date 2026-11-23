@@ -17,6 +17,10 @@ namespace Alumnos.Director
             tiempo += dt;
             if (tiempo >= 3f)
             {
+                if (Juego.I.Nivel == 4)
+                {
+                    return "DirectorJefe";
+                }
                 return "DirectorOleada";
             }
             return null;

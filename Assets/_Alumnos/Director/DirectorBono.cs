@@ -18,11 +18,11 @@ namespace Alumnos.Director
 
         public override string Actualizar(float dt)
         {
-            if (Juego.I.Nivel < Juego.TotalNiveles)
+            if (Juego.I.Nivel >= Juego.TotalNiveles)
             {
-                return "DirectorPreparacion";
+                return "DirectorVictoria";
             }
-            return null;
+            return "DirectorPreparacion";
         }
     }
 }
