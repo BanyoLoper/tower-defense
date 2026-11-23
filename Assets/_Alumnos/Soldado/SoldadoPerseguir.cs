@@ -22,15 +22,18 @@ namespace Alumnos.Soldado
         
         public override string Actualizar(float dt)
         {
+            
             if (objetivo == null || !objetivo.Vivo)
             {
+                Ctx.Fijar("objetivo", (Agente)null);
                 return "SoldadoAvanzar";
             }
-            
+
             float distancia = agente.DistanciaBorde(objetivo.Pos);
 
             if (distancia > 6f)
             {
+                Ctx.Fijar("objetivo", (Agente)null);
                 return "SoldadoAvanzar";
             }
 
@@ -39,7 +42,6 @@ namespace Alumnos.Soldado
                 agente.cuerpo.Detener();
                 return "SoldadoAtacar";
             }
-
 
             Vector3 direccion = objetivo.Pos - agente.Pos;
             direccion.y = 0f;
