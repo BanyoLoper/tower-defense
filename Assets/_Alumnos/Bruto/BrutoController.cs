@@ -14,32 +14,26 @@ namespace Alumnos.Bruto
             ag = GetComponent<Agente>();
             ctx.Fijar("agente", ag);
             ctx.Fijar("ctrl", this);
-            ctx.Fijar("cuerpo", GetComponent<Cuerpo>());
-
             maq = new Maquina(new List<Estado>
             {
                 new BrutoAvanzar(),
                 new BrutoMuerto(),
                 new BrutoPerseguir(),
-                new BrutoCargarGolpe()
+                new BrutoCargarGolpe(),
+                new BrutoGolpePesado()
             }, ctx);
         }
 
         void OnEnable()
         {
+            ctx.Fijar<Agente>("objetivo", null);
             maq.Iniciar("BrutoAvanzar");
-            if (ag != null && ag.salud != null)
-            {
-                ag.salud.AlMorir += AlMorir;
-            }
+            ag.salud.AlMorir += AlMorir;
         }
 
         void OnDisable()
         {
-            if (ag != null && ag.salud != null)
-            {
-                ag.salud.AlMorir -= AlMorir;
-            }
+            ag.salud.AlMorir -= AlMorir;
         }
 
         void AlMorir(GameObject origen)
