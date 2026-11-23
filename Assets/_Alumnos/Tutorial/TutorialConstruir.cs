@@ -20,7 +20,9 @@ namespace Alumnos.Tutorial
             {
                 construida = true;
                 Juego.I.Mensaje("Torre construida.");
+                return "TutorialGemas";
             }
+
             return null;
         }
     }
