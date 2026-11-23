@@ -6,27 +6,40 @@ namespace Alumnos.Soldado
     {
         Agente agente;
         Agente objetivo;
-
+        
         public override void Entrar(string anterior)
         {
             agente = Ctx.Obtener<Agente>("agente");
-            objetivo = Sensor.HostilMasCercano(agente, 6f);
+            objetivo = Ctx.Obtener<Agente>("objetivo");
+            Ctx.Fijar("objetivo", objetivo);
             agente.Animar(Anim.Correr);
-        }
 
+            if (objetivo == null || !objetivo.Vivo)
+            {
+                objetivo = Sensor.HostilMasCercano(agente, 6f);
+            }
+        }
+        
         public override string Actualizar(float dt)
         {
             if (objetivo == null || !objetivo.Vivo)
             {
                 return "SoldadoAvanzar";
             }
-
-            float distancia = Sensor.DistanciaPlana(agente.Pos,objetivo.Pos);
+            
+            float distancia = agente.DistanciaBorde(objetivo.Pos);
 
             if (distancia > 6f)
             {
                 return "SoldadoAvanzar";
             }
+
+            if (distancia <= 2f)
+            {
+                agente.cuerpo.Detener();
+                return "SoldadoAtacar";
+            }
+
 
             Vector3 direccion = objetivo.Pos - agente.Pos;
             direccion.y = 0f;
