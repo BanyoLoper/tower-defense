@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Alumnos.TorreMaga
+{ 
 public static partial class Steering 
 {
     static RaycastHit[] hits = new RaycastHit[10];
@@ -48,4 +50,6 @@ public static partial class Steering
 
         return resultado.normalized * vMax;
     }
+}
+
 }
