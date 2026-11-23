@@ -21,16 +21,33 @@ namespace Alumnos.Soldado
         {
             maq.Iniciar("SoldadoAvanzar");
             agente.salud.AlMorir += AlMorir;
+            agente.salud.AlDanar += AlDanar;
         }
-
+        
         void OnDisable()
         {
             agente.salud.AlMorir -= AlMorir;
+            agente.salud.AlDanar -= AlDanar;
         }
-
+        
         void AlMorir(GameObject origen)
         {
             maq.CambiarA("SoldadoMuerto");
+        }
+        
+        void AlDanar(float cantidad, GameObject origen)
+        {
+            if (agente.salud.vida <= 0f)
+            {
+                return;
+            }
+
+            if (maq.Actual.Nombre == "SoldadoAturdido")
+            {
+                return;
+            }
+
+            maq.CambiarA("SoldadoAturdido");
         }
         
         void Update()
