@@ -1,7 +1,7 @@
 using UnityEngine;
 
-    public static partial class TorreMagaSteering
-    {
+public static partial class Steering
+{
         static RaycastHit[] hits = new RaycastHit[10];
 
         public static Vector3 ObstacleAvoidance(
