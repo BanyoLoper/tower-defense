@@ -44,23 +44,13 @@ namespace Alumnos.Lancero
 
         Transform ObtenerHostilTransform()
         {
-            var hostilObj = agente.ObtenerHostilCercano();
-            if (hostilObj == null)
+            var hostil = agente.ObtenerHostilCercano();
+            if (hostil is Transform t)
             {
-                return null;
+                return t;
             }
 
-            Transform t = hostilObj as Transform;
-            if (t == null)
-            {
-                GameObject go = hostilObj as GameObject;
-                if (go != null)
-                {
-                    t = go.transform;
-                }
-            }
-
-            return t;
+            return hostil is Component comp ? comp.transform : null;
         }
     }
 }
