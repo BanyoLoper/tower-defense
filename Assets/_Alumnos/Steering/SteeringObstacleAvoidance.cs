@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static partial class Steering
+public static partial class TorreMagaSteering
 {
         static RaycastHit[] hits = new RaycastHit[10];
 
