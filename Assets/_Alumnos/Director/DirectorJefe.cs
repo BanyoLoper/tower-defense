@@ -6,11 +6,13 @@ namespace Alumnos.Director
     public class DirectorJefe : Estado
     {
         List<Rol> cola = new List<Rol>();
-        public int indice;
-        public float tiempo;
-        public float intervalo;
-        public bool jefeAparecio;
-        public bool jefeMurio;
+
+        int indice;
+        float tiempo;
+        float intervalo;
+
+        bool jefeAparecio;
+        bool jefeMurio;
 
         public override void Entrar(string anterior)
         {
@@ -19,20 +21,20 @@ namespace Alumnos.Director
             jefeAparecio = false;
             jefeMurio = false;
             cola.Clear();
-            // Escoltas del jefe.
+            // Agregar escoltas del jefe.
             AgregarEnemigos(Rol.Soldado, 12);
             AgregarEnemigos(Rol.Ladron, 4);
             AgregarEnemigos(Rol.Bruto, 4);
-            intervalo = 0.8f;
+
+           intervalo = 0.8f;
             // Escuchar cuando muere un agente.
             Agente.AlMorirAlguien -= AlMorir;
             Agente.AlMorirAlguien += AlMorir;
             Debug.Log("Director: comienza la oleada del jefe");
-            // Avisar que comienza la quinta oleada.
             Juego.I.Lanzar(Juego.I.Nivel);
         }
 
-        public void AgregarEnemigos(Rol rol, int cantidad)
+        void AgregarEnemigos(Rol rol, int cantidad)
         {
             for (int i = 0; i < cantidad; i++)
             {
@@ -40,12 +42,11 @@ namespace Alumnos.Director
             }
         }
 
-        public void AlMorir(Agente agente)
+        void AlMorir(Agente agente)
         {
             if (agente.rol == Rol.Jefe && agente.bando == Bando.Enemigo)
             {
                 jefeMurio = true;
-                // Ya no necesitamos escuchar más muertes.
                 Agente.AlMorirAlguien -= AlMorir;
                 Debug.Log("Director: el jefe fue derrotado");
             }
@@ -61,15 +62,14 @@ namespace Alumnos.Director
                 {
                     tiempo = intervalo;
                     Vector3 posicion = Ruta.Inicio;
-
-                    posicion += new Vector3( Random.Range(-0.8f, 0.8f),0f,Random.Range(-0.8f, 0.8f));
+                    posicion += new Vector3(Random.Range(-0.8f, 0.8f),0f,Random.Range(-0.8f, 0.8f));
                     Juego.I.Aparecer(cola[indice],posicion,Quaternion.LookRotation(Vector3.right));
                     indice++;
                 }
                 return null;
             }
 
-            // Después aparece el jefe.
+            // Despues aparece el jefe.
             if (!jefeAparecio)
             {
                 tiempo -= dt;
@@ -77,10 +77,11 @@ namespace Alumnos.Director
                 if (tiempo <= 0f)
                 {
                     Vector3 posicion = Ruta.Inicio;
-                    posicion += new Vector3(Random.Range(-0.8f, 0.8f),0f, Random.Range(-0.8f, 0.8f));
-                    Juego.I.Aparecer( Rol.Jefe,posicion,Quaternion.LookRotation(Vector3.right));
+
+                    posicion += new Vector3(Random.Range(-0.8f, 0.8f),0f,Random.Range(-0.8f, 0.8f));
+                    Juego.I.Aparecer(Rol.Jefe,posicion,Quaternion.LookRotation(Vector3.right));
                     jefeAparecio = true;
-                    Debug.Log("Director: ¡el JEFE ha aparecido!");
+                    Debug.Log("Director: el jefe ha aparecido");
                 }
                 return null;
             }
