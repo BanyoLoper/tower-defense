@@ -20,7 +20,8 @@ namespace Alumnos.Bruto
                 new BrutoCargarGolpe(),
                 new BrutoGolpePesado(),
                 new BrutoRecuperar(),
-                new BrutoFuria()
+                new BrutoFuria(),
+                new BrutoFestejo()
             }, ctx);
         }
         void OnEnable()
@@ -31,11 +32,13 @@ namespace Alumnos.Bruto
             maq.Iniciar("BrutoAvanzar");
             ag.salud.AlMorir += AlMorir;
             ag.salud.AlDanar += AlDanar;
+            if (Juego.I != null) Juego.I.AlCambiarFase += AlCambiarFase;
         }
         void OnDisable()
         {
             ag.salud.AlMorir -= AlMorir;
             ag.salud.AlDanar -= AlDanar;
+            if (Juego.I != null) Juego.I.AlCambiarFase -= AlCambiarFase;
         }
         void AlMorir(GameObject origen)
         {
@@ -46,6 +49,11 @@ namespace Alumnos.Bruto
             if (ag.salud.vida <= 0f) return;
             if (ctx.Obtener<bool>("furiaUsada")) return;
             if (ag.salud.Porcentaje < 0.4f) maq.CambiarA("BrutoFuria");
+        }
+        void AlCambiarFase(FaseJuego fase)
+        {
+            if (ag.salud.vida <= 0f) return;
+            if (fase == FaseJuego.Derrota || fase == FaseJuego.Victoria) maq.CambiarA("BrutoFestejo");
         }
         void Update()
         {
