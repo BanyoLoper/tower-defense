@@ -18,7 +18,8 @@ namespace Alumnos.Reparador
                 new ReparadorMuerto(),
                 new ReparadorIrAReparar(),
                 new ReparadorMartillar(),
-                new ReparadorHuir()
+                new ReparadorHuir(),
+                new ReparadorFestejo()
             }, ctx);
         }
 
