@@ -23,7 +23,7 @@ namespace Alumnos.TorreLanzadora
             if (tiempoHumo >= 1.5f)
             {
                 tiempoHumo = 0f;
-                Efectos.Reproducir(Fx.Fuego, agent.Pos, 0.7f, 1.5f);
+                Efectos.Reproducir(Fx.Fuego, agent.Pos, 7f, 1.5f);
             }
 
             tiempoDisparo += dt;
