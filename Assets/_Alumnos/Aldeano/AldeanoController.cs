@@ -10,6 +10,7 @@ namespace Alumnos.Aldeano
         readonly Contexto ctx = new Contexto();
         Agente ag;
         Salud salud;
+        Juego juego;
         public Vector3 Amenaza { get; private set; }
         public Vector3 Casa { get; private set; }
 
@@ -26,7 +27,8 @@ namespace Alumnos.Aldeano
                 new AldeanoAsustarse(),
                 new AldeanoHuir(),
                 new AldeanoCharlar(),
-                new AldeanoEsconderse()
+                new AldeanoEsconderse(),
+                new AldeanoFestejo()
             }, ctx);
         }
 
@@ -37,12 +39,36 @@ namespace Alumnos.Aldeano
             maq.Iniciar("AldeanoVagar");
             salud.AlMorir += AlMorir;
             Alertas.AlAlerta += AlAlerta;
+            EscucharJuego();
         }
+
+        void Start() { EscucharJuego(); }
 
         void OnDisable()
         {
             salud.AlMorir -= AlMorir;
             Alertas.AlAlerta -= AlAlerta;
+            if (juego != null) juego.AlCambiarFase -= AlCambiarFase;
+            juego = null;
+        }
+
+        void EscucharJuego()
+        {
+            if (juego != null) return;
+            juego = Juego.I;
+            if (juego == null) return;
+
+            juego.AlCambiarFase += AlCambiarFase;
+            if (juego.Terminado) AlCambiarFase(juego.Fase);
+        }
+
+        void AlCambiarFase(FaseJuego fase)
+        {
+            if (!ag.Vivo) return;
+            if (fase != FaseJuego.Victoria && fase != FaseJuego.Derrota) return;
+
+            ctx.Fijar("victoria", fase == FaseJuego.Victoria);
+            maq.CambiarA("AldeanoFestejo");
         }
 
         void AlMorir(GameObject origen)
