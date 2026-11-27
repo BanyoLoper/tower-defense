@@ -18,7 +18,9 @@ namespace Alumnos.Director
                 new DirectorAviso(),
                 new DirectorOleada(),
                 new DirectorLimpieza(),
-                new DirectorBono()
+                new DirectorBono(),
+                new DirectorJefe(),
+                new DirectorVictoria()
             },
             ctx);
         }
@@ -27,6 +29,7 @@ namespace Alumnos.Director
         {
             maq.Iniciar("DirectorPreparacion");
         }
+
         void Update()
         {
             maq.Actualizar(Time.deltaTime);

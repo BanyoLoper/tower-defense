@@ -24,7 +24,9 @@ namespace Alumnos.Aldeano
                 new AldeanoVagar(),
                 new AldeanoMuerto(),
                 new AldeanoAsustarse(),
-                new AldeanoHuir()
+                new AldeanoHuir(),
+                new AldeanoCharlar(),
+                new AldeanoEsconderse()
             }, ctx);
         }
 
