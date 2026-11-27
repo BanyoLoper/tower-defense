@@ -21,7 +21,7 @@ namespace Alumnos.Lancero
                 return "LanceroAvanzar";
             }
 
-            Transform hostilTransform = hostilObj as Transform;
+        Transform hostilTransform = hostilObj as Transform;
             if (hostilTransform == null)
             {
                 GameObject go = hostilObj as GameObject;
