@@ -28,6 +28,7 @@ namespace Alumnos.Soldado
 
                 if (enemigo != null)
                 {
+                    Ctx.Fijar("objetivo", enemigo);
                     return "SoldadoPerseguir";
                 }
             }
