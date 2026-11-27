@@ -14,7 +14,6 @@ namespace Alumnos.TorreLanzadora
             agent.Animar(Anim.IdleCombate);
         }
 
-
         public override string Actualizar(float dt)
         {
             if (objetivo == null || !objetivo.Vivo || Sensor.DistanciaPlana(agent.Pos, objetivo.Pos) > 14f)
@@ -25,6 +24,12 @@ namespace Alumnos.TorreLanzadora
             Vector3 puntoFuturo = objetivo.Pos + objetivo.cuerpo.Velocidad * anticipacion;
 
             agent.cuerpo.MirarA(puntoFuturo, dt);
+
+            Vector3 direccion = puntoFuturo - agent.Pos;
+            direccion.y = 0f;
+
+            if (Vector3.Angle(agent.transform.forward, direccion) < 10f) return "TorreLanzadoraDisparando";
+
             return null;
         }
     }
