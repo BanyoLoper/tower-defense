@@ -10,6 +10,8 @@ namespace Alumnos.Aldeano
         readonly Contexto ctx = new Contexto();
         Agente ag;
         Salud salud;
+        public Vector3 Amenaza { get; private set; }
+        public Vector3 Casa { get; private set; }
 
         void Awake()
         {
@@ -21,12 +23,17 @@ namespace Alumnos.Aldeano
             {
                 new AldeanoVagar(),
                 new AldeanoMuerto(),
-                new AldeanoAsustarse()
+                new AldeanoAsustarse(),
+                new AldeanoHuir(),
+                new AldeanoCharlar(),
+                new AldeanoEsconderse()
             }, ctx);
         }
 
         void OnEnable()
         {
+            Casa = transform.position;
+            Amenaza = Casa;
             maq.Iniciar("AldeanoVagar");
             salud.AlMorir += AlMorir;
             Alertas.AlAlerta += AlAlerta;
@@ -46,9 +53,13 @@ namespace Alumnos.Aldeano
         void AlAlerta(Vector3 posicion, float radio, Agente origen)
         {
             if (!ag.Vivo || radio < 0f) return;
-            if (Sensor.DistanciaPlana(ag.Pos, posicion) <= radio)
-                maq.Disparar("alerta");
+            if (Sensor.DistanciaPlana(ag.Pos, posicion) > radio) return;
+
+            Amenaza = posicion;
+            maq.Disparar("alerta");
         }
+
+        public void RecordarAmenaza(Vector3 posicion) { Amenaza = posicion; }
 
         void Update() { maq.Actualizar(Time.deltaTime); }
     }

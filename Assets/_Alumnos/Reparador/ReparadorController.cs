@@ -15,7 +15,8 @@ namespace Alumnos.Reparador
             maq = new Maquina(new List<Estado>
             {
                 new ReparadorEsperar(),
-                new ReparadorMuerto()
+                new ReparadorMuerto(),
+                new ReparadorIrAReparar()
             }, ctx);
         }
 
