@@ -13,7 +13,9 @@ namespace Alumnos.Lancero
         {
             ctx.Fijar("agente", GetComponent<Agente>());
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado> { new LanceroAvanzar(), new LanceroMuerto(), new LanceroAturdido(), new LanceroRetroceder() }, ctx);   // por ahora solo este estado
+
+            maq = new Maquina(new List<Estado> { new LanceroAvanzar(), new LanceroMuerto(), new LanceroAcercarse(), new LanceroEstocada(),  new LanceroAturdido(), new LanceroRetroceder(), new LanceroFestejo() }, ctx);   
+
             
         }
 
