@@ -16,7 +16,8 @@ namespace Alumnos.Jefe
             maq = new Maquina(
                 new List<Estado>
                 {
-                    new JefeAparicion()
+                    new JefeAparicion(),
+                    new JefeAvanzar()
                 },
                 ctx
             );
