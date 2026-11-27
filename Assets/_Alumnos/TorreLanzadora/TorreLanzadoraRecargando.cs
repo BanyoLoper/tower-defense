@@ -14,6 +14,8 @@ namespace Alumnos.TorreLanzadora
         }
         public override string Actualizar(float dt)
         {
+            if (agent.salud.Porcentaje < 0.4f) return "TorreLanzadoraDanada";
+
             tiempo += dt;
 
             if (tiempo < 1.3f) return null;
