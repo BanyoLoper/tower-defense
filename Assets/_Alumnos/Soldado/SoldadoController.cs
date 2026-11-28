@@ -42,7 +42,7 @@ namespace Alumnos.Soldado
                 return;
             }
 
-            if (maq.Actual.Nombre == "SoldadoAturdido")
+            if (maq.Actual.Nombre == "SoldadoAturdido" || maq.Actual.Nombre == "SoldadoFestejo")
             {
                 return;
             }
@@ -52,8 +52,14 @@ namespace Alumnos.Soldado
         
         void Update()
         {
+            if (Juego.I != null && Juego.I.Fase == FaseJuego.Derrota && agente.Vivo && maq.Actual.Nombre != "SoldadoFestejo")
+            {
+                maq.CambiarA("SoldadoFestejo");
+            }
+
             maq.Actualizar(Time.deltaTime);
         }
+
     }
 }
 
