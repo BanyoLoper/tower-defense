@@ -18,7 +18,7 @@ namespace Alumnos.MagoEnemigo
             ag = GetComponent<Agente>();
             ctx.Fijar("agente", ag);
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado>{ new MagoEnemigoAvanzar(),new MagoEnemigoPosicionarse(),new MagoEnemigoMuerto(),new MagoEnemigoLanzar(),new MagoEnemigoRecargar()}, ctx);
+            maq = new Maquina(new List<Estado>{ new MagoEnemigoAvanzar(),new MagoEnemigoPosicionarse(),new MagoEnemigoMuerto(),new MagoEnemigoLanzar(),new MagoEnemigoRecargar(), new MagoEnemigoAturdido(), new MagoEnemigoHuir()}, ctx);
         }
         void OnEnable()
         {
