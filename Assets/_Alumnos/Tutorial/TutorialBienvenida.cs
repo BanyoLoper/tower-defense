@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Alumnos.Tutorial
 {
@@ -10,11 +11,16 @@ namespace Alumnos.Tutorial
         {
             tiempo = 0f;
             Debug.Log("Tutorial: entre a Bienvenida");
-            TextoCentral.I.Mostrar("TUTORIAL", "Bienvenido al tutorial.", Color.white, 4f);
+            TextoCentral.I.Mostrar("TUTORIAL", "Bienvenido al tutorial.\nPulsa T para saltar.", Color.white, 4f);
         }
 
         public override string Actualizar(float dt)
         {
+            if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
+            {
+                return "TutorialFin";
+            }
+
             tiempo += dt;
 
             if (tiempo >= 4f)
