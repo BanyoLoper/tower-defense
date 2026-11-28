@@ -4,23 +4,34 @@ namespace Alumnos.Tutorial
 {
     public class TutorialConstruir : Estado
     {
-        ColocadorTorres colocador;
-        bool construida;
+        SlotTorre[] plataformas;
+        bool[] ocupadas;
 
         public override void Entrar(string anterior)
         {
-            colocador = Object.FindFirstObjectByType<ColocadorTorres>();
-            construida = false;
+            plataformas = Object.FindObjectsByType<SlotTorre>(FindObjectsSortMode.None);
+            ocupadas = new bool[plataformas.Length];
+
+            for (int i = 0; i < plataformas.Length; i++)
+            {
+                ocupadas[i] = plataformas[i].Ocupado;
+            }
+
             TextoCentral.I.Mostrar("TUTORIAL", "Pulsa 1 o 2 para construir una torre.", Color.white, 4f);
         }
 
         public override string Actualizar(float dt)
         {
-            if (construida == false && colocador != null && colocador.Elegido != null && colocador.Elegido.Ocupado)
+            for (int i = 0; i < plataformas.Length; i++)
             {
-                construida = true;
-                Juego.I.Mensaje("Torre construida.");
-                return "TutorialGemas";
+                bool ocupada = plataformas[i].Ocupado;
+
+                if (ocupadas[i] == false && ocupada)
+                {
+                    return "TutorialGemas";
+                }
+
+                ocupadas[i] = ocupada;
             }
 
             return null;
