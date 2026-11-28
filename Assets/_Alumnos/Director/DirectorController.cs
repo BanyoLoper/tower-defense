@@ -20,7 +20,8 @@ namespace Alumnos.Director
                 new DirectorLimpieza(),
                 new DirectorBono(),
                 new DirectorJefe(),
-                new DirectorVictoria()
+                new DirectorVictoria(),
+                new DirectorDerrota()
             },
             ctx);
         }
