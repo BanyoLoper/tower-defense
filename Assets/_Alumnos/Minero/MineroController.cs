@@ -14,16 +14,7 @@ namespace Alumnos.Minero
             ag = GetComponent<Agente>();
             ctx.Fijar("agente", ag);
             ctx.Fijar("ctrl", this);
-
-            maq = new Maquina(new List<Estado>
-                {
-                    new MineroIrAMina(),
-                    new MineroMinar(),
-                    new MineroIrAlGranero(),
-                    new MineroDepositar(),
-                    new MineroMuerto()
-                },
-                 ctx);
+            maq = new Maquina(new List<Estado>{new MineroIrAMina(),new MineroMinar(),new MineroIrAlGranero(),new MineroDepositar(),new MineroHuir(),new MineroEsconderse(),new MineroMuerto()},ctx);
         }
 
         void OnEnable()

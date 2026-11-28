@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,30 +14,52 @@ namespace Alumnos.Soldado
             agente = GetComponent<Agente>();
             ctx.Fijar("agente", agente);
             ctx.Fijar("ctrl", this);
-            maq = new Maquina(new List<Estado>{new SoldadoAvanzar(),new SoldadoMuerto(),new SoldadoPerseguir()},ctx);
-
+            maq = new Maquina(new List<Estado>{new SoldadoAvanzar(),new SoldadoMuerto(),new SoldadoPerseguir(),new SoldadoAtacar(),new SoldadoAturdido(),new SoldadoFestejo()},ctx);
         }
 
         void OnEnable()
         {
             maq.Iniciar("SoldadoAvanzar");
             agente.salud.AlMorir += AlMorir;
+            agente.salud.AlDanar += AlDanar;
         }
-
+        
         void OnDisable()
         {
             agente.salud.AlMorir -= AlMorir;
+            agente.salud.AlDanar -= AlDanar;
         }
-
+        
         void AlMorir(GameObject origen)
         {
             maq.CambiarA("SoldadoMuerto");
         }
         
+        void AlDanar(float cantidad, GameObject origen)
+        {
+            if (agente.salud.vida <= 0f)
+            {
+                return;
+            }
+
+            if (maq.Actual.Nombre == "SoldadoAturdido" || maq.Actual.Nombre == "SoldadoFestejo")
+            {
+                return;
+            }
+
+            maq.CambiarA("SoldadoAturdido");
+        }
+        
         void Update()
         {
+            if (Juego.I != null && Juego.I.Fase == FaseJuego.Derrota && agente.Vivo && maq.Actual.Nombre != "SoldadoFestejo")
+            {
+                maq.CambiarA("SoldadoFestejo");
+            }
+
             maq.Actualizar(Time.deltaTime);
         }
+
     }
 }
 

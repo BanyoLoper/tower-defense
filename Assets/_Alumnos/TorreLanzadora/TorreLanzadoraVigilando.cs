@@ -12,25 +12,22 @@ namespace Alumnos.TorreLanzadora
             tiempo = 0f;
             agent = Ctx.Obtener<Agente>("agente");
             agent.Animar(Anim.IdleCombate);
-            Debug.Log("TorreLanzadora: entre a Vigilando");
+            //Debug.Log("TorreLanzadora: entre a Vigilando");
         }
 
         public override string Actualizar(float dt)
         {
+            if (agent.salud.Porcentaje < 0.4f) return "TorreLanzadoraDanada";
+
             tiempo += dt;
 
-            if (tiempo < 0.2f)
-            {
-                return null;
-            }
+            if (tiempo < 0.2f) return null;
 
             tiempo = 0f;
             Agente objetivo = Sensor.HostilMasCercano(agent, 14f);
 
-            if (objetivo == null)
-            {
-                return null;
-            }
+            if (objetivo == null) return null;
+
             Ctx.Fijar("objetivo", objetivo);
             return "TorreLanzadoraApuntando";
         }

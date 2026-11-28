@@ -33,6 +33,13 @@ namespace Alumnos.Aldeano
                     ctrl.RecordarAmenaza(hostil.Pos);
                     return "AldeanoAsustarse";
                 }
+
+                Agente companero = BuscarCompanero();
+                if (companero != null)
+                {
+                    Ctx.Fijar("companero", companero);
+                    return "AldeanoCharlar";
+                }
             }
 
             Vector3 velocidad = Steering.Wander(ag.Pos, ag.transform.forward,
@@ -49,6 +56,16 @@ namespace Alumnos.Aldeano
         {
             return trigger == "alerta" || trigger == "enemigo_visto"
                 ? "AldeanoAsustarse" : null;
+        }
+
+        Agente BuscarCompanero()
+        {
+            foreach (Agente otro in Agente.Todos)
+            {
+                if (otro == ag || otro.rol != Rol.Aldeano || !otro.Vivo) continue;
+                if (Sensor.DistanciaPlana(ag.Pos, otro.Pos) < 3f) return otro;
+            }
+            return null;
         }
     }
 }
